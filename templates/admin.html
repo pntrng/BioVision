@@ -1,0 +1,752 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ADMIN – Gắn điểm bào quan trên mô hình 3D (Sketchfab)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta http-equiv="Permissions-Policy" content="accelerometer=*, gyroscope=*, magnetometer=*">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    #right {
+      position: relative !important;
+    }
+    
+    #api-frame {
+      position: relative;
+      z-index: 1;
+    }
+    
+    #overlay { 
+      position: absolute !important; 
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      pointer-events: none; 
+      overflow: visible !important;
+      z-index: 1000 !important;
+    }
+    
+    .hotspot {
+      position:absolute; 
+      transform:translate(-50%,-50%);
+      width:16px; 
+      height:16px; 
+      border-radius:50%;
+      border:2px solid #fff; 
+      background:rgba(0,0,0,0.6);
+      box-shadow:0 2px 10px rgba(0,0,0,0.35);
+      pointer-events:auto;
+      transition: all 0.2s ease;
+      z-index: 1001 !important;
+    }
+    
+    .hotspot.active { 
+      outline:3px solid rgba(31,111,235,0.8); 
+    }
+    
+    .hotspot:hover { 
+      transform:translate(-50%,-50%) scale(1.2); 
+    }
+    
+    .badge {
+      position:absolute; 
+      left:18px; 
+      top:-8px;
+      background:rgba(0,0,0,0.75); 
+      color:#fff;
+      padding:2px 6px; 
+      border-radius:999px; 
+      font-size:12px;
+      white-space:nowrap;
+    }
+  </style>
+
+  <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+</head>
+<body class="m-0 h-screen flex font-sans bg-gray-50">
+  <!-- Sidebar -->
+  <div id="left" class="w-[440px] bg-gradient-to-b from-white to-gray-50 border-r border-gray-200 overflow-y-auto">
+    <div class="p-6 space-y-6">
+      <!-- Logo & Header -->
+      <div class="border-b border-gray-200 pb-4">
+        <div class="flex items-center space-x-3 mb-2">
+          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-md">
+            <span class="text-white font-bold text-xl">B</span>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+              BioVision 3D
+            </h1>
+            <p class="text-xs text-gray-500 font-medium">ADMIN Panel</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Token Input -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">🔐 Admin Token</h3>
+        <input 
+          id="adminToken" 
+          type="password" 
+          placeholder="Nhập Admin Token (từ biến môi trường ADMIN_TOKEN)" 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+        />
+        <p class="text-xs text-gray-500 mt-2">Token được lưu trong localStorage. Cần token để lưu dữ liệu.</p>
+      </div>
+
+      <!-- Instructions -->
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-xs text-gray-700 space-y-2">
+        <p><b>Quy trình:</b></p>
+        <ol class="list-decimal list-inside space-y-1 ml-2">
+          <li>Nhập Admin Token (từ Render environment variables)</li>
+          <li>Điền thông tin khối lớp, chương, mô hình</li>
+          <li><b>Bật Chọn điểm</b> → click lên mô hình để lấy vị trí</li>
+          <li>Xoay đến góc muốn → bấm <b>Lấy góc camera</b></li>
+          <li>Điền nhãn điểm, mô tả, link (nếu có) → <b>Thêm mới</b></li>
+          <li><b>Lưu lên Server</b> để lưu</li>
+        </ol>
+      </div>
+
+      <!-- Grade Input -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Khối lớp</h3>
+        <select 
+          id="grade" 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Chọn khối lớp</option>
+          <option value="10">Lớp 10</option>
+          <option value="11">Lớp 11</option>
+          <option value="12">Lớp 12</option>
+        </select>
+      </div>
+
+      <!-- Chapter Input -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Chương</h3>
+        <input 
+          id="chapter" 
+          type="text" 
+          placeholder="VD: Tế bào nhân sơ, Tế bào nhân thực, Virus..." 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Model UID Input -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Mô hình</h3>
+        <div class="flex gap-2">
+          <input 
+            id="modelUid" 
+            type="text" 
+            placeholder="Model UID (chuỗi sau /models/ ...)" 
+            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button 
+            id="btnLoad" 
+            class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+          >
+            Load
+          </button>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">Ví dụ UID: <code class="bg-gray-100 px-1.5 py-0.5 rounded">acc7d71759a1441e8409ebb31e3c3c0d</code></p>
+      </div>
+
+      <!-- Pick & Camera Section -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Tạo điểm mới</h3>
+        <div class="grid grid-cols-2 gap-2 mb-3">
+          <button 
+            id="btnPick" 
+            class="px-4 py-2.5 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg text-sm font-medium transition-colors shadow-sm"
+          >
+            🖱️ Bật chọn điểm
+          </button>
+          <button 
+            id="btnGetCam" 
+            class="px-4 py-2.5 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg text-sm font-medium transition-colors shadow-sm"
+          >
+            📌 Lấy góc camera
+          </button>
+        </div>
+        <textarea 
+          id="pos3dOut" 
+          readonly 
+          placeholder="world/position3D sẽ hiện ở đây..." 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs font-mono bg-gray-50 resize-none focus:outline-none mb-3"
+          rows="2"
+        ></textarea>
+        <textarea 
+          id="camOut" 
+          readonly 
+          placeholder="camera position/target sẽ hiện ở đây..." 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs font-mono bg-gray-50 resize-none focus:outline-none"
+          rows="2"
+        ></textarea>
+      </div>
+
+      <!-- Hotspot List Section -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Danh sách điểm</h3>
+          <button 
+            id="btnNew" 
+            class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors"
+          >
+            ➕ Mới
+          </button>
+        </div>
+        <div id="list" class="space-y-2 max-h-64 overflow-y-auto pr-2">
+          <!-- Cards will be inserted here -->
+        </div>
+      </div>
+
+      <!-- Hotspot Info Section -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Thông tin điểm (đang chọn)</h3>
+        <input 
+          id="name" 
+          type="text" 
+          placeholder="Nhãn điểm (tên ngắn gọn, VD: Màng trong)" 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-3"
+        />
+        <textarea 
+          id="content" 
+          placeholder="Mô tả điểm (mô tả chi tiết về điểm)" 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none mb-3"
+          rows="4"
+        ></textarea>
+        <input 
+          id="link" 
+          type="text" 
+          placeholder="Link tới điểm khác (tùy chọn, VD: model_id hoặc URL)" 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+
+      <!-- Actions -->
+      <div class="grid grid-cols-2 gap-2">
+        <button 
+          id="btnAdd" 
+          class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+        >
+          ✅ Thêm mới
+        </button>
+        <button 
+          id="btnUpdate" 
+          class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+        >
+          💾 Cập nhật
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <button 
+          id="btnDelete" 
+          class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+        >
+          🗑️ Xoá
+        </button>
+        <button 
+          id="btnSave" 
+          class="px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+        >
+          💾 Lưu lên Server
+        </button>
+      </div>
+
+      <!-- Status -->
+      <div 
+        id="status" 
+        class="px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm text-gray-700"
+      >
+        Đang tải dữ liệu...
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D Viewer -->
+  <div id="right" class="flex-1 relative bg-black" style="position: relative;">
+    <iframe id="api-frame" class="w-full h-full border-0" allow="autoplay; fullscreen; xr-spatial-tracking" style="position: relative; z-index: 1;"></iframe>
+    <div id="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; pointer-events: none; overflow: visible;"></div>
+  </div>
+
+<script>
+let state = {
+  grade: "",
+  chapter: "",
+  modelUid: "",
+  items: [],
+  selectedId: null,
+  pickMode: false,
+  lastWorld: null,
+  lastCam: null
+};
+
+let api = null;
+let raf = null;
+let needsRender = true;
+
+const el = (id) => document.getElementById(id);
+const setStatus = (msg) => { el("status").textContent = msg; };
+
+function uid() {
+  return "org_" + Math.random().toString(16).slice(2) + "_" + Date.now();
+}
+
+function deepCopy(x){ return JSON.parse(JSON.stringify(x)); }
+
+// Load data from server
+async function loadFromServer() {
+  try {
+    setStatus("Đang tải dữ liệu từ server...");
+    const response = await fetch('/api/data');
+    if (!response.ok) throw new Error('Network response was not ok');
+    const data = await response.json();
+    
+    // Hỗ trợ cả format cũ và mới
+    if (data.modelUid && !data.models) {
+      // Format cũ - chuyển sang format mới
+      state.modelUid = data.modelUid || "";
+      state.items = Array.isArray(data.items) ? data.items : [];
+      state.grade = "";
+      state.chapter = "";
+    } else if (data.models && data.models.length > 0) {
+      // Format mới - lấy model đầu tiên
+      const firstModel = data.models[0];
+      state.grade = firstModel.grade || "";
+      state.chapter = firstModel.chapter || "";
+      state.modelUid = firstModel.modelUid || "";
+      state.items = Array.isArray(firstModel.items) ? firstModel.items : [];
+    } else {
+      state.modelUid = "";
+      state.items = [];
+      state.grade = "";
+      state.chapter = "";
+    }
+    
+    el("grade").value = state.grade;
+    el("chapter").value = state.chapter;
+    el("modelUid").value = state.modelUid;
+    rebuildList();
+    setStatus("Đã tải dữ liệu từ server.");
+    if (state.modelUid) {
+      initViewer(state.modelUid);
+    }
+  } catch (e) {
+    setStatus("Lỗi khi tải dữ liệu: " + e.message);
+    state.modelUid = "";
+    state.items = [];
+    rebuildList();
+  }
+}
+
+// Get admin token from input or localStorage
+function getAdminToken() {
+  const tokenInput = el("adminToken");
+  const token = tokenInput.value.trim();
+  if (token) {
+    localStorage.setItem('bio_admin_token', token);
+    return token;
+  }
+  return localStorage.getItem('bio_admin_token') || '';
+}
+
+// Save data to server
+async function saveToServer() {
+  try {
+    const token = getAdminToken();
+    if (!token) {
+      setStatus("❌ Chưa nhập Admin Token. Vui lòng nhập token ở trên.");
+      return false;
+    }
+    
+    setStatus("Đang lưu dữ liệu...");
+    
+    // Tạo cấu trúc mới với models array
+    const dataToSave = {
+      models: [{
+        id: "model_" + Date.now(),
+        grade: state.grade,
+        chapter: state.chapter,
+        modelUid: state.modelUid,
+        items: state.items
+      }]
+    };
+    
+    const response = await fetch('/api/data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(dataToSave)
+    });
+    
+    if (!response.ok) {
+      let errorMessage = '';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorData.message || `Server error (${response.status})`;
+      } catch (parseError) {
+        errorMessage = `Server error (${response.status}): ${response.statusText}`;
+      }
+      
+      if (response.status === 401) {
+        setStatus(`❌ Lỗi xác thực (401): ${errorMessage}\n\n💡 Kiểm tra:\n- Token đã nhập đúng chưa?\n- Server có ADMIN_TOKEN được set chưa?\n- Token có khớp với server không?`);
+        return false;
+      }
+      
+      if (response.status === 400) {
+        setStatus(`❌ Dữ liệu không hợp lệ (400): ${errorMessage}`);
+        return false;
+      }
+      
+      throw new Error(errorMessage);
+    }
+    
+    const result = await response.json();
+    if (result.error) {
+      throw new Error(result.error);
+    }
+    
+    setStatus("✅ Đã lưu thành công lên server!");
+    return true;
+  } catch (e) {
+    console.error('Save error:', e);
+    
+    // Handle network errors
+    if (e.message.includes('Failed to fetch') || e.message.includes('NetworkError') || e.name === 'TypeError') {
+      setStatus(`❌ Lỗi kết nối: Không thể kết nối đến server.\n\n💡 Kiểm tra:\n- Server Flask có đang chạy không? (python app.py)\n- Địa chỉ server đúng chưa? (http://localhost:5000)\n- Có lỗi firewall/network không?`);
+      return false;
+    }
+    
+    setStatus(`❌ Lỗi khi lưu: ${e.message}`);
+    return false;
+  }
+}
+
+function rebuildList() {
+  const list = el("list");
+  list.innerHTML = "";
+  const items = state.items.slice();
+  
+  if (items.length === 0) {
+    const emptyCard = document.createElement("div");
+    emptyCard.className = "px-4 py-6 text-center text-sm text-gray-500 bg-gray-50 border border-gray-200 rounded-lg";
+    emptyCard.textContent = "(Chưa có điểm nào)";
+    list.appendChild(emptyCard);
+    state.selectedId = null;
+    fillForm(null);
+    return;
+  }
+
+  items.forEach((it, idx) => {
+    const card = document.createElement("div");
+    const isSelected = it.id === state.selectedId;
+    card.className = `px-4 py-3 bg-white border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
+      isSelected 
+        ? "border-blue-500 bg-blue-50 shadow-md" 
+        : "border-gray-200 hover:border-blue-300"
+    }`;
+    
+    card.innerHTML = `
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+            ${idx + 1}
+          </div>
+          <div>
+            <div class="font-semibold text-sm text-gray-800">${it.name || "(chưa đặt tên)"}</div>
+            ${it.content ? `<div class="text-xs text-gray-500 mt-0.5 line-clamp-1">${it.content.substring(0, 40)}${it.content.length > 40 ? '...' : ''}</div>` : ''}
+          </div>
+        </div>
+        ${isSelected ? '<div class="w-2 h-2 rounded-full bg-blue-500"></div>' : ''}
+      </div>
+    `;
+    
+    card.onclick = () => {
+      state.selectedId = it.id;
+      fillForm(it);
+      rebuildList();
+      setStatus("Đã chọn điểm để chỉnh sửa.");
+    };
+    
+    list.appendChild(card);
+  });
+
+  if (!state.selectedId || !state.items.find(x => x.id === state.selectedId)) {
+    if (state.items.length > 0) {
+      state.selectedId = state.items[0].id;
+      fillForm(getSelected());
+      rebuildList();
+    }
+  } else {
+    fillForm(getSelected());
+  }
+  needsRender = true;
+}
+
+function getSelected() {
+  return state.items.find(x => x.id === state.selectedId) || null;
+}
+
+function fillForm(it) {
+  el("name").value = it?.name || "";
+  el("content").value = it?.content || "";
+  el("link").value = it?.link || "";
+
+  el("pos3dOut").value = it?.world
+    ? JSON.stringify({ world: it.world }, null, 2)
+    : (state.lastWorld ? JSON.stringify({ world: state.lastWorld }, null, 2) : "");
+
+  el("camOut").value = it?.cam
+    ? JSON.stringify({ cam: it.cam }, null, 2)
+    : (state.lastCam ? JSON.stringify({ cam: state.lastCam }, null, 2) : "");
+}
+
+function ensureApiReady() {
+  if (!api) { setStatus("Viewer chưa sẵn sàng. Hãy Load model trước."); return false; }
+  return true;
+}
+
+function initViewer(modelUid) {
+  state.modelUid = modelUid;
+  const iframe = el("api-frame");
+  const client = new Sketchfab(iframe);
+
+  setStatus("Đang khởi tạo viewer...");
+  client.init(modelUid, {
+    autostart: 1,
+    ui_infos: 0,
+    ui_controls: 1,
+    success: function(_api) {
+      api = _api;
+      api.start(function() {
+        api.addEventListener("viewerready", function() {
+          setStatus("Viewer ready. Bật 'Chọn điểm' rồi click lên mô hình để lấy world.");
+          hookPick();
+          startOverlayLoop();
+        });
+      });
+    },
+    error: function() {
+      api = null;
+      setStatus("Không khởi tạo được Viewer API. Model có thể chặn embed/API hoặc lỗi mạng.");
+    }
+  });
+}
+
+function hookPick() {
+  if (!api) return;
+  api.addEventListener("click", function(info) {
+    if (!state.pickMode) return;
+    if (!info || !info.position3D) {
+      setStatus("Bạn click chưa trúng bề mặt mô hình. Thử click lại vào đúng vật thể.");
+      return;
+    }
+    state.lastWorld = info.position3D;
+    el("pos3dOut").value = JSON.stringify({ world: state.lastWorld }, null, 2);
+    setStatus("Đã lấy world. Giờ bấm Lấy góc camera và Thêm mới.");
+  }, { pick: "slow" });
+}
+
+function getCamera() {
+  if (!ensureApiReady()) return;
+  api.getCameraLookAt(function(err, cam) {
+    if (err) { setStatus("Lỗi getCameraLookAt: " + err); return; }
+    state.lastCam = { position: cam.position, target: cam.target, duration: 1.2 };
+    el("camOut").value = JSON.stringify({ cam: state.lastCam }, null, 2);
+    setStatus("Đã lấy camera. Bạn có thể thêm mới điểm.");
+  });
+}
+
+function startOverlayLoop() {
+  if (raf) cancelAnimationFrame(raf);
+  let lastCameraHash = "";
+  
+  const loop = () => {
+    if (api && needsRender) {
+      api.getCameraLookAt(function(err, cam) {
+        if (!err && cam) {
+          const camHash = JSON.stringify(cam);
+          if (camHash !== lastCameraHash) {
+            lastCameraHash = camHash;
+            renderOverlay();
+          }
+        }
+      });
+    }
+    raf = requestAnimationFrame(loop);
+  };
+  loop();
+}
+
+function renderOverlay() {
+  if (!api || !Array.isArray(state.items)) return;
+  const overlay = el("overlay");
+  if (!overlay) return;
+  overlay.innerHTML = "";
+
+  let processedCount = 0;
+  const totalItems = state.items.length;
+
+  state.items.forEach((it) => {
+    if (!it.world) {
+      processedCount++;
+      return;
+    }
+    
+    api.getWorldToScreenCoordinates(it.world, function(err, screen) {
+      processedCount++;
+      
+      let result = null;
+      if (err && typeof err === 'object' && (err.canvasCoord || err.glCoord)) {
+        result = err;
+      } else if (screen && typeof screen === 'object' && (screen.canvasCoord || screen.glCoord)) {
+        result = screen;
+      } else {
+        return;
+      }
+      
+      let screenX, screenY;
+      if (result && result.canvasCoord && result.canvasCoord.length >= 2) {
+        screenX = result.canvasCoord[0];
+        screenY = result.canvasCoord[1];
+      } else {
+        return;
+      }
+
+      const hs = document.createElement("div");
+      hs.className = "hotspot" + (it.id === state.selectedId ? " active" : "");
+      hs.style.left = screenX + "px";
+      hs.style.top = screenY + "px";
+      hs.style.zIndex = "1001";
+      hs.title = it.name || it.id;
+
+      const badge = document.createElement("div");
+      badge.className = "badge";
+      badge.textContent = it.name || "Điểm";
+      hs.appendChild(badge);
+
+      hs.onclick = (ev) => {
+        ev.stopPropagation();
+        state.selectedId = it.id;
+        fillForm(it);
+        rebuildList();
+        setStatus("Đã chọn điểm để chỉnh sửa.");
+      };
+
+      overlay.appendChild(hs);
+      
+      if (processedCount === totalItems) {
+        console.log(`✅ Admin overlay: ${totalItems} hotspots rendered`);
+      }
+    });
+  });
+  needsRender = false;
+}
+
+async function addNewFromForm() {
+  const name = el("name").value.trim();
+  const content = el("content").value.trim();
+  const link = el("link").value.trim();
+
+  const world = state.lastWorld ? [...state.lastWorld] : null;
+  const cam = state.lastCam ? deepCopy(state.lastCam) : null;
+
+  if (!world) { setStatus("Chưa có world. Bật Chọn điểm và click lên mô hình trước."); return; }
+  if (!cam) { setStatus("Chưa có camera. Xoay rồi bấm 'Lấy góc camera' trước."); return; }
+
+  const it = { 
+    id: uid(), 
+    name: name || "Điểm", 
+    content: content || "", 
+    link: link || "",
+    world, 
+    cam 
+  };
+  state.items.push(it);
+  state.selectedId = it.id;
+  rebuildList();
+  await saveToServer();
+}
+
+async function updateSelectedFromForm() {
+  const it = getSelected();
+  if (!it) { setStatus("Chưa chọn điểm để cập nhật."); return; }
+
+  it.name = el("name").value.trim() || it.name || "Điểm";
+  it.content = el("content").value.trim();
+  it.link = el("link").value.trim();
+
+  if (state.lastWorld) it.world = [...state.lastWorld];
+  if (state.lastCam) it.cam = deepCopy(state.lastCam);
+
+  rebuildList();
+  await saveToServer();
+}
+
+async function deleteSelected() {
+  const it = getSelected();
+  if (!it) return;
+  const idx = state.items.findIndex(x => x.id === it.id);
+  if (idx >= 0) state.items.splice(idx, 1);
+  state.selectedId = state.items[0]?.id || null;
+  rebuildList();
+  await saveToServer();
+}
+
+function newBlank() {
+  state.selectedId = null;
+  el("name").value = "";
+  el("content").value = "";
+  el("link").value = "";
+  rebuildList();
+  setStatus("Mới: hãy pick world + lấy camera, rồi bấm Thêm mới.");
+}
+
+el("btnLoad").onclick = () => {
+  const uidVal = el("modelUid").value.trim();
+  if (!uidVal) return setStatus("Bạn chưa nhập Model UID.");
+  state.grade = el("grade").value;
+  state.chapter = el("chapter").value;
+  initViewer(uidVal);
+  saveToServer();
+};
+
+el("btnPick").onclick = () => {
+  state.pickMode = !state.pickMode;
+  const btn = el("btnPick");
+  btn.textContent = state.pickMode ? "🖱️ Đang chọn điểm (bấm để tắt)" : "🖱️ Bật chọn điểm";
+  btn.className = state.pickMode 
+    ? "px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white border border-blue-600 rounded-lg text-sm font-medium transition-colors shadow-sm"
+    : "px-4 py-2.5 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg text-sm font-medium transition-colors shadow-sm";
+  setStatus(state.pickMode ? "Chế độ chọn điểm: click lên mô hình để lấy world." : "Đã tắt chọn điểm.");
+};
+
+el("btnGetCam").onclick = getCamera;
+el("btnAdd").onclick = addNewFromForm;
+el("btnUpdate").onclick = updateSelectedFromForm;
+el("btnDelete").onclick = deleteSelected;
+el("btnNew").onclick = newBlank;
+el("btnSave").onclick = saveToServer;
+
+// Load token from localStorage on startup
+(function init() {
+  const savedToken = localStorage.getItem('bio_admin_token');
+  if (savedToken) {
+    el("adminToken").value = savedToken;
+  }
+  loadFromServer();
+})();
+</script>
+
+</body>
+</html>

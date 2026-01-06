@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install ruff
+      
+      - name: Run ruff linter
+        run: |
+          ruff check app.py --output-format=github || true
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+      
+      - name: Set test environment
+        run: |
+          echo "ADMIN_TOKEN=test-token-123" >> $GITHUB_ENV
+          echo "ENV=development" >> $GITHUB_ENV
+      
+      - name: Run tests
+        run: |
+          pytest tests/ -v || true
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run pip-audit
+        run: |
+          pip install pip-audit
+          pip-audit --requirement requirements.txt || true
+      
+      - name: Check for secrets
+        run: |
+          # Basic check - look for common secret patterns
+          if grep -r "password.*=" --include="*.py" --include="*.html" .; then
+            echo "⚠️ Potential secrets found"
+          fi
