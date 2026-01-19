@@ -187,6 +187,20 @@ def admin():
     # Hiện tại để public nhưng POST API đã được bảo vệ
     return render_template('admin.html')
 
+@app.route('/mindmap_order.json')
+def mindmap_order():
+    """Serve mindmap order JSON file"""
+    try:
+        order_file = os.path.join(BASE_DIR, 'mindmap_order.json')
+        if os.path.exists(order_file):
+            with open(order_file, 'r', encoding='utf-8') as f:
+                return jsonify(json.load(f))
+        return jsonify({"error": "mindmap_order.json not found"}), 404
+    except Exception as e:
+        if ENV == 'development':
+            return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "Internal server error"}), 500
+
 # =========================
 # API
 # =========================

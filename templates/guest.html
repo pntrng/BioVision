@@ -172,53 +172,24 @@
         />
       </div>
 
-      <!-- Grade Filter -->
-      <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-2">Khối lớp</label>
-        <select 
-          id="gradeFilter" 
-          class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-200 focus:border-blue-400"
-        >
-          <option value="">Tất cả</option>
-          <option value="10">Lớp 10</option>
-          <option value="11">Lớp 11</option>
-          <option value="12">Lớp 12</option>
-        </select>
-      </div>
-
-      <!-- Chapter Filter -->
-      <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-2">Chương</label>
-        <select 
-          id="chapterFilter" 
-          class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-200 focus:border-blue-400"
-        >
-          <option value="">Tất cả</option>
-        </select>
-      </div>
-
       <!-- Model Tree -->
       <div>
-        <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wider">Danh sách mô hình</h3>
-        <div id="modelTree" class="space-y-2">
-          <!-- Model list will be inserted here -->
-        </div>
-      </div>
-
-      <!-- Organelle List (shown after model selected) -->
-      <div id="organelleSection" class="hidden">
-        <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wider">Danh sách điểm</h3>
-        <div id="list" class="space-y-3">
-          <!-- Cards will be inserted here -->
+        <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wider">🌳 Cây kiến thức</h3>
+        <div id="modelTree" class="space-y-1">
+          <!-- Tree view will be inserted here -->
         </div>
       </div>
 
       <!-- Detail Panel -->
-      <div id="panel" class="hidden bg-gradient-to-br from-white to-gray-50 border-2 border-blue-200 rounded-2xl p-6 shadow-xl mt-6">
-        <h3 id="pTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-gray-200 pb-3"></h3>
-        <div id="pContent" class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap mb-4"></div>
-        <div id="pLink" class="hidden">
-          <a id="pLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
+      <div id="panel" class="hidden bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 border-2 border-pink-200 rounded-2xl p-6 shadow-xl mt-6">
+        <h3 id="pTitle" class="text-2xl font-bold text-purple-800 mb-3 border-b-2 border-pink-200 pb-2"></h3>
+        <div id="pContent" class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap mb-3"></div>
+        <div id="pFunFact" class="hidden mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
+          <div class="text-xs font-semibold text-yellow-800 mb-1">✨ Góc thú vị:</div>
+          <div id="pFunFactContent" class="text-sm text-yellow-900"></div>
+        </div>
+        <div id="pLink" class="hidden mt-4">
+          <a id="pLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 text-white rounded-lg text-sm font-medium transition-all shadow-md">
             🔗 Xem chi tiết
           </a>
         </div>
@@ -242,8 +213,24 @@
   let animationFrameId = null;
   let lastCameraHash = "";
   let labelElements = new Map();
+  let mindmapOrder = null;
+  let expandedGrades = new Set();
+  let expandedChapters = new Set();
+  let expandedModels = new Set();
 
   const el = (id) => document.getElementById(id);
+
+  // Load mindmap order
+  async function loadMindmapOrder() {
+    try {
+      const response = await fetch('/mindmap_order.json');
+      if (response.ok) {
+        mindmapOrder = await response.json();
+      }
+    } catch (e) {
+      console.warn('Could not load mindmap_order.json:', e);
+    }
+  }
 
   // Sanitize HTML to prevent XSS
   function escapeHtml(text) {
@@ -284,90 +271,284 @@
     }
   }
 
-  // Update chapter filter based on grade
-  function updateChapterFilter() {
-    const grade = el("gradeFilter").value;
-    const chapterSelect = el("chapterFilter");
-    const currentValue = chapterSelect.value;
-    
-    chapterSelect.innerHTML = '<option value="">Tất cả</option>';
-    
-    if (grade) {
-      const chapters = new Set();
-      ALL_DATA.models.forEach(m => {
-        if (m.grade === grade && m.chapter) {
-          chapters.add(m.chapter);
-        }
-      });
-      
-      Array.from(chapters).sort().forEach(ch => {
-        const option = document.createElement("option");
-        option.value = ch;
-        option.textContent = escapeHtml(ch);
-        chapterSelect.appendChild(option);
-      });
-    } else {
-      const chapters = new Set();
-      ALL_DATA.models.forEach(m => {
-        if (m.chapter) chapters.add(m.chapter);
-      });
-      Array.from(chapters).sort().forEach(ch => {
-        const option = document.createElement("option");
-        option.value = ch;
-        option.textContent = escapeHtml(ch);
-        chapterSelect.appendChild(option);
-      });
-    }
-    
-    chapterSelect.value = currentValue;
-    renderModelTree();
-  }
 
-  // Render model tree
+  // Render model tree với cấu trúc Khối lớp → Chương → Mô hình → Thành phần
   function renderModelTree() {
     const q = (el("q").value || "").toLowerCase().trim();
-    const grade = el("gradeFilter").value;
-    const chapter = el("chapterFilter").value;
     
     const tree = el("modelTree");
     tree.innerHTML = "";
     
-    let filteredModels = ALL_DATA.models.filter(m => {
-      const matchGrade = !grade || m.grade === grade;
-      const matchChapter = !chapter || m.chapter === chapter;
+    // Tổ chức dữ liệu theo cấu trúc tree
+    const treeData = {};
+    ALL_DATA.models.forEach(m => {
+      const grade = m.grade || "Khác";
+      const chapter = m.chapter || "Khác";
+      
+      // Filter by search
       const matchSearch = !q || 
         (m.grade && m.grade.toString().includes(q)) ||
         (m.chapter && m.chapter.toLowerCase().includes(q)) ||
-        (m.modelUid && m.modelUid.toLowerCase().includes(q));
-      return matchGrade && matchChapter && matchSearch;
+        (m.name && m.name.toLowerCase().includes(q)) ||
+        ((m.items || []).some(item => 
+          (item.name && item.name.toLowerCase().includes(q)) ||
+          (item.content && item.content.toLowerCase().includes(q))
+        ));
+      
+      if (!matchSearch) return;
+      
+      if (!treeData[grade]) treeData[grade] = {};
+      if (!treeData[grade][chapter]) treeData[grade][chapter] = [];
+      treeData[grade][chapter].push(m);
     });
     
-    if (filteredModels.length === 0) {
-      tree.innerHTML = '<div class="px-4 py-6 text-center text-sm text-gray-500">Không tìm thấy mô hình nào</div>';
+    if (Object.keys(treeData).length === 0) {
+      tree.innerHTML = '<div class="px-4 py-6 text-center text-sm text-gray-500 bg-pink-50 border-2 border-pink-200 rounded-xl">Không tìm thấy dữ liệu nào</div>';
       return;
     }
     
-    filteredModels.forEach(model => {
-      const card = document.createElement("div");
-      card.className = `px-4 py-3 bg-white border-2 rounded-xl cursor-pointer transition-all hover:shadow-lg ${
-        CURRENT_MODEL && CURRENT_MODEL.id === model.id
-          ? "border-blue-500 bg-blue-50"
-          : "border-gray-200 hover:border-blue-300"
-      }`;
-      
-      const chapterText = escapeHtml(model.chapter || "Mô hình");
-      const gradeText = model.grade ? `Lớp ${model.grade}` : '';
-      const itemsCount = (model.items || []).length;
-      
-      card.innerHTML = `
-        <div class="font-semibold text-sm text-gray-800">${chapterText}</div>
-        ${gradeText ? `<div class="text-xs text-gray-500 mt-1">${gradeText}</div>` : ''}
-        <div class="text-xs text-gray-400 mt-1">${itemsCount} điểm</div>
-      `;
-      
-      card.onclick = () => selectModel(model);
-      tree.appendChild(card);
+    // Sắp xếp grades theo mindmap order
+    let grades = Object.keys(treeData);
+    if (mindmapOrder && mindmapOrder.grades) {
+      grades = grades.sort((a, b) => {
+        const idxA = mindmapOrder.grades.indexOf(a);
+        const idxB = mindmapOrder.grades.indexOf(b);
+        if (idxA === -1 && idxB === -1) return a.localeCompare(b);
+        if (idxA === -1) return 1;
+        if (idxB === -1) return -1;
+        return idxA - idxB;
+      });
+    } else {
+      grades.sort();
+    }
+    
+    grades.forEach(grade => {
+      const gradeDiv = createGradeNode(grade, treeData[grade], q);
+      tree.appendChild(gradeDiv);
     });
+  }
+  
+  function createGradeNode(grade, chapters, searchQuery) {
+    const isExpanded = expandedGrades.has(grade);
+    const gradeDiv = document.createElement("div");
+    gradeDiv.className = "mb-1";
+    
+    const gradeHeader = document.createElement("div");
+    gradeHeader.className = "flex items-center px-3 py-2 rounded-lg cursor-pointer transition-all hover:bg-pink-100 group";
+    gradeHeader.style.backgroundColor = isExpanded ? '#fce7f3' : '#fef3f2';
+    
+    const icon = document.createElement("span");
+    icon.className = "text-lg mr-2 transition-transform";
+    icon.textContent = isExpanded ? "📚" : "📖";
+    icon.style.transform = isExpanded ? "rotate(0deg)" : "rotate(-90deg)";
+    
+    const gradeText = document.createElement("span");
+    gradeText.className = "font-bold text-sm text-pink-800";
+    gradeText.textContent = `Khối ${grade}`;
+    
+    gradeHeader.appendChild(icon);
+    gradeHeader.appendChild(gradeText);
+    
+    const chaptersContainer = document.createElement("div");
+    chaptersContainer.className = "ml-4 mt-1 space-y-1";
+    chaptersContainer.style.display = isExpanded ? "block" : "none";
+    
+    // Sắp xếp chapters theo mindmap order
+    let chapterNames = Object.keys(chapters);
+    if (mindmapOrder && mindmapOrder.chapters_by_grade && mindmapOrder.chapters_by_grade[grade]) {
+      chapterNames = chapterNames.sort((a, b) => {
+        const idxA = mindmapOrder.chapters_by_grade[grade].indexOf(a);
+        const idxB = mindmapOrder.chapters_by_grade[grade].indexOf(b);
+        if (idxA === -1 && idxB === -1) return a.localeCompare(b);
+        if (idxA === -1) return 1;
+        if (idxB === -1) return -1;
+        return idxA - idxB;
+      });
+    } else {
+      chapterNames.sort();
+    }
+    
+    chapterNames.forEach(chapter => {
+      const chapterNode = createChapterNode(grade, chapter, chapters[chapter], searchQuery);
+      chaptersContainer.appendChild(chapterNode);
+    });
+    
+    gradeHeader.onclick = (e) => {
+      e.stopPropagation();
+      if (isExpanded) {
+        expandedGrades.delete(grade);
+      } else {
+        expandedGrades.add(grade);
+      }
+      renderModelTree();
+    };
+    
+    gradeDiv.appendChild(gradeHeader);
+    gradeDiv.appendChild(chaptersContainer);
+    
+    return gradeDiv;
+  }
+  
+  function createChapterNode(grade, chapter, models, searchQuery) {
+    const isExpanded = expandedChapters.has(`${grade}::${chapter}`);
+    const chapterDiv = document.createElement("div");
+    chapterDiv.className = "mb-1";
+    
+    const chapterHeader = document.createElement("div");
+    chapterHeader.className = "flex items-center px-3 py-1.5 rounded-lg cursor-pointer transition-all hover:bg-purple-100 group";
+    chapterHeader.style.backgroundColor = isExpanded ? '#f3e8ff' : '#faf5ff';
+    
+    const icon = document.createElement("span");
+    icon.className = "text-sm mr-2";
+    icon.textContent = isExpanded ? "📁" : "📂";
+    
+    const chapterText = document.createElement("span");
+    chapterText.className = "font-semibold text-xs text-purple-800";
+    chapterText.textContent = escapeHtml(chapter);
+    
+    chapterHeader.appendChild(icon);
+    chapterHeader.appendChild(chapterText);
+    
+    const modelsContainer = document.createElement("div");
+    modelsContainer.className = "ml-4 mt-1 space-y-1";
+    modelsContainer.style.display = isExpanded ? "block" : "none";
+    
+    // Sắp xếp models theo mindmap order
+    let sortedModels = [...models];
+    if (mindmapOrder && mindmapOrder.models_by_chapter) {
+      const key = `${grade}::${chapter}`;
+      if (mindmapOrder.models_by_chapter[key]) {
+        sortedModels = sortedModels.sort((a, b) => {
+          const nameA = a.name || "";
+          const nameB = b.name || "";
+          const idxA = mindmapOrder.models_by_chapter[key].indexOf(nameA);
+          const idxB = mindmapOrder.models_by_chapter[key].indexOf(nameB);
+          if (idxA === -1 && idxB === -1) return nameA.localeCompare(nameB);
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
+      }
+    }
+    
+    sortedModels.forEach(model => {
+      const modelNode = createModelNode(grade, chapter, model, searchQuery);
+      modelsContainer.appendChild(modelNode);
+    });
+    
+    chapterHeader.onclick = (e) => {
+      e.stopPropagation();
+      const key = `${grade}::${chapter}`;
+      if (isExpanded) {
+        expandedChapters.delete(key);
+      } else {
+        expandedChapters.add(key);
+      }
+      renderModelTree();
+    };
+    
+    chapterDiv.appendChild(chapterHeader);
+    chapterDiv.appendChild(modelsContainer);
+    
+    return chapterDiv;
+  }
+  
+  function createModelNode(grade, chapter, model, searchQuery) {
+    const isExpanded = expandedModels.has(model.id);
+    const isSelected = CURRENT_MODEL && CURRENT_MODEL.id === model.id;
+    const modelDiv = document.createElement("div");
+    modelDiv.className = "mb-1";
+    
+    const modelHeader = document.createElement("div");
+    modelHeader.className = `flex items-center px-3 py-1.5 rounded-lg cursor-pointer transition-all ${
+      isSelected ? "bg-blue-200 border-2 border-blue-400" : "hover:bg-blue-50"
+    }`;
+    
+    const icon = document.createElement("span");
+    icon.className = "text-xs mr-2";
+    icon.textContent = isExpanded ? "🎯" : "🎨";
+    
+    const modelText = document.createElement("span");
+    modelText.className = `font-medium text-xs ${isSelected ? "text-blue-900" : "text-blue-800"}`;
+    modelText.textContent = escapeHtml(model.name || "Mô hình");
+    
+    const itemsCount = document.createElement("span");
+    itemsCount.className = "ml-auto text-xs text-gray-500";
+    itemsCount.textContent = `(${(model.items || []).length})`;
+    
+    modelHeader.appendChild(icon);
+    modelHeader.appendChild(modelText);
+    modelHeader.appendChild(itemsCount);
+    
+    const componentsContainer = document.createElement("div");
+    componentsContainer.className = "ml-4 mt-1 space-y-0.5";
+    componentsContainer.style.display = isExpanded ? "block" : "none";
+    
+    // Sắp xếp components theo mindmap order
+    let items = model.items || [];
+    if (mindmapOrder && mindmapOrder.components_by_model) {
+      const key = `${grade}::${chapter}::${model.name}`;
+      if (mindmapOrder.components_by_model[key]) {
+        items = items.sort((a, b) => {
+          const nameA = a.name || "";
+          const nameB = b.name || "";
+          const idxA = mindmapOrder.components_by_model[key].indexOf(nameA);
+          const idxB = mindmapOrder.components_by_model[key].indexOf(nameB);
+          if (idxA === -1 && idxB === -1) return nameA.localeCompare(nameB);
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
+      }
+    }
+    
+    items.forEach(item => {
+      const itemNode = createComponentNode(model, item);
+      componentsContainer.appendChild(itemNode);
+    });
+    
+    modelHeader.onclick = (e) => {
+      e.stopPropagation();
+      if (isExpanded) {
+        expandedModels.delete(model.id);
+        renderModelTree();
+      } else {
+        expandedModels.add(model.id);
+        selectModel(model);
+        renderModelTree();
+      }
+    };
+    
+    modelDiv.appendChild(modelHeader);
+    modelDiv.appendChild(componentsContainer);
+    
+    return modelDiv;
+  }
+  
+  function createComponentNode(model, item) {
+    const isSelected = selectedId === item.id;
+    const itemDiv = document.createElement("div");
+    itemDiv.className = `px-3 py-1 rounded-md cursor-pointer transition-all text-xs ${
+      isSelected ? "bg-yellow-200 border-l-4 border-yellow-500" : "hover:bg-yellow-50"
+    }`;
+    
+    const itemText = document.createElement("span");
+    itemText.className = isSelected ? "text-yellow-900 font-medium" : "text-yellow-800";
+    itemText.textContent = "• " + escapeHtml(item.name || "Thành phần");
+    
+    itemDiv.appendChild(itemText);
+    
+    itemDiv.onclick = (e) => {
+      e.stopPropagation();
+      selectItem(item);
+      // Expand model nếu chưa expand
+      if (!expandedModels.has(model.id)) {
+        expandedModels.add(model.id);
+        renderModelTree();
+      }
+    };
+    
+    return itemDiv;
   }
 
   // Select a model
@@ -378,32 +559,64 @@
       items: model.items || []
     };
     
-    el("organelleSection").classList.remove("hidden");
-    renderList();
-    renderModelTree();
+    // Hiển thị thông tin mô hình
+    setPanel(model, true);
     
     if (DATA.modelUid) {
       initViewer();
     }
+    
+    // Expand model trong tree
+    if (!expandedModels.has(model.id)) {
+      expandedModels.add(model.id);
+    }
   }
 
-  function setPanel(it) {
+  function setPanel(it, isModel = false) {
     const panel = el("panel");
     if (!it) { 
       panel.classList.add("hidden");
       return; 
     }
     panel.classList.remove("hidden");
-    el("pTitle").textContent = it.name || "Bào quan";
-    el("pContent").textContent = it.content || "";
     
-    const linkDiv = el("pLink");
-    const linkBtn = el("pLinkBtn");
-    if (it.link) {
-      linkDiv.classList.remove("hidden");
-      linkBtn.href = it.link;
+    if (isModel) {
+      // Hiển thị thông tin mô hình
+      el("pTitle").textContent = it.name || "Mô hình";
+      el("pContent").textContent = it.feature || "Chưa có mô tả đặc điểm.";
+      
+      const funFactDiv = el("pFunFact");
+      const funFactContent = el("pFunFactContent");
+      if (it.funFact) {
+        funFactDiv.classList.remove("hidden");
+        funFactContent.textContent = it.funFact;
+      } else {
+        funFactDiv.classList.add("hidden");
+      }
+      
+      el("pLink").classList.add("hidden");
     } else {
-      linkDiv.classList.add("hidden");
+      // Hiển thị thông tin thành phần
+      el("pTitle").textContent = it.name || "Thành phần";
+      el("pContent").textContent = it.content || "Chưa có mô tả.";
+      
+      const funFactDiv = el("pFunFact");
+      const funFactContent = el("pFunFactContent");
+      if (it.funFact) {
+        funFactDiv.classList.remove("hidden");
+        funFactContent.textContent = it.funFact;
+      } else {
+        funFactDiv.classList.add("hidden");
+      }
+      
+      const linkDiv = el("pLink");
+      const linkBtn = el("pLinkBtn");
+      if (it.link) {
+        linkDiv.classList.remove("hidden");
+        linkBtn.href = it.link;
+      } else {
+        linkDiv.classList.add("hidden");
+      }
     }
   }
 
@@ -412,56 +625,10 @@
     if (api && it.cam) {
       api.setCameraLookAt(it.cam.position, it.cam.target, it.cam.duration || 1.2, function(){});
     }
-    setPanel(it);
-    renderList();
+    setPanel(it, false);
     updateLabels();
   }
 
-  function renderList() {
-    const q = (el("q").value || "").toLowerCase().trim();
-    const wrap = el("list");
-    wrap.innerHTML = "";
-    const items = (DATA.items || []).filter(it => {
-      const s = ((it.name||"") + " " + (it.content||"")).toLowerCase();
-      return (!q) || s.includes(q);
-    });
-
-    if (items.length === 0) {
-      const emptyCard = document.createElement("div");
-      emptyCard.className = "px-5 py-8 text-center text-sm text-gray-500 bg-gray-50 border-2 border-gray-200 rounded-2xl";
-      emptyCard.textContent = "Không tìm thấy điểm nào";
-      wrap.appendChild(emptyCard);
-      return;
-    }
-
-    items.forEach((it, idx) => {
-      const isSelected = it.id === selectedId;
-      const card = document.createElement("div");
-      card.className = `px-5 py-4 bg-white border-2 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 ${
-        isSelected 
-          ? "border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl ring-4 ring-blue-200 scale-[1.02]" 
-          : "border-gray-200 hover:border-blue-300 shadow-md"
-      }`;
-      
-      const nameText = escapeHtml(it.name || "Điểm");
-      const contentText = it.content ? escapeHtml(it.content) : '';
-      
-      card.innerHTML = `
-        <div class="flex items-start space-x-4">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-base font-bold shadow-lg flex-shrink-0">
-            ${idx + 1}
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="font-bold text-lg text-gray-800 mb-1.5">${nameText}</div>
-            ${contentText ? `<div class="text-xs text-gray-600 line-clamp-2 leading-relaxed">${contentText}</div>` : ''}
-          </div>
-        </div>
-      `;
-      
-      card.onclick = () => selectItem(it);
-      wrap.appendChild(card);
-    });
-  }
 
   function createFloatingLabel(item, screenX, screenY) {
     const overlay = el("overlay");
@@ -682,8 +849,6 @@
     if (CURRENT_MODEL) renderList();
   });
   
-  el("gradeFilter").addEventListener("change", updateChapterFilter);
-  el("chapterFilter").addEventListener("change", renderModelTree);
 
   window.addEventListener("resize", () => {
     if (api) {
@@ -692,10 +857,16 @@
   });
 
   // Initialize
-  loadAllData().then(() => {
-    updateChapterFilter();
+  loadMindmapOrder().then(() => {
+    return loadAllData();
+  }).then(() => {
     renderModelTree();
   });
+  
+  // Search input listener
+  if (el("q")) {
+    el("q").addEventListener("input", renderModelTree);
+  }
 </script>
 </body>
 </html>

@@ -88,10 +88,30 @@
         </div>
       </div>
 
+      <!-- Admin Token Section -->
+      <div id="tokenSection" class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4">
+        <label class="block text-xs font-semibold text-gray-700 mb-2">🔐 Admin Token</label>
+        <input 
+          id="adminTokenInput" 
+          type="password" 
+          placeholder="Nhập admin token để lưu dữ liệu..."
+          value=""
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 mb-2"
+        />
+        <button 
+          id="saveTokenBtn"
+          class="w-full px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg text-xs font-medium transition-colors"
+        >
+          💾 Lưu Token
+        </button>
+        <div id="tokenStatus" class="mt-2 text-xs text-gray-600"></div>
+      </div>
+
       <!-- Instructions -->
       <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-xs text-gray-700 space-y-2">
         <p><b>Quy trình:</b></p>
         <ol class="list-decimal list-inside space-y-1 ml-2">
+          <li>Nhập <b>Admin Token</b> và lưu (chỉ cần làm 1 lần)</li>
           <li>Điền thông tin khối lớp, chương, mô hình</li>
           <li><b>Bật Chọn điểm</b> → click lên mô hình để lấy vị trí</li>
           <li>Xoay đến góc muốn → bấm <b>Lấy góc camera</b></li>
@@ -320,6 +340,8 @@
 
 <script>
 let allData = { models: [] };
+let mindmapOrder = null; // Thứ tự từ mindmap
+let adminToken = localStorage.getItem('admin_token') || ''; // Admin token từ localStorage
 
 let state = {
   currentModelId: null,
@@ -342,6 +364,70 @@ let needsRender = true;
 
 const el = (id) => document.getElementById(id);
 const setStatus = (msg) => { el("status").textContent = msg; };
+
+// Token management
+function updateTokenUI() {
+  const tokenInput = el("adminTokenInput");
+  const tokenStatus = el("tokenStatus");
+  
+  if (adminToken) {
+    tokenInput.value = '••••••••';
+    tokenInput.placeholder = "Token đã được lưu";
+    tokenStatus.textContent = '✅ Token đã được lưu';
+    tokenStatus.className = 'mt-2 text-xs text-green-600';
+  } else {
+    tokenInput.value = '';
+    tokenInput.placeholder = "Nhập admin token để lưu dữ liệu...";
+    tokenStatus.textContent = '⚠️ Chưa có token. Không thể lưu dữ liệu.';
+    tokenStatus.className = 'mt-2 text-xs text-yellow-600';
+  }
+}
+
+// Save token button handler
+if (el("saveTokenBtn")) {
+  el("saveTokenBtn").onclick = () => {
+    const tokenInput = el("adminTokenInput");
+    const token = tokenInput.value.trim();
+    
+    if (!token) {
+      alert('Vui lòng nhập token!');
+      return;
+    }
+    
+    adminToken = token;
+    localStorage.setItem('admin_token', token);
+    updateTokenUI();
+    setStatus("✅ Token đã được lưu!");
+  };
+}
+
+// Load mindmap order
+async function loadMindmapOrder() {
+  try {
+    const response = await fetch('/mindmap_order.json');
+    if (response.ok) {
+      mindmapOrder = await response.json();
+    }
+  } catch (e) {
+    console.warn('Could not load mindmap_order.json:', e);
+  }
+}
+
+// Sort array according to mindmap order
+function sortByMindmapOrder(items, orderArray) {
+  if (!mindmapOrder || !orderArray) return items;
+  
+  const orderMap = new Map();
+  orderArray.forEach((item, index) => {
+    orderMap.set(item, index);
+  });
+  
+  return items.sort((a, b) => {
+    const indexA = orderMap.has(a) ? orderMap.get(a) : Infinity;
+    const indexB = orderMap.has(b) ? orderMap.get(b) : Infinity;
+    return indexA - indexB;
+  });
+}
 
 function uid() {
   return "org_" + Math.random().toString(16).slice(2) + "_" + Date.now();
@@ -480,7 +566,15 @@ function rebuildChapterAndModelOptions() {
     baseOpts.textContent = "Chọn chương (lọc theo khối lớp)";
     chSel.appendChild(baseOpts);
 
-    Array.from(chapters).sort().forEach((c) => {
+    // Sắp xếp theo thứ tự mindmap thay vì alphabet
+    let chaptersArray = Array.from(chapters);
+    if (mindmapOrder && mindmapOrder.chapters_by_grade && mindmapOrder.chapters_by_grade[gradeVal]) {
+      chaptersArray = sortByMindmapOrder(chaptersArray, mindmapOrder.chapters_by_grade[gradeVal]);
+    } else {
+      chaptersArray.sort();
+    }
+
+    chaptersArray.forEach((c) => {
       const opt = document.createElement("option");
       opt.value = c;
       opt.textContent = c;
@@ -516,7 +610,20 @@ function rebuildChapterAndModelOptions() {
       if (m.name) modelSet.add(m.name);
     });
 
-    (modelSet.size ? modelSet : models).forEach((name) => {
+    // Sắp xếp theo thứ tự mindmap
+    let modelsArray = Array.from(modelSet.size ? modelSet : models);
+    if (mindmapOrder && mindmapOrder.models_by_chapter) {
+      const key = `${gradeVal}::${chapterVal}`;
+      if (mindmapOrder.models_by_chapter[key]) {
+        modelsArray = sortByMindmapOrder(modelsArray, mindmapOrder.models_by_chapter[key]);
+      } else {
+        modelsArray.sort();
+      }
+    } else {
+      modelsArray.sort();
+    }
+
+    modelsArray.forEach((name) => {
       const opt = document.createElement("option");
       opt.value = name;
       opt.textContent = name;
@@ -623,10 +730,16 @@ async function saveToServer() {
       m.items = state.items;
     }
     
+    if (!adminToken) {
+      setStatus("❌ Lỗi: Chưa có admin token! Vui lòng nhập token ở trên.");
+      return;
+    }
+    
     const response = await fetch('/api/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${adminToken}`
       },
       body: JSON.stringify(allData)
     });
@@ -1090,7 +1203,10 @@ el("btnGetCam").onclick = getCamera;
 el("btnUpdate").onclick = updateSelectedFromForm;
 
 // Initialize on load
-loadFromServer();
+updateTokenUI();
+loadMindmapOrder().then(() => {
+  loadFromServer();
+});
 </script>
 
 </body>
