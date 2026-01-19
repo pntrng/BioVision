@@ -88,29 +88,38 @@
         </div>
       </div>
 
-      <!-- Admin Token Input -->
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">🔐 Admin Token</h3>
-        <input 
-          id="adminToken" 
-          type="password" 
-          placeholder="Nhập Admin Token (từ biến môi trường ADMIN_TOKEN)" 
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
-        />
-        <p class="text-xs text-gray-500 mt-2">Token được lưu trong localStorage. Cần token để lưu dữ liệu.</p>
-      </div>
-
       <!-- Instructions -->
       <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-xs text-gray-700 space-y-2">
         <p><b>Quy trình:</b></p>
         <ol class="list-decimal list-inside space-y-1 ml-2">
-          <li>Nhập Admin Token (từ Render environment variables)</li>
           <li>Điền thông tin khối lớp, chương, mô hình</li>
           <li><b>Bật Chọn điểm</b> → click lên mô hình để lấy vị trí</li>
           <li>Xoay đến góc muốn → bấm <b>Lấy góc camera</b></li>
           <li>Điền nhãn điểm, mô tả, link (nếu có) → <b>Thêm mới</b></li>
           <li><b>Lưu lên Server</b> để lưu</li>
         </ol>
+      </div>
+
+      <!-- Model Library (ẩn vì đã dùng dropdown Khối/Chương/Mô hình) -->
+      <div class="space-y-3 hidden">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Thư viện mô hình</h3>
+          <button
+            id="btnNewModel"
+            class="px-3 py-1.5 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg text-xs font-medium text-gray-700 shadow-sm"
+          >
+            ➕ Mô hình mới
+          </button>
+        </div>
+        <input
+          id="searchModel"
+          type="text"
+          placeholder="🔍 Tìm theo tên mô hình / chương..."
+          class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+        />
+        <div id="modelListAdmin" class="space-y-2 max-h-56 overflow-y-auto pr-2">
+          <!-- Model cards will be inserted here -->
+        </div>
       </div>
 
       <!-- Grade Input -->
@@ -128,19 +137,48 @@
       </div>
 
       <!-- Chapter Input -->
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Chương</h3>
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">Chương</h3>
+        <!-- Dropdown (tự sinh từ dữ liệu) -->
+        <select
+          id="chapterSelect"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Chọn chương (lọc theo khối lớp)</option>
+          <option value="__custom__">+ Tự nhập chương mới...</option>
+        </select>
+        <!-- Ô text thực tế lưu giá trị (đồng bộ với dropdown) -->
         <input 
           id="chapter" 
           type="text" 
           placeholder="VD: Tế bào nhân sơ, Tế bào nhân thực, Virus..." 
+          class="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-400"
+        />
+      </div>
+      
+      <!-- Model name -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">Tên mô hình</h3>
+        <!-- Dropdown (tự sinh theo chương + khối lớp) -->
+        <select
+          id="modelNameSelect"
           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Chọn mô hình (lọc theo khối & chương)</option>
+          <option value="__custom__">+ Tự nhập mô hình mới...</option>
+        </select>
+        <!-- Ô text thực tế lưu giá trị (đồng bộ với dropdown) -->
+        <input 
+          id="modelName" 
+          type="text" 
+          placeholder="VD: DNA, Ti thể, Virus..." 
+          class="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-400"
         />
       </div>
 
       <!-- Model UID Input -->
       <div>
-        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Mô hình</h3>
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">UID Sketchfab</h3>
         <div class="flex gap-2">
           <input 
             id="modelUid" 
@@ -158,9 +196,43 @@
         <p class="text-xs text-gray-500 mt-2">Ví dụ UID: <code class="bg-gray-100 px-1.5 py-0.5 rounded">acc7d71759a1441e8409ebb31e3c3c0d</code></p>
       </div>
 
+      <!-- Model feature/funfact -->
+      <div class="space-y-3">
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Đặc điểm (mô hình)</h3>
+          <textarea
+            id="modelFeature"
+            placeholder="Đặc điểm của mô hình..."
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            rows="3"
+          ></textarea>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Góc thú vị (mô hình)</h3>
+          <textarea
+            id="modelFunFact"
+            placeholder="Góc thú vị của mô hình..."
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Hotspot List Section (Dropdown điểm) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Điểm trong mô hình</h3>
+        <select
+          id="itemSelect"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Chọn điểm để chỉnh sửa / gán góc</option>
+          <option value="__new__">+ Thêm điểm mới từ world/camera hiện tại...</option>
+        </select>
+      </div>
+
       <!-- Pick & Camera Section -->
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Tạo điểm mới</h3>
+      <div class="mt-4">
+        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Lấy vị trí & góc nhìn</h3>
         <div class="grid grid-cols-2 gap-2 mb-3">
           <button 
             id="btnPick" 
@@ -191,22 +263,6 @@
         ></textarea>
       </div>
 
-      <!-- Hotspot List Section -->
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Danh sách điểm</h3>
-          <button 
-            id="btnNew" 
-            class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors"
-          >
-            ➕ Mới
-          </button>
-        </div>
-        <div id="list" class="space-y-2 max-h-64 overflow-y-auto pr-2">
-          <!-- Cards will be inserted here -->
-        </div>
-      </div>
-
       <!-- Hotspot Info Section -->
       <div>
         <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Thông tin điểm (đang chọn)</h3>
@@ -222,6 +278,12 @@
           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none mb-3"
           rows="4"
         ></textarea>
+        <textarea 
+          id="funFact" 
+          placeholder="Góc thú vị của điểm (tùy chọn)" 
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none mb-3"
+          rows="3"
+        ></textarea>
         <input 
           id="link" 
           type="text" 
@@ -231,33 +293,12 @@
       </div>
 
       <!-- Actions -->
-      <div class="grid grid-cols-2 gap-2">
-        <button 
-          id="btnAdd" 
-          class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
-        >
-          ✅ Thêm mới
-        </button>
+      <div class="mt-4">
         <button 
           id="btnUpdate" 
-          class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+          class="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
         >
-          💾 Cập nhật
-        </button>
-      </div>
-
-      <div class="grid grid-cols-2 gap-2">
-        <button 
-          id="btnDelete" 
-          class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
-        >
-          🗑️ Xoá
-        </button>
-        <button 
-          id="btnSave" 
-          class="px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
-        >
-          💾 Lưu lên Server
+          💾 Cập nhật & lưu điểm
         </button>
       </div>
 
@@ -278,10 +319,16 @@
   </div>
 
 <script>
+let allData = { models: [] };
+
 let state = {
+  currentModelId: null,
   grade: "",
   chapter: "",
+  modelName: "",
   modelUid: "",
+  modelFeature: "",
+  modelFunFact: "",
   items: [],
   selectedId: null,
   pickMode: false,
@@ -309,106 +356,284 @@ async function loadFromServer() {
     const response = await fetch('/api/data');
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    
-    // Hỗ trợ cả format cũ và mới
-    if (data.modelUid && !data.models) {
-      // Format cũ - chuyển sang format mới
-      state.modelUid = data.modelUid || "";
-      state.items = Array.isArray(data.items) ? data.items : [];
-      state.grade = "";
-      state.chapter = "";
-    } else if (data.models && data.models.length > 0) {
-      // Format mới - lấy model đầu tiên
-      const firstModel = data.models[0];
-      state.grade = firstModel.grade || "";
-      state.chapter = firstModel.chapter || "";
-      state.modelUid = firstModel.modelUid || "";
-      state.items = Array.isArray(firstModel.items) ? firstModel.items : [];
+    allData = data && data.models ? data : { models: [] };
+
+    // auto-select first model (from CSV import)
+    if (allData.models.length > 0) {
+      selectModel(allData.models[0].id);
     } else {
-      state.modelUid = "";
-      state.items = [];
-      state.grade = "";
-      state.chapter = "";
+      clearModelState();
     }
-    
-    el("grade").value = state.grade;
-    el("chapter").value = state.chapter;
-    el("modelUid").value = state.modelUid;
+
+    rebuildChapterAndModelOptions();
+    renderModelListAdmin();
     rebuildList();
     setStatus("Đã tải dữ liệu từ server.");
-    if (state.modelUid) {
-      initViewer(state.modelUid);
-    }
   } catch (e) {
     setStatus("Lỗi khi tải dữ liệu: " + e.message);
-    state.modelUid = "";
-    state.items = [];
+    allData = { models: [] };
+    clearModelState();
+    rebuildChapterAndModelOptions();
+    renderModelListAdmin();
     rebuildList();
   }
 }
 
-// Get admin token from input or localStorage
-function getAdminToken() {
-  const tokenInput = el("adminToken");
-  const token = tokenInput.value.trim();
-  if (token) {
-    localStorage.setItem('bio_admin_token', token);
-    return token;
+function renderModelListAdmin() {
+  const wrap = el("modelListAdmin");
+  if (!wrap) return;
+
+  wrap.innerHTML = "";
+
+  const q = (el("searchModel")?.value || "").toLowerCase().trim();
+  const gradeFilter = el("grade")?.value || "";
+  const chapterFilter = (el("chapter")?.value || "").toLowerCase().trim();
+
+  let models = allData.models || [];
+
+  models = models.filter((m) => {
+    const matchGrade = !gradeFilter || (m.grade || "") === gradeFilter;
+    const matchChapter =
+      !chapterFilter || (m.chapter || "").toLowerCase().includes(chapterFilter);
+    const text = (
+      (m.name || "") +
+      " " +
+      (m.chapter || "") +
+      " " +
+      (m.grade || "")
+    )
+      .toLowerCase();
+    const matchSearch = !q || text.includes(q);
+    return matchGrade && matchChapter && matchSearch;
+  });
+
+  if (models.length === 0) {
+    const empty = document.createElement("div");
+    empty.className =
+      "px-4 py-4 text-xs text-gray-500 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-center";
+    empty.textContent = "Chưa có mô hình nào (hoặc không khớp bộ lọc).";
+    wrap.appendChild(empty);
+    return;
   }
-  return localStorage.getItem('bio_admin_token') || '';
+
+  models.forEach((m) => {
+    const isCurrent = m.id === state.currentModelId;
+    const card = document.createElement("div");
+    card.className =
+      "px-4 py-3 bg-white border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md " +
+      (isCurrent
+        ? "border-blue-500 bg-blue-50 ring-2 ring-blue-200"
+        : "border-gray-200 hover:border-blue-300");
+
+    card.innerHTML = `
+      <div class="flex items-start justify-between space-x-3">
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-semibold text-gray-800 truncate">
+            ${m.name || "Mô hình"}
+          </div>
+          <div class="text-xs text-gray-500 mt-0.5">
+            ${m.grade ? `Lớp ${m.grade}` : "—"}${m.chapter ? ` • ${m.chapter}` : ""}
+          </div>
+          ${
+            m.items && m.items.length
+              ? `<div class="text-[11px] text-gray-400 mt-0.5">${m.items.length} điểm</div>`
+              : ""
+          }
+        </div>
+        ${isCurrent ? '<div class="w-2 h-2 rounded-full bg-blue-500 mt-1"></div>' : ""}
+      </div>
+    `;
+
+    card.onclick = () => {
+      selectModel(m.id);
+      setStatus("Đã chọn mô hình từ thư viện.");
+    };
+
+    wrap.appendChild(card);
+  });
+}
+
+function rebuildChapterAndModelOptions() {
+  const gradeVal = el("grade")?.value || "";
+  const chapterInput = el("chapter");
+  const modelInput = el("modelName");
+  const chSel = el("chapterSelect");
+  const mSel = el("modelNameSelect");
+
+  if (!chSel && !mSel) return;
+
+  // collect unique chapters & model names theo khối lớp
+  const chapters = new Set();
+  const models = new Set();
+
+  (allData.models || []).forEach((m) => {
+    if (gradeVal && (m.grade || "") !== gradeVal) return;
+    if (m.chapter) chapters.add(m.chapter);
+    if (m.name) models.add(m.name);
+  });
+
+  if (chSel) {
+    const currentChapter = chapterInput?.value || "";
+    chSel.innerHTML = "";
+    const baseOpts = document.createElement("option");
+    baseOpts.value = "";
+    baseOpts.textContent = "Chọn chương (lọc theo khối lớp)";
+    chSel.appendChild(baseOpts);
+
+    Array.from(chapters).sort().forEach((c) => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      if (c === currentChapter) opt.selected = true;
+      chSel.appendChild(opt);
+    });
+
+    const custom = document.createElement("option");
+    custom.value = "__custom__";
+    custom.textContent = "+ Tự nhập chương mới...";
+    chSel.appendChild(custom);
+
+    // nếu currentChapter không có trong danh sách, chọn custom
+    if (currentChapter && !chapters.has(currentChapter)) {
+      chSel.value = "__custom__";
+    }
+  }
+
+  if (mSel) {
+    const currentModel = modelInput?.value || "";
+    mSel.innerHTML = "";
+    const base = document.createElement("option");
+    base.value = "";
+    base.textContent = "Chọn mô hình (lọc theo khối & chương)";
+    mSel.appendChild(base);
+
+    // lọc model theo chương hiện tại nếu có
+    const chapterVal = el("chapter")?.value || "";
+    const modelSet = new Set();
+    (allData.models || []).forEach((m) => {
+      if (gradeVal && (m.grade || "") !== gradeVal) return;
+      if (chapterVal && (m.chapter || "") !== chapterVal) return;
+      if (m.name) modelSet.add(m.name);
+    });
+
+    (modelSet.size ? modelSet : models).forEach((name) => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      if (name === currentModel) opt.selected = true;
+      mSel.appendChild(opt);
+    });
+
+    const customM = document.createElement("option");
+    customM.value = "__custom__";
+    customM.textContent = "+ Tự nhập mô hình mới...";
+    mSel.appendChild(customM);
+
+    if (currentModel && !models.has(currentModel) && !modelSet.has(currentModel)) {
+      mSel.value = "__custom__";
+    }
+  }
+}
+
+function clearModelState() {
+  state.currentModelId = null;
+  state.grade = "";
+  state.chapter = "";
+  state.modelName = "";
+  state.modelUid = "";
+  state.modelFeature = "";
+  state.modelFunFact = "";
+  state.items = [];
+  state.selectedId = null;
+  el("grade").value = "";
+  el("chapter").value = "";
+  el("modelName").value = "";
+  el("modelUid").value = "";
+  el("modelFeature").value = "";
+  el("modelFunFact").value = "";
+}
+
+function getCurrentModel() {
+  return (allData.models || []).find(m => m.id === state.currentModelId) || null;
+}
+
+function selectModel(modelId) {
+  const m = (allData.models || []).find(x => x.id === modelId) || null;
+  if (!m) return;
+  state.currentModelId = m.id;
+  state.grade = m.grade || "";
+  state.chapter = m.chapter || "";
+  state.modelName = m.name || "";
+  state.modelUid = m.modelUid || "";
+  state.modelFeature = m.feature || "";
+  state.modelFunFact = m.funFact || "";
+  state.items = Array.isArray(m.items) ? m.items : [];
+  state.selectedId = state.items[0]?.id || null;
+
+  el("grade").value = state.grade;
+  el("chapter").value = state.chapter;
+  el("modelName").value = state.modelName;
+  el("modelUid").value = state.modelUid;
+  el("modelFeature").value = state.modelFeature;
+  el("modelFunFact").value = state.modelFunFact;
+
+  rebuildList();
+  rebuildChapterAndModelOptions();
+  renderModelListAdmin();
+  if (state.modelUid) initViewer(state.modelUid);
 }
 
 // Save data to server
 async function saveToServer() {
   try {
-    const token = getAdminToken();
-    if (!token) {
-      setStatus("❌ Chưa nhập Admin Token. Vui lòng nhập token ở trên.");
-      return false;
-    }
-    
     setStatus("Đang lưu dữ liệu...");
-    
-    // Tạo cấu trúc mới với models array
-    const dataToSave = {
-      models: [{
+
+    // sync UI -> state
+    state.grade = el("grade").value;
+    state.chapter = el("chapter").value.trim();
+    state.modelName = el("modelName").value.trim();
+    state.modelUid = el("modelUid").value.trim();
+    state.modelFeature = el("modelFeature").value.trim();
+    state.modelFunFact = el("modelFunFact").value.trim();
+
+    // update current model in allData
+    let m = getCurrentModel();
+    if (!m) {
+      // create new model if none selected
+      m = {
         id: "model_" + Date.now(),
         grade: state.grade,
         chapter: state.chapter,
+        name: state.modelName || state.modelUid,
         modelUid: state.modelUid,
+        feature: state.modelFeature,
+        funFact: state.modelFunFact,
         items: state.items
-      }]
-    };
+      };
+      allData.models = allData.models || [];
+      allData.models.unshift(m);
+      state.currentModelId = m.id;
+    } else {
+      m.grade = state.grade;
+      m.chapter = state.chapter;
+      m.name = state.modelName || m.name || state.modelUid;
+      m.modelUid = state.modelUid;
+      m.feature = state.modelFeature;
+      m.funFact = state.modelFunFact;
+      m.items = state.items;
+    }
     
     const response = await fetch('/api/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(dataToSave)
+      body: JSON.stringify(allData)
     });
     
     if (!response.ok) {
-      let errorMessage = '';
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.error || errorData.message || `Server error (${response.status})`;
-      } catch (parseError) {
-        errorMessage = `Server error (${response.status}): ${response.statusText}`;
-      }
-      
-      if (response.status === 401) {
-        setStatus(`❌ Lỗi xác thực (401): ${errorMessage}\n\n💡 Kiểm tra:\n- Token đã nhập đúng chưa?\n- Server có ADMIN_TOKEN được set chưa?\n- Token có khớp với server không?`);
-        return false;
-      }
-      
-      if (response.status === 400) {
-        setStatus(`❌ Dữ liệu không hợp lệ (400): ${errorMessage}`);
-        return false;
-      }
-      
-      throw new Error(errorMessage);
+      const errorText = await response.text();
+      throw new Error(`Server error (${response.status}): ${errorText}`);
     }
     
     const result = await response.json();
@@ -417,79 +642,55 @@ async function saveToServer() {
     }
     
     setStatus("✅ Đã lưu thành công lên server!");
+    renderModelListAdmin();
     return true;
   } catch (e) {
     console.error('Save error:', e);
-    
-    // Handle network errors
-    if (e.message.includes('Failed to fetch') || e.message.includes('NetworkError') || e.name === 'TypeError') {
-      setStatus(`❌ Lỗi kết nối: Không thể kết nối đến server.\n\n💡 Kiểm tra:\n- Server Flask có đang chạy không? (python app.py)\n- Địa chỉ server đúng chưa? (http://localhost:5000)\n- Có lỗi firewall/network không?`);
-      return false;
-    }
-    
-    setStatus(`❌ Lỗi khi lưu: ${e.message}`);
+    setStatus("❌ Lỗi khi lưu: " + e.message);
     return false;
   }
 }
 
 function rebuildList() {
-  const list = el("list");
-  list.innerHTML = "";
+  const select = el("itemSelect");
+  if (!select) return;
+
   const items = state.items.slice();
-  
+  select.innerHTML = "";
+
+  // option mặc định
+  const base = document.createElement("option");
+  base.value = "";
+  base.textContent = "Chọn điểm để chỉnh sửa / gán góc";
+  select.appendChild(base);
+
+  // option tạo mới
+  const optNew = document.createElement("option");
+  optNew.value = "__new__";
+  optNew.textContent = "+ Thêm điểm mới từ world/camera hiện tại...";
+  select.appendChild(optNew);
+
   if (items.length === 0) {
-    const emptyCard = document.createElement("div");
-    emptyCard.className = "px-4 py-6 text-center text-sm text-gray-500 bg-gray-50 border border-gray-200 rounded-lg";
-    emptyCard.textContent = "(Chưa có điểm nào)";
-    list.appendChild(emptyCard);
     state.selectedId = null;
     fillForm(null);
+    select.value = "__new__";
     return;
   }
 
-  items.forEach((it, idx) => {
-    const card = document.createElement("div");
-    const isSelected = it.id === state.selectedId;
-    card.className = `px-4 py-3 bg-white border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
-      isSelected 
-        ? "border-blue-500 bg-blue-50 shadow-md" 
-        : "border-gray-200 hover:border-blue-300"
-    }`;
-    
-    card.innerHTML = `
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-sm">
-            ${idx + 1}
-          </div>
-          <div>
-            <div class="font-semibold text-sm text-gray-800">${it.name || "(chưa đặt tên)"}</div>
-            ${it.content ? `<div class="text-xs text-gray-500 mt-0.5 line-clamp-1">${it.content.substring(0, 40)}${it.content.length > 40 ? '...' : ''}</div>` : ''}
-          </div>
-        </div>
-        ${isSelected ? '<div class="w-2 h-2 rounded-full bg-blue-500"></div>' : ''}
-      </div>
-    `;
-    
-    card.onclick = () => {
-      state.selectedId = it.id;
-      fillForm(it);
-      rebuildList();
-      setStatus("Đã chọn điểm để chỉnh sửa.");
-    };
-    
-    list.appendChild(card);
+  items.forEach((it) => {
+    const opt = document.createElement("option");
+    opt.value = it.id;
+    opt.textContent = it.name || "(chưa đặt tên)";
+    select.appendChild(opt);
   });
 
-  if (!state.selectedId || !state.items.find(x => x.id === state.selectedId)) {
-    if (state.items.length > 0) {
-      state.selectedId = state.items[0].id;
-      fillForm(getSelected());
-      rebuildList();
-    }
-  } else {
-    fillForm(getSelected());
+  // đảm bảo selectedId hợp lệ
+  if (!state.selectedId || !state.items.find((x) => x.id === state.selectedId)) {
+    state.selectedId = state.items[0].id;
   }
+
+  select.value = state.selectedId || "";
+  fillForm(getSelected());
   needsRender = true;
 }
 
@@ -500,6 +701,7 @@ function getSelected() {
 function fillForm(it) {
   el("name").value = it?.name || "";
   el("content").value = it?.content || "";
+  el("funFact").value = it?.funFact || "";
   el("link").value = it?.link || "";
 
   el("pos3dOut").value = it?.world
@@ -656,6 +858,7 @@ function renderOverlay() {
 async function addNewFromForm() {
   const name = el("name").value.trim();
   const content = el("content").value.trim();
+  const funFact = el("funFact").value.trim();
   const link = el("link").value.trim();
 
   const world = state.lastWorld ? [...state.lastWorld] : null;
@@ -668,6 +871,7 @@ async function addNewFromForm() {
     id: uid(), 
     name: name || "Điểm", 
     content: content || "", 
+    funFact: funFact || "",
     link: link || "",
     world, 
     cam 
@@ -679,15 +883,42 @@ async function addNewFromForm() {
 }
 
 async function updateSelectedFromForm() {
-  const it = getSelected();
-  if (!it) { setStatus("Chưa chọn điểm để cập nhật."); return; }
+  const name = el("name").value.trim();
+  const content = el("content").value.trim();
+  const funFact = el("funFact").value.trim();
+  const link = el("link").value.trim();
 
-  it.name = el("name").value.trim() || it.name || "Điểm";
-  it.content = el("content").value.trim();
-  it.link = el("link").value.trim();
+  const world = state.lastWorld ? [...state.lastWorld] : null;
+  const cam = state.lastCam ? deepCopy(state.lastCam) : null;
 
-  if (state.lastWorld) it.world = [...state.lastWorld];
-  if (state.lastCam) it.cam = deepCopy(state.lastCam);
+  let it = getSelected();
+
+  // Nếu chưa có điểm nào được chọn (hoặc đang ở chế độ tạo mới) thì tạo điểm mới
+  if (!it || !it.id) {
+    if (!world) { setStatus("Chưa có world. Bật Chọn điểm và click lên mô hình trước."); return; }
+    if (!cam) { setStatus("Chưa có camera. Xoay rồi bấm 'Lấy góc camera' trước."); return; }
+
+    it = {
+      id: uid(),
+      name: name || "Điểm",
+      content: content || "",
+      funFact: funFact || "",
+      link: link || "",
+      world,
+      cam
+    };
+    state.items.push(it);
+    state.selectedId = it.id;
+  } else {
+    // Cập nhật điểm hiện có
+    it.name = name || it.name || "Điểm";
+    it.content = content;
+    it.funFact = funFact;
+    it.link = link;
+
+    if (world) it.world = world;
+    if (cam) it.cam = cam;
+  }
 
   rebuildList();
   await saveToServer();
@@ -707,19 +938,143 @@ function newBlank() {
   state.selectedId = null;
   el("name").value = "";
   el("content").value = "";
+  el("funFact").value = "";
   el("link").value = "";
   rebuildList();
-  setStatus("Mới: hãy pick world + lấy camera, rồi bấm Thêm mới.");
+  setStatus("Mới: hãy pick world + lấy camera, rồi bấm Cập nhật & lưu.");
+}
+
+function newModel() {
+  clearModelState();
+  state.items = [];
+  state.selectedId = null;
+  rebuildList();
+  renderModelListAdmin();
+  setStatus("Mô hình mới: hãy nhập thông tin và Load UID để xem 3D.");
 }
 
 el("btnLoad").onclick = () => {
   const uidVal = el("modelUid").value.trim();
   if (!uidVal) return setStatus("Bạn chưa nhập Model UID.");
+  // update state from UI but do not overwrite whole library
   state.grade = el("grade").value;
-  state.chapter = el("chapter").value;
+  state.chapter = el("chapter").value.trim();
+  state.modelName = el("modelName").value.trim();
+  state.modelUid = uidVal;
+  state.modelFeature = el("modelFeature").value.trim();
+  state.modelFunFact = el("modelFunFact").value.trim();
   initViewer(uidVal);
-  saveToServer();
+  saveToServer(); // persist metadata edits
 };
+
+// UI events for filters / model list
+if (el("searchModel")) {
+  el("searchModel").addEventListener("input", renderModelListAdmin);
+}
+if (el("grade")) {
+  el("grade").addEventListener("change", () => {
+    // đổi khối lớp → reset chương & mô hình để tránh lọc quá hẹp
+    el("chapter").value = "";
+    el("modelName").value = "";
+    rebuildChapterAndModelOptions();
+    renderModelListAdmin();
+  });
+}
+if (el("chapter")) {
+  el("chapter").addEventListener("input", () => {
+    rebuildChapterAndModelOptions();
+    renderModelListAdmin();
+  });
+}
+if (el("btnNewModel")) {
+  el("btnNewModel").addEventListener("click", newModel);
+}
+
+// Dropdown events
+if (el("chapterSelect")) {
+  el("chapterSelect").addEventListener("change", (e) => {
+    const val = e.target.value;
+    if (val === "__custom__") {
+      const manual = prompt("Nhập tên chương mới:");
+      if (manual) {
+        el("chapter").value = manual.trim();
+      }
+    } else {
+      el("chapter").value = val;
+    }
+
+    // tự chọn mô hình đầu tiên khớp khối & chương (nếu có)
+    const gradeVal = el("grade")?.value || "";
+    const chapterVal = el("chapter")?.value || "";
+    const first = (allData.models || []).find((m) => {
+      const matchGrade = !gradeVal || (m.grade || "") === gradeVal;
+      const matchChapter = !chapterVal || (m.chapter || "") === chapterVal;
+      return matchGrade && matchChapter;
+    });
+    if (first) {
+      selectModel(first.id);
+    } else {
+      clearModelState();
+      rebuildList();
+    }
+
+    renderModelListAdmin();
+    rebuildChapterAndModelOptions();
+  });
+}
+
+if (el("modelNameSelect")) {
+  el("modelNameSelect").addEventListener("change", (e) => {
+    const val = e.target.value;
+    if (val === "__custom__") {
+      const manual = prompt("Nhập tên mô hình mới:");
+      if (manual) {
+        el("modelName").value = manual.trim();
+      }
+    } else {
+      el("modelName").value = val;
+
+      // tìm đúng mô hình theo khối / chương / tên và load luôn (bao gồm UID)
+      const gradeVal = el("grade")?.value || "";
+      const chapterVal = el("chapter")?.value || "";
+      const match = (allData.models || []).find((m) => {
+        const matchGrade = !gradeVal || (m.grade || "") === gradeVal;
+        const matchChapter = !chapterVal || (m.chapter || "") === chapterVal;
+        const matchName = (m.name || "") === val;
+        return matchGrade && matchChapter && matchName;
+      });
+      if (match) {
+        selectModel(match.id);
+      } else {
+        // không khớp dữ liệu có sẵn -> clear state để tạo mới (trường hợp hiếm)
+        clearModelState();
+        el("modelName").value = val;
+      }
+    }
+
+    renderModelListAdmin();
+    rebuildChapterAndModelOptions();
+  });
+}
+
+// Dropdown điểm
+if (el("itemSelect")) {
+  el("itemSelect").addEventListener("change", (e) => {
+    const val = e.target.value;
+    if (val === "__new__") {
+      newBlank();
+      return;
+    }
+    const it = (state.items || []).find((x) => x.id === val);
+    if (it) {
+      state.selectedId = it.id;
+      fillForm(it);
+      setStatus("Đã chọn điểm để chỉnh sửa.");
+    } else {
+      newBlank();
+    }
+  });
+}
 
 el("btnPick").onclick = () => {
   state.pickMode = !state.pickMode;
@@ -732,20 +1087,10 @@ el("btnPick").onclick = () => {
 };
 
 el("btnGetCam").onclick = getCamera;
-el("btnAdd").onclick = addNewFromForm;
 el("btnUpdate").onclick = updateSelectedFromForm;
-el("btnDelete").onclick = deleteSelected;
-el("btnNew").onclick = newBlank;
-el("btnSave").onclick = saveToServer;
 
-// Load token from localStorage on startup
-(function init() {
-  const savedToken = localStorage.getItem('bio_admin_token');
-  if (savedToken) {
-    el("adminToken").value = savedToken;
-  }
-  loadFromServer();
-})();
+// Initialize on load
+loadFromServer();
 </script>
 
 </body>

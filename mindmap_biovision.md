@@ -1,0 +1,121 @@
+# Mind map (Khối lớp → Chương → Mô hình → Chi tiết)
+## Khối 10
+- **Thành phần hóa học của tế bào**
+  - **DNA**
+    - Liên kết phosphodiester
+    - Nitrogenous base
+    - Đường 5-carbon
+    - Nhóm phosphate
+    - Liên kết hydrogen
+- **Cấu trúc tế bào**
+  - **Tế bào nhân sơ**
+    - Lông
+    - Roi
+    - Màng ngoài
+    - Thành tế bào
+    - Màng tế bào
+    - Tế bào chất
+    - Vùng nhân chứa DNA
+    - Ribosome
+    - Plasmid
+  - **Nhân tế bào**
+    - Màng nhân
+    - Lỗ nhân
+    - Chất nhiễm sắc
+    - Hạch nhân
+  - **Ribosome**
+    - Tiểu đơn vị lớn
+    - Tiểu đơn vị nhỏ
+  - **Lưới nội chất**
+    - Lưới nội chất hạt
+    - Lưới nội chất trơn
+  - **Bộ máy Golgi**
+    - Túi vận chuyển
+    - Túi dẹp
+  - **Lysosome**
+    - Màng
+    - Enzyme thủy phân
+    - Protein vận chuyển
+  - **Peroxisome**
+    - Màng
+    - Các enzyme
+    - Vùng lõi
+    - Protein vận chuyển
+  - **Ti thể**
+    - Màng ngoài
+    - Màng trong
+    - Mào
+    - Chất nền
+    - Ribosome
+    - Hạt dự trữ
+    - DNA
+    - Không gian giữa 2 màng
+  - **Lục lạp**
+    - Màng ngoài
+    - Màng trong
+    - Phiến màng
+    - Chất nền
+    - Granum
+    - Thylakoid
+  - **Màng tế bào**
+    - Lớp kép phospholipid
+    - Glycoprotein
+    - Glycolipid
+    - Carbohydrate
+    - Cholesterol
+    - Protein hình cầu
+    - Protein xoắn
+    - Kênh protein
+    - Protein bám màng
+    - Protein xuyên màng
+  - **Trung thể**
+    - Vi ống
+- **Trao đổi chất qua màng và truyền tin tế bào**
+  - **Nhập bào**
+    - Túi vận chuyển
+    - Màng sinh chất
+    - Tế bào chất
+  - **Xuất bào**
+    - Túi tiết
+    - Màng sinh chất
+    - Tế bào chất
+- **Chuyển hóa năng lượng trong tế bào**
+  - **ATP**
+    - Adenine
+    - Đường ribose
+    - 3 Nhóm phosphate
+    - Liên kết giữa 2 nhóm P
+  - **Enzyme**
+    - Cơ chất
+    - Trung tâm hoạt động
+    - Enzyme
+- **Chu kì tế bào và phân bào**
+  - **Chu kì tế bào**
+    - Pha G1
+    - Pha S
+    - Pha G2
+    - Nguyên phân
+  - **Nguyên phân**
+    - Thoi phân bào
+    - NST
+    - Màng nhân và hạch nhân
+    - NST
+    - Vi ống
+    - NST
+    - NST
+    - Màng nhân và hạch nhân
+    - Thoi phân bào
+    - Tế bào chất
+  - **Giảm phân**
+    - 2n
+    - n
+- **Sinh học vi sinh vật**
+  - **VSV**
+    - Cầu khuẩn
+    - Trực khuẩn
+    - Phẩy khuẩn
+- **Virus**
+  - **Virus**
+    - Lõi
+    - Capsid
+    - Vỏ ngoài
