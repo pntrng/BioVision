@@ -18,6 +18,7 @@
     - Vùng nhân chứa DNA
     - Ribosome
     - Plasmid
+  - **Tế bào nhân thực**
   - **Nhân tế bào**
     - Màng nhân
     - Lỗ nhân
@@ -41,6 +42,7 @@
     - Các enzyme
     - Vùng lõi
     - Protein vận chuyển
+  - **Không bào**
   - **Ti thể**
     - Màng ngoài
     - Màng trong
@@ -68,6 +70,10 @@
     - Kênh protein
     - Protein bám màng
     - Protein xuyên màng
+  - **Lông**
+  - **Roi**
+  - **Khung xương tế bào**
+  - **Thành tế bào**
   - **Trung thể**
     - Vi ống
 - **Trao đổi chất qua màng và truyền tin tế bào**
@@ -95,13 +101,16 @@
     - Pha S
     - Pha G2
     - Nguyên phân
-  - **Nguyên phân**
+  - **Kì đầu nguyên phân**
     - Thoi phân bào
     - NST
     - Màng nhân và hạch nhân
+  - **Kì giữa nguyên phân**
     - NST
     - Vi ống
+  - **Kì sau nguyên phân**
     - NST
+  - **Kì cuối nguyên phân**
     - NST
     - Màng nhân và hạch nhân
     - Thoi phân bào
