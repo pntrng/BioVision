@@ -75,13 +75,16 @@
       pointer-events: auto;
       cursor: pointer;
       min-width: 120px;
-      max-width: 200px;
+      max-width: 240px;
       z-index: 1002;
       opacity: 0;
       transform: translateY(-10px);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: visible;
     }
+
+    /* detail is shown in fixed box, not inside floating labels */
+    .floating-label.detail { max-width: 240px; }
     
     .floating-label.visible {
       opacity: 1;
@@ -110,10 +113,42 @@
       font-size: 11px;
       color: #4b5563;
       line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      white-space: normal;
+    }
+
+    /* Fixed detail box (top-right) */
+    #detailBox {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 380px;
+      max-width: calc(100% - 32px);
+      max-height: calc(100% - 32px);
+      overflow: auto;
+      z-index: 1003;
+      pointer-events: auto;
+    }
+
+    /* Fun fact box (bottom-right) */
+    #funFactBox {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      width: 360px;
+      max-width: calc(100% - 32px);
+      max-height: 40vh;
+      overflow: auto;
+      z-index: 1003;
+      pointer-events: auto;
+    }
+
+    .float-in {
+      animation: floatIn 220ms ease-out;
+    }
+
+    @keyframes floatIn {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
     
     /* SVG overlay cho leader lines */
@@ -202,6 +237,36 @@
     <iframe id="api-frame" class="w-full h-full border-0" allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"></iframe>
     <svg id="svg-overlay"></svg>
     <div id="overlay"></div>
+    <div id="detailBox" class="hidden bg-white/95 backdrop-blur border-2 border-blue-200 rounded-2xl shadow-2xl">
+      <div class="p-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-xs font-semibold text-blue-700">🧩 Chi tiết điểm</div>
+            <div id="detailTitle" class="mt-1 text-lg font-bold text-gray-900"></div>
+          </div>
+          <button id="detailClose" class="shrink-0 px-2 py-1 text-xs font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">✕</button>
+        </div>
+        <div id="detailContent" class="mt-3 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed"></div>
+        <div id="detailLinkWrap" class="hidden mt-4">
+          <a id="detailLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-block px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold">
+            Mở liên kết
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="funFactBox" class="hidden bg-gradient-to-br from-yellow-50 via-amber-50 to-white/95 backdrop-blur border-2 border-yellow-300 rounded-2xl shadow-2xl">
+      <div class="p-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-xs font-semibold text-yellow-800">✨ Góc thú vị</div>
+            <div id="funFactTitle" class="mt-1 text-base font-bold text-gray-900"></div>
+          </div>
+          <button id="funFactClose" class="shrink-0 px-2 py-1 text-xs font-semibold text-gray-700 hover:text-gray-900 hover:bg-yellow-100 rounded-lg">✕</button>
+        </div>
+        <div id="funFactContent" class="mt-3 text-sm text-gray-800 whitespace-pre-wrap leading-relaxed"></div>
+      </div>
+    </div>
   </div>
 
 <script>
@@ -212,11 +277,16 @@
   let selectedId = null;
   let animationFrameId = null;
   let lastCameraHash = "";
-  let labelElements = new Map();
+  let labelElements = new Map(); // itemId -> { element, screenX, screenY }
+  let hotspotElements = new Map(); // itemId -> element
   let mindmapOrder = null;
   let expandedGrades = new Set();
   let expandedChapters = new Set();
   let expandedModels = new Set();
+  let serverVersion = null;
+  let serverUpdatedAt = null;
+  const POLL_INTERVAL_MS = 15000; // 15s check for fresh data
+  let pollHandle = null;
 
   const el = (id) => document.getElementById(id);
 
@@ -242,9 +312,13 @@
   // Fetch all data from server
   async function loadAllData() {
     try {
-      const response = await fetch('/api/data');
+      const response = await fetch(`/api/data?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
       if (!response.ok) throw new Error('Network response was not ok');
-      ALL_DATA = await response.json();
+      const incoming = await response.json();
+      ALL_DATA = incoming;
       
       // Hỗ trợ cả format cũ và mới
       if (ALL_DATA.modelUid && !ALL_DATA.models) {
@@ -260,6 +334,8 @@
       }
       
       if (!ALL_DATA.models) ALL_DATA.models = [];
+      serverVersion = typeof incoming.version === "number" ? incoming.version : serverVersion || 1;
+      serverUpdatedAt = incoming.updatedAt || serverUpdatedAt || "";
       return true;
     } catch (e) {
       console.error('Error loading data:', e);
@@ -269,6 +345,70 @@
       }
       return false;
     }
+  }
+
+  function applyLatestData(incoming) {
+    if (incoming && incoming.modelUid && !incoming.models) {
+      incoming = {
+        models: [{
+          id: "default",
+          grade: "",
+          chapter: "",
+          modelUid: incoming.modelUid,
+          items: incoming.items || []
+        }],
+        version: incoming.version,
+        updatedAt: incoming.updatedAt
+      };
+    }
+
+    ALL_DATA = incoming && incoming.models ? incoming : { models: [] };
+    serverVersion = typeof incoming.version === "number" ? incoming.version : serverVersion;
+    serverUpdatedAt = incoming.updatedAt || serverUpdatedAt;
+
+    const prevModelId = CURRENT_MODEL ? CURRENT_MODEL.id : null;
+    renderModelTree();
+
+    if (prevModelId) {
+      const found = (ALL_DATA.models || []).find(m => m.id === prevModelId);
+      if (found) {
+        selectModel(found);
+      } else {
+        CURRENT_MODEL = null;
+        selectedId = null;
+      }
+    }
+  }
+
+  async function pollServerData() {
+    try {
+      const response = await fetch(`/api/data?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+      if (!response.ok) return;
+      const incoming = await response.json();
+      const incomingVersion = typeof incoming.version === "number" ? incoming.version : null;
+      if (incomingVersion === null) return;
+      if (serverVersion === null || incomingVersion > serverVersion) {
+        applyLatestData(incoming);
+        if (CURRENT_MODEL) {
+          renderList();
+        }
+      }
+    } catch (e) {
+      console.warn('pollServerData error:', e);
+    }
+  }
+
+  // Render danh sách/overlay (tối thiểu) để tránh lỗi và kích hoạt overlay
+  function renderList() {
+    // Nếu chưa chọn item nào, mặc định chọn item đầu tiên
+    if (!selectedId && (DATA.items || []).length > 0) {
+      selectedId = DATA.items[0].id;
+    }
+    // Cập nhật overlay/leader lines
+    updateLabels();
   }
 
 
@@ -626,59 +766,111 @@
       api.setCameraLookAt(it.cam.position, it.cam.target, it.cam.duration || 1.2, function(){});
     }
     setPanel(it, false);
+    showDetailBox(it);
+    showFunFactBox(it);
     updateLabels();
   }
 
+  function showDetailBox(it) {
+    const box = el("detailBox");
+    if (!box) return;
+    if (!it) {
+      box.classList.add("hidden");
+      return;
+    }
+    el("detailTitle").textContent = it.name || "Điểm";
+    el("detailContent").textContent = it.content || "";
 
-  function createFloatingLabel(item, screenX, screenY) {
+    const linkWrap = el("detailLinkWrap");
+    const linkEl = el("detailLink");
+    if (it.link) {
+      linkWrap.classList.remove("hidden");
+      linkEl.href = it.link;
+    } else {
+      linkWrap.classList.add("hidden");
+      linkEl.href = "#";
+    }
+
+    // Only show box if there is detail content/funfact/link
+    const hasAny = (it.content && it.content.trim()) || (it.link && it.link.trim());
+    if (hasAny) {
+      box.classList.remove("hidden");
+      box.classList.add("float-in");
+    } else {
+      box.classList.add("hidden");
+    }
+  }
+
+  function showFunFactBox(it) {
+    const box = el("funFactBox");
+    if (!box) return;
+    if (!it || !it.funFact || !it.funFact.trim()) {
+      box.classList.add("hidden");
+      return;
+    }
+    el("funFactTitle").textContent = it.name || "Điểm";
+    el("funFactContent").textContent = it.funFact;
+    box.classList.remove("hidden");
+    box.classList.add("float-in");
+  }
+
+
+  function createFloatingLabel(item, screenX, screenY, existingLabel = null) {
     const overlay = el("overlay");
     if (!overlay) return;
     
     const labelId = `label-${item.id}`;
-    const existing = document.getElementById(labelId);
-    if (existing) existing.remove();
     
-    const label = document.createElement("div");
+    const label = existingLabel || document.createElement("div");
     label.id = labelId;
     label.className = `floating-label ${item.id === selectedId ? 'active' : ''}`;
     
     const nameText = escapeHtml(item.name || "Bào quan");
-    const contentText = item.content ? escapeHtml(item.content) : '';
     
     label.innerHTML = `
       <div class="label-title">${nameText}</div>
-      ${contentText ? `<div class="label-content">${contentText}</div>` : ''}
     `;
     
-    const labelWidth = 160;
-    const labelHeight = 60;
-    let x = screenX - labelWidth / 2;
-    let y = screenY - labelHeight - 30;
+    // Append if new to measure real size
+    if (!existingLabel) {
+      label.style.opacity = "0";
+      overlay.appendChild(label);
+    }
     
-    const padding = 10;
     const rightContainer = el("right");
     const containerWidth = rightContainer ? rightContainer.offsetWidth : window.innerWidth;
     const containerHeight = rightContainer ? rightContainer.offsetHeight : window.innerHeight;
-    
-    if (x < padding) x = padding;
-    if (x + labelWidth > containerWidth - padding) x = containerWidth - labelWidth - padding;
-    if (y < padding) y = screenY + 30;
-    if (y + labelHeight > containerHeight - padding) y = screenY - labelHeight - 30;
-    
-    label.style.left = x + "px";
-    label.style.top = y + "px";
+    const padding = 12;
+
+    const labelWidth = label.offsetWidth || 180;
+    const labelHeight = label.offsetHeight || 80;
+
+    // Prefer positioning above/right a bit to avoid covering the part
+    let x = screenX + 18;
+    if (x + labelWidth + padding > containerWidth) x = screenX - labelWidth - 18;
+    let y = screenY - labelHeight - 14;
+    if (y < padding) y = screenY + 14;
+    if (y < padding) y = padding;
+    if (y + labelHeight > containerHeight - padding) {
+      y = containerHeight - labelHeight - padding;
+    }
+
+    label.style.left = `${x}px`;
+    label.style.top = `${y}px`;
     
     label.onclick = (ev) => {
       ev.stopPropagation();
       selectItem(item);
     };
     
-    overlay.appendChild(label);
-    labelElements.set(item.id, { element: label, screenX, screenY, labelX: x + labelWidth/2, labelY: y + labelHeight });
+    // Update line anchor (center of label)
+    labelElements.set(item.id, { element: label, screenX, screenY, labelX: x + labelWidth/2, labelY: y + labelHeight/2 });
     
-    setTimeout(() => label.classList.add("visible"), 10);
+    if (!existingLabel) {
+      requestAnimationFrame(() => label.classList.add("visible"));
+    }
     
-    return { x: x + labelWidth/2, y: y + labelHeight };
+    return { x: x + labelWidth/2, y: y + labelHeight/2 };
   }
 
   function updateLeaderLines() {
@@ -723,11 +915,8 @@
     const overlay = el("overlay");
     if (!overlay) return;
     
-    labelElements.clear();
-    overlay.innerHTML = "";
-    
+    const seen = new Set();
     let processedCount = 0;
-    let successCount = 0;
     const totalItems = DATA.items.length;
     
     (DATA.items || []).forEach(it => {
@@ -773,34 +962,67 @@
           coord.x > boundsWidth || coord.y > boundsHeight
         ) {
           if (processedCount === totalItems) {
-            updateLeaderLines();
+            cleanupOverlay(seen);
           }
           return;
         }
 
-        const hs = document.createElement("div");
+        // Hotspot: reuse element instead of appending forever
+        let hs = hotspotElements.get(it.id);
+        if (!hs) {
+          hs = document.createElement("div");
+          hs.className = "hotspot";
+          hs.onclick = (ev) => {
+            ev.stopPropagation();
+            selectItem(it);
+          };
+          overlay.appendChild(hs);
+          hotspotElements.set(it.id, hs);
+        }
         hs.className = `hotspot ${it.id === selectedId ? "active" : ""}`;
         hs.style.left = coord.x + "px";
         hs.style.top = coord.y + "px";
         hs.title = it.name || "Điểm";
-        
-        hs.onclick = (ev) => {
-          ev.stopPropagation();
-          selectItem(it);
-        };
-        
-        overlay.appendChild(hs);
-        
-        createFloatingLabel(it, coord.x, coord.y);
-        successCount++;
+
+        // Label (name only): reuse element
+        const existingLabelEntry = labelElements.get(it.id);
+        const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
+        createFloatingLabel(it, coord.x, coord.y, existingLabel);
+        seen.add(it.id);
         
         if (processedCount === totalItems) {
-          setTimeout(() => {
-            updateLeaderLines();
-          }, 50);
+          cleanupOverlay(seen);
         }
       });
     });
+  }
+
+  function cleanupOverlay(seen) {
+    // Remove labels not seen
+    const toDeleteLabels = [];
+    labelElements.forEach((val, key) => {
+      if (!seen.has(key)) {
+        if (val.element && val.element.parentNode) {
+          val.element.parentNode.removeChild(val.element);
+        }
+        toDeleteLabels.push(key);
+      }
+    });
+    toDeleteLabels.forEach(k => labelElements.delete(k));
+
+    // Remove hotspots not seen
+    const toDeleteHotspots = [];
+    hotspotElements.forEach((el, key) => {
+      if (!seen.has(key)) {
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+        toDeleteHotspots.push(key);
+      }
+    });
+    toDeleteHotspots.forEach(k => hotspotElements.delete(k));
+
+    // Disable leader lines for simplicity (less clutter)
+    const svg = el("svg-overlay");
+    if (svg) svg.innerHTML = "";
   }
 
   function optimizedRenderLoop() {
@@ -886,7 +1108,28 @@
     return loadAllData();
   }).then(() => {
     renderModelTree();
+    if (!pollHandle) {
+      pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
+    }
   });
+
+  // Detail box close button
+  if (el("detailClose")) {
+    el("detailClose").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const box = el("detailBox");
+      if (box) box.classList.add("hidden");
+    });
+  }
+
+  // Fun fact box close button
+  if (el("funFactClose")) {
+    el("funFactClose").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const box = el("funFactBox");
+      if (box) box.classList.add("hidden");
+    });
+  }
   
   // Search input listener
   if (el("q")) {

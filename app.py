@@ -3,6 +3,7 @@ import json
 import os
 import tempfile
 import secrets
+from datetime import datetime, timezone
 
 app = Flask(__name__)
 
@@ -17,10 +18,11 @@ if ENV == 'development':
     if ADMIN_TOKEN:
         # Mask token for security (show first 4 and last 4 chars)
         masked = ADMIN_TOKEN[:4] + '*' * max(0, len(ADMIN_TOKEN) - 8) + ADMIN_TOKEN[-4:] if len(ADMIN_TOKEN) > 8 else '***'
-        print(f"🔐 ADMIN_TOKEN loaded: {masked} (length: {len(ADMIN_TOKEN)})")
+        # NOTE: Avoid emojis/unicode here to prevent Windows console UnicodeEncodeError.
+        print(f"[INFO] ADMIN_TOKEN loaded: {masked} (length: {len(ADMIN_TOKEN)})")
     else:
-        print("⚠️  WARNING: ADMIN_TOKEN not set! POST /api/data and /admin will be blocked.")
-        print("   Set it with: $env:ADMIN_TOKEN = 'your-token-here'")
+        print("[WARN] ADMIN_TOKEN not set! POST /api/data and /admin will be blocked.")
+        print("       Set it with: $env:ADMIN_TOKEN = 'your-token-here'")
 
 # Security: Request size limit (1MB)
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
@@ -35,9 +37,37 @@ MAX_NAME_LENGTH = 200
 def ensure_data_file():
     if not os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'w', encoding='utf-8') as f:
-            json.dump({"models": []}, f, indent=4, ensure_ascii=False)
+            json.dump({"models": [], "version": 1, "updatedAt": datetime.now(timezone.utc).isoformat()}, f, indent=4, ensure_ascii=False)
 
 ensure_data_file()
+
+
+# Helper: load data with sane defaults
+def read_data_file():
+    ensure_data_file()
+    with open(DATA_FILE, 'r', encoding='utf-8') as f:
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError:
+            data = {"models": []}
+
+    if not isinstance(data, dict):
+        data = {"models": []}
+
+    if 'models' not in data or not isinstance(data.get('models'), list):
+        data['models'] = []
+
+    # Versioning defaults
+    if not isinstance(data.get('version'), int):
+        data['version'] = 1
+    if 'updatedAt' not in data:
+        try:
+            ts = os.path.getmtime(DATA_FILE)
+            data['updatedAt'] = datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+        except Exception:
+            data['updatedAt'] = datetime.now(timezone.utc).isoformat()
+
+    return data
 
 # =========================
 # SECURITY HELPERS
@@ -209,14 +239,14 @@ def mindmap_order():
 def get_data():
     """Public read-only endpoint"""
     try:
-        ensure_data_file()
-        with open(DATA_FILE, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-
-        if 'models' not in data:
-            data = {"models": []}
-
-        return jsonify(data)
+        data = read_data_file()
+        resp = jsonify(data)
+        # Avoid stale caches on API responses
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        resp.headers['Pragma'] = 'no-cache'
+        resp.headers['Expires'] = '0'
+        resp.headers['ETag'] = f"W/\"{data.get('version', 0)}\""
+        return resp
     except Exception as e:
         if ENV == 'development':
             return jsonify({"error": str(e), "models": []}), 500
@@ -265,11 +295,21 @@ def save_data():
         if not is_valid:
             return jsonify({"error": error_msg}), 400
 
+        # Versioning: increment server version & updatedAt
+        current = read_data_file()
+        next_version = int(current.get('version', 0)) + 1
+        data['version'] = next_version
+        data['updatedAt'] = datetime.now(timezone.utc).isoformat()
+
         # Atomic write
-        ensure_data_file()
         atomic_write_file(DATA_FILE, data)
 
-        return jsonify({"status": "success"})
+        resp = jsonify({"status": "success", "version": next_version, "updatedAt": data['updatedAt']})
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        resp.headers['Pragma'] = 'no-cache'
+        resp.headers['Expires'] = '0'
+        resp.headers['ETag'] = f"W/\"{next_version}\""
+        return resp
     except ValueError as e:
         return jsonify({"error": f"Invalid JSON: {str(e)}"}), 400
     except Exception as e:

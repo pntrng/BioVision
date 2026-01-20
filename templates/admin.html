@@ -341,7 +341,22 @@
 <script>
 let allData = { models: [] };
 let mindmapOrder = null; // Thứ tự từ mindmap
-let adminToken = localStorage.getItem('admin_token') || ''; // Admin token từ localStorage
+// Sanitize token để tránh ký tự lạ (bullet, emoji...) gây lỗi header
+function sanitizeToken(token) {
+  if (!token) return '';
+  // Chỉ giữ các ký tự ASCII in được
+  const cleaned = token.replace(/[^\x20-\x7E]/g, '').trim();
+  return cleaned;
+}
+
+let adminToken = sanitizeToken(localStorage.getItem('admin_token') || ''); // Admin token từ localStorage
+
+// Đồng bộ phiên bản server
+let serverVersion = null;
+let serverUpdatedAt = null;
+const POLL_INTERVAL_MS = 15000; // 15s kiểm tra bản mới
+let pollHandle = null;
+let isDirty = false; // đánh dấu có thay đổi cục bộ chưa lưu
 
 let state = {
   currentModelId: null,
@@ -365,14 +380,17 @@ let needsRender = true;
 const el = (id) => document.getElementById(id);
 const setStatus = (msg) => { el("status").textContent = msg; };
 
+const markDirty = () => { isDirty = true; };
+const clearDirty = () => { isDirty = false; };
+
 // Token management
 function updateTokenUI() {
   const tokenInput = el("adminTokenInput");
   const tokenStatus = el("tokenStatus");
   
   if (adminToken) {
-    tokenInput.value = '••••••••';
-    tokenInput.placeholder = "Token đã được lưu";
+    tokenInput.value = '';
+    tokenInput.placeholder = "Token đã được lưu (để trống nếu không đổi)";
     tokenStatus.textContent = '✅ Token đã được lưu';
     tokenStatus.className = 'mt-2 text-xs text-green-600';
   } else {
@@ -387,7 +405,7 @@ function updateTokenUI() {
 if (el("saveTokenBtn")) {
   el("saveTokenBtn").onclick = () => {
     const tokenInput = el("adminTokenInput");
-    const token = tokenInput.value.trim();
+    const token = sanitizeToken(tokenInput.value);
     
     if (!token) {
       alert('Vui lòng nhập token!');
@@ -396,6 +414,7 @@ if (el("saveTokenBtn")) {
     
     adminToken = token;
     localStorage.setItem('admin_token', token);
+    tokenInput.value = '';
     updateTokenUI();
     setStatus("✅ Token đã được lưu!");
   };
@@ -439,10 +458,18 @@ function deepCopy(x){ return JSON.parse(JSON.stringify(x)); }
 async function loadFromServer() {
   try {
     setStatus("Đang tải dữ liệu từ server...");
-    const response = await fetch('/api/data');
+    const response = await fetch(`/api/data?t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
     allData = data && data.models ? data : { models: [] };
+
+    serverVersion = typeof data.version === "number" ? data.version : serverVersion || 1;
+    serverUpdatedAt = data.updatedAt || serverUpdatedAt || "";
 
     // auto-select first model (from CSV import)
     if (allData.models.length > 0) {
@@ -454,7 +481,9 @@ async function loadFromServer() {
     rebuildChapterAndModelOptions();
     renderModelListAdmin();
     rebuildList();
-    setStatus("Đã tải dữ liệu từ server.");
+    clearDirty();
+    const meta = serverVersion ? ` (v${serverVersion}${serverUpdatedAt ? " • " + serverUpdatedAt : ""})` : "";
+    setStatus("Đã tải dữ liệu từ server" + meta + ".");
   } catch (e) {
     setStatus("Lỗi khi tải dữ liệu: " + e.message);
     allData = { models: [] };
@@ -462,6 +491,40 @@ async function loadFromServer() {
     rebuildChapterAndModelOptions();
     renderModelListAdmin();
     rebuildList();
+  }
+}
+
+// Polling: kiểm tra phiên bản mới trên server và đồng bộ khi an toàn
+async function pollServerData() {
+  try {
+    const response = await fetch(`/api/data?t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache' }
+    });
+    if (!response.ok) return;
+
+    const incoming = await response.json();
+    const incomingVersion = typeof incoming.version === "number" ? incoming.version : null;
+    if (incomingVersion === null) return;
+
+    // Lần đầu ghi nhận meta
+    if (serverVersion === null) {
+      serverVersion = incomingVersion;
+      serverUpdatedAt = incoming.updatedAt || serverUpdatedAt;
+      return;
+    }
+
+    if (incomingVersion > serverVersion) {
+      if (isDirty) {
+        setStatus(`⚠️ Có bản mới (v${incomingVersion}) trên server. Bạn có thay đổi chưa lưu, hãy lưu hoặc tải lại để đồng bộ.`);
+        return;
+      }
+      // Tự đồng bộ bằng hàm loadFromServer để đảm bảo state nhất quán
+      await loadFromServer();
+      setStatus(`🔄 Đã tự đồng bộ dữ liệu mới (v${serverVersion}${serverUpdatedAt ? " • " + serverUpdatedAt : ""})`);
+    }
+  } catch (e) {
+    console.warn('pollServerData error:', e);
   }
 }
 
@@ -735,11 +798,20 @@ async function saveToServer() {
       return;
     }
     
+    const safeToken = sanitizeToken(adminToken);
+    if (!safeToken) {
+      setStatus("❌ Lỗi: Token có ký tự không hợp lệ hoặc rỗng. Nhập lại token.");
+      localStorage.removeItem('admin_token');
+      adminToken = '';
+      updateTokenUI();
+      return false;
+    }
+
     const response = await fetch('/api/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${adminToken}`
+        'Authorization': `Bearer ${safeToken}`
       },
       body: JSON.stringify(allData)
     });
@@ -754,7 +826,11 @@ async function saveToServer() {
       throw new Error(result.error);
     }
     
-    setStatus("✅ Đã lưu thành công lên server!");
+    serverVersion = typeof result.version === "number" ? result.version : serverVersion;
+    serverUpdatedAt = result.updatedAt || serverUpdatedAt;
+    clearDirty();
+    setStatus(`✅ Đã lưu thành công (v${serverVersion || "?"}${serverUpdatedAt ? " • " + serverUpdatedAt : ""})`);
+    await loadFromServer();
     renderModelListAdmin();
     return true;
   } catch (e) {
@@ -1202,10 +1278,35 @@ el("btnPick").onclick = () => {
 el("btnGetCam").onclick = getCamera;
 el("btnUpdate").onclick = updateSelectedFromForm;
 
+// Đánh dấu thay đổi cục bộ để tránh auto-sync ghi đè
+[
+  "grade",
+  "chapter",
+  "chapterSelect",
+  "modelName",
+  "modelNameSelect",
+  "modelUid",
+  "modelFeature",
+  "modelFunFact",
+  "name",
+  "content",
+  "funFact",
+  "link"
+].forEach((id) => {
+  const node = el(id);
+  if (!node) return;
+  const evt = node.tagName === "SELECT" ? "change" : "input";
+  node.addEventListener(evt, markDirty);
+});
+
 // Initialize on load
 updateTokenUI();
 loadMindmapOrder().then(() => {
-  loadFromServer();
+  loadFromServer().then(() => {
+    if (!pollHandle) {
+      pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
+    }
+  });
 });
 </script>
 
