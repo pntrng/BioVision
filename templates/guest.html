@@ -739,24 +739,49 @@
       api.getWorldToScreenCoordinates(it.world, function(err, screen) {
         processedCount++;
         
-        if (err) {
+        // Sketchfab đôi khi trả kết quả ở tham số "err" dưới dạng object
+        // dạng { glCoord: Float64Array(2), canvasCoord: Float64Array(2) }
+        // hoặc ở tham số "screen". Ta chuẩn hoá về {x, y} pixel trên canvas.
+        let coord = null;
+
+        // Trường hợp chuẩn: screen.x, screen.y là số
+        if (screen && typeof screen.x === "number" && typeof screen.y === "number") {
+          coord = { x: screen.x, y: screen.y };
+        }
+        // Trường hợp mới: screen.canvasCoord là mảng [x, y]
+        else if (screen && screen.canvasCoord && screen.canvasCoord.length >= 2) {
+          coord = { x: screen.canvasCoord[0], y: screen.canvasCoord[1] };
+        }
+        // Một số phiên bản API trả object vào "err"
+        else if (!screen && err && err.canvasCoord && err.canvasCoord.length >= 2) {
+          coord = { x: err.canvasCoord[0], y: err.canvasCoord[1] };
+        }
+
+        if (!coord) {
           if (processedCount === totalItems) {
             updateLeaderLines();
           }
           return;
         }
-        
-        if (!screen || typeof screen.x !== "number" || typeof screen.y !== "number") {
+
+        // Bỏ qua các điểm nằm ngoài vùng hiển thị của viewer
+        const rightContainer = el("right");
+        const boundsWidth = rightContainer ? rightContainer.offsetWidth : window.innerWidth;
+        const boundsHeight = rightContainer ? rightContainer.offsetHeight : window.innerHeight;
+        if (
+          coord.x < 0 || coord.y < 0 ||
+          coord.x > boundsWidth || coord.y > boundsHeight
+        ) {
           if (processedCount === totalItems) {
             updateLeaderLines();
           }
           return;
         }
-        
+
         const hs = document.createElement("div");
         hs.className = `hotspot ${it.id === selectedId ? "active" : ""}`;
-        hs.style.left = screen.x + "px";
-        hs.style.top = screen.y + "px";
+        hs.style.left = coord.x + "px";
+        hs.style.top = coord.y + "px";
         hs.title = it.name || "Điểm";
         
         hs.onclick = (ev) => {
@@ -766,7 +791,7 @@
         
         overlay.appendChild(hs);
         
-        createFloatingLabel(it, screen.x, screen.y);
+        createFloatingLabel(it, coord.x, coord.y);
         successCount++;
         
         if (processedCount === totalItems) {
