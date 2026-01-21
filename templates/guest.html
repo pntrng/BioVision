@@ -699,6 +699,9 @@
       items: model.items || []
     };
     
+    // Clear old overlays when switching models
+    clearOverlays();
+    
     // Hiển thị thông tin mô hình
     setPanel(model, true);
     
@@ -710,6 +713,19 @@
     if (!expandedModels.has(model.id)) {
       expandedModels.add(model.id);
     }
+  }
+
+  function clearOverlays() {
+    const overlay = el("overlay");
+    if (overlay) {
+      overlay.innerHTML = "";
+    }
+    const svg = el("svg-overlay");
+    if (svg) {
+      svg.innerHTML = "";
+    }
+    labelElements.clear();
+    hotspotElements.clear();
   }
 
   function setPanel(it, isModel = false) {
@@ -1057,6 +1073,8 @@
       }
       return;
     }
+
+    clearOverlays();
 
     const iframe = el("api-frame");
     const client = new Sketchfab(iframe);
