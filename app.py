@@ -45,13 +45,6 @@ def ensure_data_file():
             json.dump({"models": [], "version": 1, "updatedAt": datetime.now(timezone.utc).isoformat()}, f, indent=4, ensure_ascii=False)
 
 ensure_data_file()
-if USE_DATABASE:
-    try:
-        ensure_data_store()
-    except Exception as e:
-        if ENV == 'development':
-            app.logger.warning(f"Failed to init database, falling back to file: {e}")
-        USE_DATABASE = False
 
 
 def get_db_connection():
@@ -119,6 +112,15 @@ def ensure_data_store():
         conn.commit()
     finally:
         conn.close()
+
+# Initialize DB on startup (after ensure_data_store is defined)
+if USE_DATABASE:
+    try:
+        ensure_data_store()
+    except Exception as e:
+        if ENV == 'development':
+            app.logger.warning(f"Failed to init database, falling back to file: {e}")
+        USE_DATABASE = False
 
 
 def read_data_store():
