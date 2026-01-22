@@ -12,7 +12,14 @@ app = Flask(__name__)
 
 # Configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_FILE = os.path.join(BASE_DIR, 'data.json')
+
+# Allow overriding data file location via environment variable.
+# This is important for production (e.g. Render) where you mount
+# a persistent disk and point DATA_PATH to that location so that
+# all clients share ONE central source of truth.
+DATA_PATH = os.environ.get("DATA_PATH", os.path.join(BASE_DIR, "data.json"))
+DATA_FILE = DATA_PATH
+
 ADMIN_TOKEN = os.environ.get('ADMIN_TOKEN', '')
 ENV = os.environ.get('ENV', 'development')
 DATABASE_URL = os.environ.get('DATABASE_URL', '').strip()
@@ -40,6 +47,11 @@ MAX_NAME_LENGTH = 200
 
 # Đảm bảo file data tồn tại
 def ensure_data_file():
+    # Create directory for DATA_FILE if needed
+    data_dir = os.path.dirname(DATA_FILE)
+    if data_dir and not os.path.exists(data_dir):
+        os.makedirs(data_dir, exist_ok=True)
+    
     if not os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'w', encoding='utf-8') as f:
             json.dump({"models": [], "version": 1, "updatedAt": datetime.now(timezone.utc).isoformat()}, f, indent=4, ensure_ascii=False)
