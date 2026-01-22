@@ -313,25 +313,40 @@ def atomic_write_file(filepath, data):
         # Ensure directory exists
         file_dir = os.path.dirname(filepath)
         if file_dir and not os.path.exists(file_dir):
+            app.logger.info(f"Creating directory: {file_dir}")
             os.makedirs(file_dir, exist_ok=True)
+            if not os.path.exists(file_dir):
+                raise Exception(f"Failed to create directory: {file_dir}")
+        
+        # Check directory permissions
+        if file_dir and os.path.exists(file_dir):
+            if not os.access(file_dir, os.W_OK):
+                raise Exception(f"Directory not writable: {file_dir}")
         
         # Write to temp file first (in same directory as target file)
         # This is important when DATA_FILE is on a mounted disk
         temp_dir = file_dir if file_dir else BASE_DIR
+        app.logger.info(f"Creating temp file in: {temp_dir}")
         temp_fd, temp_path = tempfile.mkstemp(dir=temp_dir, suffix='.tmp', prefix='data_')
         try:
+            app.logger.info(f"Writing to temp file: {temp_path}")
             with os.fdopen(temp_fd, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
             # Atomic replace
+            app.logger.info(f"Replacing {temp_path} -> {filepath}")
             os.replace(temp_path, filepath)
+            app.logger.info(f"Successfully wrote file: {filepath}")
         except Exception as e:
             # Clean up temp file on error
             try:
-                os.unlink(temp_path)
+                if os.path.exists(temp_path):
+                    os.unlink(temp_path)
             except:
                 pass
+            app.logger.error(f"Error writing temp file: {str(e)}")
             raise e
     except Exception as e:
+        app.logger.error(f"atomic_write_file failed: {str(e)}", exc_info=True)
         raise Exception(f"Failed to write file: {str(e)}")
 
 # =========================
@@ -436,8 +451,7 @@ def save_data():
     # Check authentication
     is_valid, error_msg = check_admin_token()
     if not is_valid:
-        if ENV == 'development':
-            app.logger.warning(f"Authentication failed: {error_msg}")
+        app.logger.warning(f"Authentication failed: {error_msg}")
         return jsonify({"error": error_msg}), 401
     
     try:
@@ -448,11 +462,21 @@ def save_data():
         # Validate schema
         is_valid, error_msg = validate_data_schema(data)
         if not is_valid:
+            app.logger.warning(f"Validation failed: {error_msg}")
             return jsonify({"error": error_msg}), 400
+
+        # Log file path for debugging
+        app.logger.info(f"Writing to DATA_FILE: {DATA_FILE}")
+        app.logger.info(f"DATA_FILE exists: {os.path.exists(DATA_FILE)}")
+        file_dir = os.path.dirname(DATA_FILE)
+        if file_dir:
+            app.logger.info(f"Directory exists: {os.path.exists(file_dir)}")
+            app.logger.info(f"Directory writable: {os.access(file_dir, os.W_OK) if os.path.exists(file_dir) else 'N/A'}")
 
         # Write to DB (or file fallback) with versioning
         saved = write_data_store(data)
 
+        app.logger.info(f"Successfully saved data, version: {saved.get('version')}")
         resp = jsonify({"status": "success", "version": saved.get("version"), "updatedAt": saved.get("updatedAt")})
         resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
         resp.headers['Pragma'] = 'no-cache'
@@ -460,11 +484,13 @@ def save_data():
         resp.headers['ETag'] = f"W/\"{saved.get('version', 0)}\""
         return resp
     except ValueError as e:
+        app.logger.error(f"ValueError in save_data: {str(e)}")
         return jsonify({"error": f"Invalid JSON: {str(e)}"}), 400
     except Exception as e:
-        if ENV == 'development':
-            return jsonify({"error": str(e)}), 500
-        return jsonify({"error": "Internal server error"}), 500
+        error_detail = str(e)
+        app.logger.error(f"Exception in save_data: {error_detail}", exc_info=True)
+        # Always return error details in response for debugging
+        return jsonify({"error": f"Internal server error: {error_detail}"}), 500
 
 # =========================
 # ERROR HANDLERS
