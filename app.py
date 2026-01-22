@@ -455,7 +455,20 @@ def save_data():
         return jsonify({"error": error_msg}), 401
     
     try:
-        data = request.get_json()
+        # Get JSON data with proper encoding handling
+        try:
+            data = request.get_json(force=True)
+        except Exception as json_error:
+            app.logger.error(f"JSON decode error: {str(json_error)}")
+            # Try to get raw data and decode manually
+            try:
+                raw_data = request.get_data(as_text=False)
+                data_str = raw_data.decode('utf-8')
+                data = json.loads(data_str)
+            except Exception as decode_error:
+                app.logger.error(f"Manual decode error: {str(decode_error)}")
+                return jsonify({"error": f"Failed to decode JSON: {str(decode_error)}"}), 400
+        
         if not data:
             return jsonify({"error": "No data provided"}), 400
 
