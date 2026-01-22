@@ -310,8 +310,15 @@ def validate_data_schema(data):
 def atomic_write_file(filepath, data):
     """Write file atomically using temp file + replace"""
     try:
-        # Write to temp file first
-        temp_fd, temp_path = tempfile.mkstemp(dir=BASE_DIR, suffix='.tmp', prefix='data_')
+        # Ensure directory exists
+        file_dir = os.path.dirname(filepath)
+        if file_dir and not os.path.exists(file_dir):
+            os.makedirs(file_dir, exist_ok=True)
+        
+        # Write to temp file first (in same directory as target file)
+        # This is important when DATA_FILE is on a mounted disk
+        temp_dir = file_dir if file_dir else BASE_DIR
+        temp_fd, temp_path = tempfile.mkstemp(dir=temp_dir, suffix='.tmp', prefix='data_')
         try:
             with os.fdopen(temp_fd, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
