@@ -287,8 +287,71 @@
   let serverUpdatedAt = null;
   const POLL_INTERVAL_MS = 15000; // 15s check for fresh data
   let pollHandle = null;
+  const STORAGE_KEY_LAST_MODEL = "biovision_last_model";
 
   const el = (id) => document.getElementById(id);
+
+  function normalizeGrade(grade) {
+    const text = (grade || "").toString().trim();
+    return text ? text : "Khác";
+  }
+
+  function normalizeChapter(chapter) {
+    const text = (chapter || "").toString().trim();
+    return text ? text : "Khác";
+  }
+
+  function expandToModel(model) {
+    if (!model) return;
+    const grade = normalizeGrade(model.grade);
+    const chapter = normalizeChapter(model.chapter);
+    expandedGrades.add(grade);
+    expandedChapters.add(`${grade}::${chapter}`);
+    if (model.id) expandedModels.add(model.id);
+  }
+
+  function saveLastModel(model) {
+    try {
+      localStorage.setItem(STORAGE_KEY_LAST_MODEL, JSON.stringify({
+        id: model.id || null,
+        modelUid: model.modelUid || null,
+        name: model.name || null,
+        chapter: model.chapter || null,
+        grade: model.grade || null
+      }));
+    } catch (e) {
+      // Ignore storage failures (private mode, quota, etc.)
+    }
+  }
+
+  function loadLastModel() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_LAST_MODEL);
+      if (!raw) return null;
+      const saved = JSON.parse(raw);
+      if (!saved) return null;
+      const models = ALL_DATA.models || [];
+      if (saved.id) {
+        const byId = models.find(m => m.id === saved.id);
+        if (byId) return byId;
+      }
+      if (saved.modelUid) {
+        const byUid = models.find(m => m.modelUid === saved.modelUid);
+        if (byUid) return byUid;
+      }
+      if (saved.name || saved.chapter || saved.grade) {
+        const byMeta = models.find(m =>
+          (m.name || "") === (saved.name || "") &&
+          normalizeChapter(m.chapter) === normalizeChapter(saved.chapter) &&
+          normalizeGrade(m.grade) === normalizeGrade(saved.grade)
+        );
+        if (byMeta) return byMeta;
+      }
+    } catch (e) {
+      // Ignore parse/storage errors
+    }
+    return null;
+  }
 
   // Load mindmap order
   async function loadMindmapOrder() {
@@ -698,6 +761,9 @@
       modelUid: model.modelUid || "",
       items: model.items || []
     };
+
+    expandToModel(model);
+    saveLastModel(model);
     
     // Clear old overlays when switching models
     clearOverlays();
@@ -1126,6 +1192,12 @@
     return loadAllData();
   }).then(() => {
     renderModelTree();
+    const lastModel = loadLastModel();
+    if (lastModel) {
+      expandToModel(lastModel);
+      selectModel(lastModel);
+      renderModelTree();
+    }
     if (!pollHandle) {
       pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
     }
