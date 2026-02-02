@@ -142,6 +142,59 @@
       pointer-events: auto;
     }
 
+    #welcomePanel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(720px, 90%);
+      max-height: 85%;
+      overflow: auto;
+      z-index: 1004;
+      pointer-events: auto;
+    }
+
+    .welcome-card {
+      background: rgba(255, 255, 255, 0.98);
+      border: 2px solid rgba(59, 130, 246, 0.25);
+      border-radius: 20px;
+      padding: 24px 28px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .welcome-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1d4ed8;
+      margin-bottom: 8px;
+    }
+
+    .welcome-subtitle {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+
+    .welcome-steps {
+      margin: 0;
+      padding-left: 18px;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .welcome-hint {
+      margin-top: 16px;
+      padding: 12px 14px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      color: #1e40af;
+      font-size: 13px;
+    }
+
     .float-in {
       animation: floatIn 220ms ease-out;
     }
@@ -173,6 +226,57 @@
     .leader-line.active {
       stroke: rgba(34, 197, 94, 0.8);
       stroke-width: 2.5;
+    }
+
+    /* Welcome screen */
+    #welcomeScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1004;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(248, 250, 252, 0.98) 0%, rgba(236, 242, 255, 0.98) 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 24px;
+    }
+
+    .welcome-card {
+      max-width: 720px;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px;
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+      padding: 28px;
+    }
+
+    .welcome-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .welcome-step .num {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
     }
   </style>
 
@@ -237,6 +341,23 @@
     <iframe id="api-frame" class="w-full h-full border-0" allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"></iframe>
     <svg id="svg-overlay"></svg>
     <div id="overlay"></div>
+    <div id="welcomePanel" class="hidden">
+      <div class="welcome-card">
+        <div class="welcome-title">Chào mừng đến BioVision 3D</div>
+        <div class="welcome-subtitle">
+          Nền tảng học tập tương tác giúp bạn khám phá mô hình Sinh học 3D bằng điểm hotspot trực quan.
+        </div>
+        <ol class="welcome-steps">
+          <li>Mở mục Khối → Chương → Mô hình ở cây kiến thức bên trái.</li>
+          <li>Click vào mô hình để tải 3D và hiển thị các hotspot.</li>
+          <li>Click trực tiếp vào hotspot (hoặc nhãn tên) để xem “Chi tiết điểm” và “Góc thú vị”.</li>
+          <li>Dùng ô tìm kiếm để tìm nhanh mô hình hoặc thành phần.</li>
+        </ol>
+        <div class="welcome-hint">
+          Mẹo: Nếu chưa thấy điểm, hãy xoay mô hình và zoom gần phần cần quan sát.
+        </div>
+      </div>
+    </div>
     <div id="detailBox" class="hidden bg-white/95 backdrop-blur border-2 border-blue-200 rounded-2xl shadow-2xl">
       <div class="p-4">
         <div class="flex items-start justify-between gap-3">
@@ -287,7 +408,6 @@
   let serverUpdatedAt = null;
   const POLL_INTERVAL_MS = 15000; // 15s check for fresh data
   let pollHandle = null;
-  const STORAGE_KEY_LAST_MODEL = "biovision_last_model";
 
   const el = (id) => document.getElementById(id);
 
@@ -310,47 +430,21 @@
     if (model.id) expandedModels.add(model.id);
   }
 
-  function saveLastModel(model) {
-    try {
-      localStorage.setItem(STORAGE_KEY_LAST_MODEL, JSON.stringify({
-        id: model.id || null,
-        modelUid: model.modelUid || null,
-        name: model.name || null,
-        chapter: model.chapter || null,
-        grade: model.grade || null
-      }));
-    } catch (e) {
-      // Ignore storage failures (private mode, quota, etc.)
-    }
+  function showWelcome() {
+    const welcome = el("welcomePanel");
+    if (welcome) welcome.classList.remove("hidden");
   }
 
-  function loadLastModel() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY_LAST_MODEL);
-      if (!raw) return null;
-      const saved = JSON.parse(raw);
-      if (!saved) return null;
-      const models = ALL_DATA.models || [];
-      if (saved.id) {
-        const byId = models.find(m => m.id === saved.id);
-        if (byId) return byId;
-      }
-      if (saved.modelUid) {
-        const byUid = models.find(m => m.modelUid === saved.modelUid);
-        if (byUid) return byUid;
-      }
-      if (saved.name || saved.chapter || saved.grade) {
-        const byMeta = models.find(m =>
-          (m.name || "") === (saved.name || "") &&
-          normalizeChapter(m.chapter) === normalizeChapter(saved.chapter) &&
-          normalizeGrade(m.grade) === normalizeGrade(saved.grade)
-        );
-        if (byMeta) return byMeta;
-      }
-    } catch (e) {
-      // Ignore parse/storage errors
-    }
-    return null;
+  function hideWelcome() {
+    const welcome = el("welcomePanel");
+    if (welcome) welcome.classList.add("hidden");
+  }
+
+  function clearInfoPanels() {
+    setPanel(null);
+    showDetailBox(null);
+    showFunFactBox(null);
+    selectedId = null;
   }
 
   // Load mindmap order
@@ -466,9 +560,8 @@
 
   // Render danh sách/overlay (tối thiểu) để tránh lỗi và kích hoạt overlay
   function renderList() {
-    // Nếu chưa chọn item nào, mặc định chọn item đầu tiên
-    if (!selectedId && (DATA.items || []).length > 0) {
-      selectedId = DATA.items[0].id;
+    if (selectedId && !(DATA.items || []).some(it => it.id === selectedId)) {
+      selectedId = null;
     }
     // Cập nhật overlay/leader lines
     updateLabels();
@@ -761,15 +854,12 @@
       modelUid: model.modelUid || "",
       items: model.items || []
     };
-
     expandToModel(model);
-    saveLastModel(model);
+    hideWelcome();
+    clearInfoPanels();
     
     // Clear old overlays when switching models
     clearOverlays();
-    
-    // Hiển thị thông tin mô hình
-    setPanel(model, true);
     
     if (DATA.modelUid) {
       initViewer();
@@ -1154,9 +1244,6 @@
         api.start(function() {
           api.addEventListener("viewerready", function() {
             renderList();
-            if ((DATA.items||[]).length > 0) {
-              selectItem(DATA.items[0]);
-            }
             setTimeout(() => {
               updateLabels();
               optimizedRenderLoop();
@@ -1192,12 +1279,7 @@
     return loadAllData();
   }).then(() => {
     renderModelTree();
-    const lastModel = loadLastModel();
-    if (lastModel) {
-      expandToModel(lastModel);
-      selectModel(lastModel);
-      renderModelTree();
-    }
+    showWelcome();
     if (!pollHandle) {
       pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
     }
