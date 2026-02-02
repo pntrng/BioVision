@@ -151,6 +151,31 @@ pytest tests/
 3. Chọn mô hình từ danh sách
 4. Click vào hotspot hoặc chọn từ sidebar để xem chi tiết
 
+## 🎛️ UX Controls (Guest)
+
+- **Reset góc nhìn:** nút `↺ Reset góc nhìn` ở góc phải viewer hoặc phím tắt `R`.
+- **Trình chiếu:** nút `🖥️ Trình chiếu` trên topbar (ẩn sidebar, phóng to viewer). Có thể mở bằng URL: `/?mode=present`.
+- **Kiểm tra Matching (DNA):** nút `🧪 Kiểm tra` trong viewer để bật bài kéo-thả nhãn.
+
+### Default Camera per Lesson
+
+- Mặc định hệ thống lưu camera ban đầu khi viewer sẵn sàng.
+- Có thể tuỳ chỉnh trong `templates/guest.html`:
+  - `getDefaultCamera(model)` (override nếu muốn)
+  - `defaultCameras` (map theo `modelUid`)
+
+### Matching Quiz Data
+
+- Cấu hình trong `templates/guest.html` tại `QUIZ_CONFIG`.
+- Mỗi item: `{ id, label }` với `id` là `hotspot id` trong data.
+
+## ✅ Manual UX Checklist
+
+- Desktop: chọn model → reset camera → hotspot hiển thị nhãn, click mở chi tiết.
+- Presenter mode: bật/tắt, viewer full width, UI không vỡ.
+- Mobile: mở hamburger để chọn model, hotspot click mở chi tiết, không double-scroll.
+- Test mode (DNA): kéo thả nhãn đúng/sai, score cập nhật, “Làm lại” hoạt động.
+
 ## 🛠️ Development
 
 ### Code Style

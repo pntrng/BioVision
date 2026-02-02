@@ -228,6 +228,273 @@
       stroke-width: 2.5;
     }
 
+    :root {
+      --topbar-height: 56px;
+      --control-size: 44px;
+    }
+
+    body {
+      height: 100vh;
+      padding-top: var(--topbar-height);
+      box-sizing: border-box;
+    }
+
+    #left,
+    #right {
+      height: calc(100vh - var(--topbar-height));
+    }
+
+    #topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--topbar-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+      z-index: 1100;
+      backdrop-filter: blur(10px);
+    }
+
+    #topbar .topbar-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #1e40af;
+      letter-spacing: 0.02em;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .topbar-btn,
+    .viewer-btn {
+      height: var(--control-size);
+      min-width: var(--control-size);
+      padding: 0 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .topbar-btn:hover,
+    .viewer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+    }
+
+    .viewer-controls {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1004;
+    }
+
+    .viewer-btn.primary {
+      border-color: rgba(59, 130, 246, 0.6);
+      background: #2563eb;
+      color: #fff;
+    }
+
+    body.presenter #left {
+      display: none;
+    }
+
+    body.presenter #right {
+      width: 100%;
+    }
+
+    body.presenter #topbar {
+      background: rgba(15, 23, 42, 0.6);
+      color: #f8fafc;
+    }
+
+    body.presenter #topbar .topbar-title {
+      color: #f8fafc;
+    }
+
+    body.presenter #detailBox,
+    body.presenter #funFactBox {
+      transform: scale(1.05);
+    }
+
+    #drawerOverlay {
+      position: fixed;
+      top: var(--topbar-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.4);
+      z-index: 900;
+      display: none;
+    }
+
+    #drawerOverlay.active {
+      display: block;
+    }
+
+    body.dragging #api-frame {
+      pointer-events: none;
+    }
+
+    .quiz-panel {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      width: 320px;
+      max-width: calc(100% - 32px);
+      background: rgba(255, 255, 255, 0.98);
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+      z-index: 1004;
+      padding: 14px;
+      display: none;
+    }
+
+    .quiz-panel.active {
+      display: block;
+    }
+
+    #quizDropzones {
+      position: absolute;
+      inset: 0;
+      z-index: 1002;
+      pointer-events: none;
+    }
+
+    .quiz-labels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .quiz-label {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      border: 1px solid #7dd3fc;
+      color: #0f172a;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .quiz-label.locked {
+      background: #dcfce7;
+      border-color: #22c55e;
+      cursor: default;
+    }
+
+    .quiz-dropzone {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 2px dashed rgba(14, 116, 144, 0.8);
+      background: rgba(6, 182, 212, 0.15);
+      transform: translate(-50%, -50%);
+      z-index: 1002;
+      pointer-events: auto;
+      display: none;
+    }
+
+    .quiz-dropzone.active {
+      display: block;
+    }
+
+    .quiz-dropzone.correct {
+      border-color: #16a34a;
+      background: rgba(22, 163, 74, 0.2);
+    }
+
+    .quiz-dropzone.wrong {
+      border-color: #dc2626;
+      background: rgba(220, 38, 38, 0.2);
+    }
+
+    .quiz-score {
+      font-size: 12px;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+      #left {
+        width: 320px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-top: var(--topbar-height);
+      }
+
+      #left {
+        position: fixed;
+        top: var(--topbar-height);
+        left: -100%;
+        height: calc(100vh - var(--topbar-height));
+        width: 80%;
+        max-width: 360px;
+        transition: left 0.25s ease;
+        z-index: 1000;
+      }
+
+      #left.open {
+        left: 0;
+      }
+
+      #right {
+        width: 100%;
+        height: calc(100vh - var(--topbar-height));
+      }
+
+      #detailBox,
+      #funFactBox {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        top: auto;
+        width: auto;
+        max-height: 45vh;
+      }
+
+      .viewer-controls {
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .quiz-panel {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        width: auto;
+      }
+    }
+
     /* Welcome screen */
     #welcomeScreen {
       position: absolute;
@@ -283,6 +550,16 @@
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
 <body class="m-0 h-screen flex font-sans bg-gradient-to-br from-gray-50 to-gray-100">
+  <div id="topbar">
+    <div class="flex items-center gap-3">
+      <button id="btnSidebar" class="topbar-btn" title="Mở cây kiến thức">☰</button>
+      <div class="topbar-title">BioVision 3D</div>
+    </div>
+    <div class="topbar-actions">
+      <button id="btnPresenter" class="topbar-btn" title="Bật/Tắt trình chiếu">🖥️ Trình chiếu</button>
+    </div>
+  </div>
+  <div id="drawerOverlay"></div>
   <!-- Sidebar -->
   <div id="left" class="w-[400px] bg-white border-r-2 border-gray-200 shadow-xl overflow-y-auto">
     <div class="p-8 space-y-6">
@@ -341,6 +618,7 @@
     <iframe id="api-frame" class="w-full h-full border-0" allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"></iframe>
     <svg id="svg-overlay"></svg>
     <div id="overlay"></div>
+    <div id="quizDropzones"></div>
     <div id="welcomePanel" class="hidden">
       <div class="welcome-card">
         <div class="welcome-title">Chào mừng đến BioVision 3D</div>
@@ -388,6 +666,22 @@
         <div id="funFactContent" class="mt-3 text-sm text-gray-800 whitespace-pre-wrap leading-relaxed"></div>
       </div>
     </div>
+    <div class="viewer-controls">
+      <button id="btnResetCamera" class="viewer-btn primary" title="Reset góc nhìn (R)">↺ Reset góc nhìn</button>
+      <button id="btnTestMode" class="viewer-btn" title="Kiểm tra Matching">🧪 Kiểm tra</button>
+    </div>
+    <div id="quizPanel" class="quiz-panel">
+      <div class="flex items-center justify-between">
+        <div class="font-semibold text-sm text-cyan-900">Kiểm tra Matching</div>
+        <button id="btnQuizClose" class="topbar-btn" title="Đóng">✕</button>
+      </div>
+      <div class="quiz-score" id="quizScore">0/0 đúng</div>
+      <div class="quiz-labels" id="quizLabels"></div>
+      <div class="flex items-center gap-2 mt-3">
+        <button id="btnQuizReset" class="topbar-btn">Làm lại</button>
+        <button id="btnQuizHint" class="topbar-btn">Gợi ý</button>
+      </div>
+    </div>
   </div>
 
 <script>
@@ -408,8 +702,27 @@
   let serverUpdatedAt = null;
   const POLL_INTERVAL_MS = 15000; // 15s check for fresh data
   let pollHandle = null;
+  let presenterMode = false;
+  let sidebarOpen = false;
+  let isTestMode = false;
+  let isDraggingLabel = false;
+  let quizState = null;
+  let dropzoneElements = new Map(); // hotspotId -> element
+  const defaultCameras = new Map(); // modelUid -> { position, target }
 
   const el = (id) => document.getElementById(id);
+  const QUIZ_CONFIG = {
+    dna: {
+      modelNameIncludes: ["DNA"],
+      items: [
+        { id: "pt_27714f2b_li_n_k_t_phosphodieste", label: "Liên kết phosphodieste" },
+        { id: "pt_27714f2b_nitrogenous_base", label: "Nitrogenous base" },
+        { id: "pt_27714f2b_5_carbon", label: "Đường 5-carbon" },
+        { id: "pt_27714f2b_nh_m_phosphate", label: "Nhóm phosphate" },
+        { id: "pt_27714f2b_li_n_k_t_hydrogen", label: "Liên kết hydrogen" }
+      ]
+    }
+  };
 
   function normalizeGrade(grade) {
     const text = (grade || "").toString().trim();
@@ -445,6 +758,216 @@
     showDetailBox(null);
     showFunFactBox(null);
     selectedId = null;
+  }
+
+  function setPresenterMode(enabled) {
+    presenterMode = enabled;
+    document.body.classList.toggle("presenter", presenterMode);
+    const presenterBtn = el("btnPresenter");
+    if (presenterBtn) {
+      presenterBtn.textContent = presenterMode ? "⬅️ Thoát trình chiếu" : "🖥️ Trình chiếu";
+    }
+  }
+
+  function toggleSidebar(force) {
+    const left = el("left");
+    const overlay = el("drawerOverlay");
+    if (!left || !overlay) return;
+    sidebarOpen = typeof force === "boolean" ? force : !sidebarOpen;
+    left.classList.toggle("open", sidebarOpen);
+    overlay.classList.toggle("active", sidebarOpen);
+  }
+
+  function setDraggingState(active) {
+    isDraggingLabel = active;
+    document.body.classList.toggle("dragging", active);
+  }
+
+  function getDefaultCamera(model) {
+    if (!model) return null;
+    if (defaultCameras.has(model.modelUid)) {
+      return defaultCameras.get(model.modelUid);
+    }
+    const camItem = (model.items || []).find(it => it.cam && it.cam.position && it.cam.target);
+    if (camItem) {
+      return { position: camItem.cam.position, target: camItem.cam.target };
+    }
+    return null;
+  }
+
+  function resetCamera() {
+    if (!api || !CURRENT_MODEL) return;
+    const cam = getDefaultCamera(CURRENT_MODEL);
+    if (!cam) return;
+    api.setCameraLookAt(cam.position, cam.target, 1.2, function(){});
+  }
+
+  function isDnaLesson(model) {
+    if (!model) return false;
+    const name = (model.name || "").toLowerCase();
+    return QUIZ_CONFIG.dna.modelNameIncludes.some(token => name.includes(token.toLowerCase()));
+  }
+
+  function buildQuizState() {
+    if (!CURRENT_MODEL || !isDnaLesson(CURRENT_MODEL)) {
+      return null;
+    }
+    const items = QUIZ_CONFIG.dna.items
+      .map(entry => {
+        const target = (CURRENT_MODEL.items || []).find(it => it.id === entry.id);
+        if (!target) return null;
+        return {
+          id: entry.id,
+          label: entry.label,
+          targetId: entry.id,
+          status: "pending"
+        };
+      })
+      .filter(Boolean);
+    return {
+      lessonId: "dna",
+      items,
+      correctCount: 0
+    };
+  }
+
+  function updateQuizScore() {
+    const scoreEl = el("quizScore");
+    if (!scoreEl || !quizState) return;
+    const total = quizState.items.length;
+    const correct = quizState.items.filter(it => it.status === "correct").length;
+    scoreEl.textContent = `${correct}/${total} đúng`;
+  }
+
+  function renderQuizLabels() {
+    const labelsEl = el("quizLabels");
+    if (!labelsEl || !quizState) return;
+    labelsEl.innerHTML = "";
+    quizState.items.forEach(item => {
+      if (item.status === "correct") return;
+      const label = document.createElement("div");
+      label.className = "quiz-label";
+      label.textContent = item.label;
+      label.dataset.labelId = item.id;
+      label.addEventListener("pointerdown", startLabelDrag);
+      labelsEl.appendChild(label);
+    });
+    updateQuizScore();
+  }
+
+  function renderDropzones(active) {
+    const container = el("quizDropzones");
+    if (!container) return;
+    container.innerHTML = "";
+    dropzoneElements.clear();
+    if (!quizState) return;
+    quizState.items.forEach(item => {
+      const zone = document.createElement("div");
+      zone.className = "quiz-dropzone";
+      zone.dataset.targetId = item.targetId;
+      if (active) zone.classList.add("active");
+      container.appendChild(zone);
+      dropzoneElements.set(item.targetId, zone);
+    });
+  }
+
+  function setTestMode(enabled) {
+    if (enabled && !CURRENT_MODEL) {
+      alert("Hãy chọn mô hình trước khi vào chế độ kiểm tra.");
+      return;
+    }
+    if (enabled && !isDnaLesson(CURRENT_MODEL)) {
+      alert("Chế độ kiểm tra hiện chỉ mở cho bài DNA.");
+      return;
+    }
+    isTestMode = enabled;
+    const panel = el("quizPanel");
+    if (panel) panel.classList.toggle("active", isTestMode);
+    if (isTestMode) {
+      quizState = buildQuizState();
+      renderDropzones(true);
+      renderQuizLabels();
+      updateLabels();
+    } else {
+      quizState = null;
+      renderDropzones(false);
+      updateLabels();
+    }
+  }
+
+  function resetQuiz() {
+    if (!quizState) return;
+    quizState.items.forEach(it => { it.status = "pending"; });
+    renderDropzones(true);
+    renderQuizLabels();
+    updateLabels();
+  }
+
+  function highlightHint() {
+    if (!quizState) return;
+    const pending = quizState.items.find(it => it.status !== "correct");
+    if (!pending) return;
+    const zone = dropzoneElements.get(pending.targetId);
+    if (zone) {
+      zone.classList.add("active");
+      zone.classList.add("correct");
+      setTimeout(() => zone.classList.remove("correct"), 600);
+    }
+  }
+
+  function startLabelDrag(ev) {
+    if (!quizState) return;
+    const labelId = ev.currentTarget.dataset.labelId;
+    if (!labelId) return;
+    const label = ev.currentTarget;
+    const rect = label.getBoundingClientRect();
+    const ghost = label.cloneNode(true);
+    ghost.style.position = "fixed";
+    ghost.style.left = `${rect.left}px`;
+    ghost.style.top = `${rect.top}px`;
+    ghost.style.width = `${rect.width}px`;
+    ghost.style.zIndex = "1200";
+    ghost.style.pointerEvents = "none";
+    ghost.classList.add("dragging");
+    document.body.appendChild(ghost);
+    const offsetX = ev.clientX - rect.left;
+    const offsetY = ev.clientY - rect.top;
+    setDraggingState(true);
+
+    const move = (e) => {
+      ghost.style.left = `${e.clientX - offsetX}px`;
+      ghost.style.top = `${e.clientY - offsetY}px`;
+      const target = document.elementFromPoint(e.clientX, e.clientY);
+      dropzoneElements.forEach(zone => zone.classList.remove("wrong"));
+      if (target && target.classList.contains("quiz-dropzone")) {
+        target.classList.add("active");
+      }
+    };
+
+    const end = (e) => {
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerup", end);
+      const target = document.elementFromPoint(e.clientX, e.clientY);
+      const zone = target && target.classList.contains("quiz-dropzone") ? target : null;
+      const item = quizState.items.find(it => it.id === labelId);
+      if (zone && item && zone.dataset.targetId === item.targetId) {
+        item.status = "correct";
+        zone.classList.add("correct");
+        const locked = document.createElement("div");
+        locked.className = "quiz-label locked";
+        locked.textContent = item.label;
+        zone.appendChild(locked);
+        updateQuizScore();
+        renderQuizLabels();
+      } else {
+        if (zone) zone.classList.add("wrong");
+      }
+      ghost.remove();
+      setDraggingState(false);
+    };
+
+    document.addEventListener("pointermove", move);
+    document.addEventListener("pointerup", end);
   }
 
   // Load mindmap order
@@ -857,6 +1380,12 @@
     expandToModel(model);
     hideWelcome();
     clearInfoPanels();
+    if (isTestMode && !isDnaLesson(model)) {
+      setTestMode(false);
+    }
+    if (window.innerWidth <= 768) {
+      toggleSidebar(false);
+    }
     
     // Clear old overlays when switching models
     clearOverlays();
@@ -882,6 +1411,9 @@
     }
     labelElements.clear();
     hotspotElements.clear();
+    dropzoneElements.clear();
+    const dropzoneContainer = el("quizDropzones");
+    if (dropzoneContainer) dropzoneContainer.innerHTML = "";
   }
 
   function setPanel(it, isModel = false) {
@@ -941,6 +1473,9 @@
     showDetailBox(it);
     showFunFactBox(it);
     updateLabels();
+    if (window.innerWidth <= 768) {
+      toggleSidebar(false);
+    }
   }
 
   function showDetailBox(it) {
@@ -1161,6 +1696,15 @@
         const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
         createFloatingLabel(it, coord.x, coord.y, existingLabel);
         seen.add(it.id);
+
+        if (isTestMode && quizState) {
+          const zone = dropzoneElements.get(it.id);
+          if (zone) {
+            zone.style.left = coord.x + "px";
+            zone.style.top = coord.y + "px";
+            zone.classList.add("active");
+          }
+        }
         
         if (processedCount === totalItems) {
           cleanupOverlay(seen);
@@ -1248,6 +1792,12 @@
               updateLabels();
               optimizedRenderLoop();
             }, 800);
+
+            api.getCameraLookAt(function(err, cam) {
+              if (!err && cam && DATA.modelUid) {
+                defaultCameras.set(DATA.modelUid, { position: cam.position, target: cam.target });
+              }
+            });
           });
         });
       },
@@ -1266,6 +1816,42 @@
     renderModelTree();
     if (CURRENT_MODEL) renderList();
   });
+
+  if (el("btnSidebar")) {
+    el("btnSidebar").addEventListener("click", () => toggleSidebar());
+  }
+  if (el("drawerOverlay")) {
+    el("drawerOverlay").addEventListener("click", () => toggleSidebar(false));
+  }
+  if (el("btnPresenter")) {
+    el("btnPresenter").addEventListener("click", () => setPresenterMode(!presenterMode));
+  }
+  if (el("btnResetCamera")) {
+    el("btnResetCamera").addEventListener("click", resetCamera);
+  }
+  if (el("btnTestMode")) {
+    el("btnTestMode").addEventListener("click", () => setTestMode(!isTestMode));
+  }
+  if (el("btnQuizClose")) {
+    el("btnQuizClose").addEventListener("click", () => setTestMode(false));
+  }
+  if (el("btnQuizReset")) {
+    el("btnQuizReset").addEventListener("click", resetQuiz);
+  }
+  if (el("btnQuizHint")) {
+    el("btnQuizHint").addEventListener("click", highlightHint);
+  }
+
+  document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+    const typing = tag === "input" || tag === "textarea" || (e.target && e.target.isContentEditable);
+    if (!typing && e.key.toLowerCase() === "r") {
+      resetCamera();
+    }
+    if (e.key === "Escape" && sidebarOpen) {
+      toggleSidebar(false);
+    }
+  });
   
 
   window.addEventListener("resize", () => {
@@ -1282,6 +1868,10 @@
     showWelcome();
     if (!pollHandle) {
       pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("mode") === "present") {
+      setPresenterMode(true);
     }
   });
 
