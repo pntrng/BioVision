@@ -10,6 +10,7 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
   
   <style>
     /* Đảm bảo container viewer có position relative */
@@ -39,39 +40,39 @@
     .hotspot {
       position: absolute;
       transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       border: 2px solid #fff;
-      background: rgba(59, 130, 246, 0.8);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      background: color-mix(in srgb, var(--color-primary) 80%, transparent);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
       pointer-events: auto;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       z-index: 1001;
     }
     
     .hotspot.active {
-      background: rgba(34, 197, 94, 0.9);
+      background: color-mix(in srgb, var(--color-success) 75%, transparent);
       border-color: #fff;
-      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.6);
-      transform: translate(-50%, -50%) scale(1.5);
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.5);
+      transform: translate(-50%, -50%) scale(1.4);
     }
     
     .hotspot:hover {
-      transform: translate(-50%, -50%) scale(1.3);
+      transform: translate(-50%, -50%) scale(1.25);
     }
     
     /* Floating label - thông tin hiển thị */
     .floating-label {
       position: absolute;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 250, 251, 0.98) 100%);
+      background: var(--color-surface);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border: 2px solid rgba(59, 130, 246, 0.3);
+      border: 1px solid var(--color-border);
       border-radius: 12px;
       padding: 10px 14px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
       pointer-events: auto;
       cursor: pointer;
       min-width: 120px;
@@ -79,7 +80,7 @@
       z-index: 1002;
       opacity: 0;
       transform: translateY(-10px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.2s ease, opacity 0.2s ease;
       overflow: visible;
     }
 
@@ -92,21 +93,20 @@
     }
     
     .floating-label.active {
-      border-color: rgba(34, 197, 94, 0.5);
-      box-shadow: 0 8px 32px rgba(34, 197, 94, 0.25), 0 0 0 1px rgba(34, 197, 94, 0.1);
-      background: linear-gradient(135deg, rgba(240, 253, 244, 0.98) 0%, rgba(255, 255, 255, 0.98) 100%);
+      border-color: color-mix(in srgb, var(--color-success) 60%, var(--color-border));
+      box-shadow: 0 10px 26px rgba(34, 197, 94, 0.2);
     }
     
     .label-title {
       font-weight: 700;
       font-size: 13px;
-      color: #1e40af;
+      color: var(--color-text);
       margin-bottom: 4px;
       line-height: 1.3;
     }
     
     .floating-label.active .label-title {
-      color: #15803d;
+      color: var(--color-success);
     }
     
     .label-content {
@@ -116,12 +116,12 @@
       white-space: normal;
     }
 
-    /* Fixed detail box (top-right) */
+    /* Fixed detail box (top-left) */
     #detailBox {
       position: absolute;
       top: 16px;
-      right: 16px;
-      width: 380px;
+      left: 16px;
+      width: 360px;
       max-width: calc(100% - 32px);
       max-height: calc(100% - 32px);
       overflow: auto;
@@ -129,10 +129,10 @@
       pointer-events: auto;
     }
 
-    /* Fun fact box (bottom-right) */
+    /* Fun fact box (bottom-left) */
     #funFactBox {
       position: absolute;
-      right: 16px;
+      left: 16px;
       bottom: 16px;
       width: 360px;
       max-width: calc(100% - 32px);
@@ -140,6 +140,45 @@
       overflow: auto;
       z-index: 1003;
       pointer-events: auto;
+    }
+
+    #viewerLoading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.6);
+      color: #f8fafc;
+      z-index: 1005;
+      backdrop-filter: blur(3px);
+    }
+
+    #viewerLoading.hidden {
+      display: none;
+    }
+
+    .loading-card {
+      width: min(420px, 90%);
+      padding: 24px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 12px;
+      border-radius: 999px;
+      border: 3px solid rgba(248, 250, 252, 0.3);
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     #welcomePanel {
@@ -155,32 +194,32 @@
     }
 
     .welcome-card {
-      background: rgba(255, 255, 255, 0.98);
-      border: 2px solid rgba(59, 130, 246, 0.25);
-      border-radius: 20px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
       padding: 24px 28px;
-      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
     .welcome-title {
       font-size: 26px;
       font-weight: 800;
-      color: #1d4ed8;
+      color: var(--color-text);
       margin-bottom: 8px;
     }
 
     .welcome-subtitle {
       font-size: 14px;
-      color: #475569;
+      color: var(--color-muted);
       margin-bottom: 16px;
     }
 
     .welcome-steps {
       margin: 0;
       padding-left: 18px;
-      color: #334155;
+      color: var(--color-text);
       font-size: 14px;
       line-height: 1.6;
     }
@@ -188,10 +227,10 @@
     .welcome-hint {
       margin-top: 16px;
       padding: 12px 14px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      background: #f1f5ff;
+      border: 1px solid #dbeafe;
       border-radius: 12px;
-      color: #1e40af;
+      color: var(--color-muted);
       font-size: 13px;
     }
 
@@ -254,8 +293,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      background: rgba(255, 255, 255, 0.96);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+      background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+      border-bottom: 1px solid var(--color-border);
       z-index: 1100;
       backdrop-filter: blur(10px);
     }
@@ -263,7 +302,7 @@
     #topbar .topbar-title {
       font-weight: 700;
       font-size: 14px;
-      color: #1e40af;
+      color: var(--color-text);
       letter-spacing: 0.02em;
     }
 
@@ -273,17 +312,90 @@
       gap: 8px;
     }
 
+    #left {
+      background: var(--color-surface);
+      border-color: var(--color-border);
+    }
+
+    #left .section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--color-muted);
+    }
+
+    #q {
+      border: 1px solid var(--color-border);
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 10px 12px 10px 36px;
+      font-size: 0.95rem;
+      color: var(--color-text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #q:focus {
+      border-color: color-mix(in srgb, var(--color-primary) 60%, var(--color-border));
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      outline: none;
+      background: #fff;
+    }
+
+    .tree-item {
+      padding: 8px 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-text);
+      transition: background 0.18s ease, color 0.18s ease;
+      cursor: pointer;
+    }
+
+    .tree-item:hover {
+      background: #f1f5f9;
+    }
+
+    .tree-item.active {
+      background: #e0f2fe;
+      border-left: 3px solid var(--color-primary);
+      padding-left: 10px;
+      font-weight: 600;
+    }
+
+    .tree-item small {
+      color: var(--color-muted);
+    }
+
+    #panel {
+      background: var(--color-surface);
+    }
+
+    #pFunFact {
+      background: #fef9c3;
+      border-color: #fde68a;
+    }
+
+    body.hide-labels .floating-label {
+      display: none !important;
+    }
+
+    body.focus-mode #detailBox,
+    body.focus-mode #funFactBox {
+      border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+      box-shadow: 0 12px 32px rgba(37, 99, 235, 0.18);
+    }
+
     .topbar-btn,
     .viewer-btn {
       height: var(--control-size);
       min-width: var(--control-size);
       padding: 0 12px;
       border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: #ffffff;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
       font-size: 13px;
       font-weight: 600;
-      color: #1e293b;
+      color: var(--color-text);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -302,7 +414,7 @@
     .viewer-controls {
       position: absolute;
       right: 16px;
-      bottom: 16px;
+      top: 16px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -310,8 +422,8 @@
     }
 
     .viewer-btn.primary {
-      border-color: rgba(59, 130, 246, 0.6);
-      background: #2563eb;
+      border-color: var(--color-primary);
+      background: var(--color-primary);
       color: #fff;
     }
 
@@ -324,8 +436,7 @@
     }
 
     body.presenter #topbar {
-      background: rgba(15, 23, 42, 0.6);
-      color: #f8fafc;
+      background: rgba(15, 23, 42, 0.7);
     }
 
     body.presenter #topbar .topbar-title {
@@ -334,7 +445,13 @@
 
     body.presenter #detailBox,
     body.presenter #funFactBox {
-      transform: scale(1.05);
+      transform: scale(1.02);
+    }
+
+    body.presenter .viewer-btn,
+    body.presenter .topbar-btn {
+      height: 52px;
+      font-size: 14px;
     }
 
     #drawerOverlay {
@@ -352,93 +469,28 @@
       display: block;
     }
 
-    body.dragging #api-frame {
-      pointer-events: none;
-    }
-
-    .quiz-panel {
+    #presenterToolbar {
       position: absolute;
-      left: 16px;
+      left: 50%;
       bottom: 16px;
-      width: 320px;
-      max-width: calc(100% - 32px);
-      background: rgba(255, 255, 255, 0.98);
-      border: 2px solid rgba(56, 189, 248, 0.3);
-      border-radius: 16px;
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+      transform: translateX(-50%);
+      display: none;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.4);
       z-index: 1004;
-      padding: 14px;
-      display: none;
     }
 
-    .quiz-panel.active {
-      display: block;
-    }
-
-    #quizDropzones {
-      position: absolute;
-      inset: 0;
-      z-index: 1002;
-      pointer-events: none;
-    }
-
-    .quiz-labels {
+    body.presenter #presenterToolbar {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
     }
 
-    .quiz-label {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #e0f2fe;
-      border: 1px solid #7dd3fc;
+    #presenterToolbar .btn {
+      background: rgba(248, 250, 252, 0.9);
+      border-color: rgba(148, 163, 184, 0.6);
       color: #0f172a;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
-    }
-
-    .quiz-label.locked {
-      background: #dcfce7;
-      border-color: #22c55e;
-      cursor: default;
-    }
-
-    .quiz-dropzone {
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 2px dashed rgba(14, 116, 144, 0.8);
-      background: rgba(6, 182, 212, 0.15);
-      transform: translate(-50%, -50%);
-      z-index: 1002;
-      pointer-events: auto;
-      display: none;
-    }
-
-    .quiz-dropzone.active {
-      display: block;
-    }
-
-    .quiz-dropzone.correct {
-      border-color: #16a34a;
-      background: rgba(22, 163, 74, 0.2);
-    }
-
-    .quiz-dropzone.wrong {
-      border-color: #dc2626;
-      background: rgba(220, 38, 38, 0.2);
-    }
-
-    .quiz-score {
-      font-size: 12px;
-      color: #0f172a;
-      font-weight: 700;
     }
 
     @media (max-width: 1024px) {
@@ -484,14 +536,11 @@
 
       .viewer-controls {
         right: 12px;
-        bottom: 12px;
+        top: 12px;
       }
 
-      .quiz-panel {
-        left: 8px;
-        right: 8px;
-        bottom: 8px;
-        width: auto;
+      #presenterToolbar {
+        bottom: 12px;
       }
     }
 
@@ -549,7 +598,7 @@
 
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
-<body class="m-0 h-screen flex font-sans bg-gradient-to-br from-gray-50 to-gray-100">
+<body class="m-0 h-screen flex font-sans">
   <div id="topbar">
     <div class="flex items-center gap-3">
       <button id="btnSidebar" class="topbar-btn" title="Mở cây kiến thức">☰</button>
@@ -590,14 +639,14 @@
 
       <!-- Model Tree -->
       <div>
-        <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wider">🌳 Cây kiến thức</h3>
+        <h3 class="section-title mb-4 uppercase tracking-wider">🌳 Cây kiến thức</h3>
         <div id="modelTree" class="space-y-1">
           <!-- Tree view will be inserted here -->
         </div>
       </div>
 
       <!-- Detail Panel -->
-      <div id="panel" class="hidden bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 border-2 border-pink-200 rounded-2xl p-6 shadow-xl mt-6">
+      <div id="panel" class="hidden panel p-6 mt-6">
         <h3 id="pTitle" class="text-2xl font-bold text-purple-800 mb-3 border-b-2 border-pink-200 pb-2"></h3>
         <div id="pContent" class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap mb-3"></div>
         <div id="pFunFact" class="hidden mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
@@ -618,7 +667,14 @@
     <iframe id="api-frame" class="w-full h-full border-0" allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"></iframe>
     <svg id="svg-overlay"></svg>
     <div id="overlay"></div>
-    <div id="quizDropzones"></div>
+    <div id="viewerLoading" class="hidden">
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <div id="loadingTitle" class="text-base font-semibold">Đang tải mô hình…</div>
+        <div id="loadingMessage" class="text-sm text-slate-200 mt-2">Khởi tạo viewer, vui lòng chờ.</div>
+        <button id="loadingRetry" class="btn btn-primary mt-4 hidden">Tải lại</button>
+      </div>
+    </div>
     <div id="welcomePanel" class="hidden">
       <div class="welcome-card">
         <div class="welcome-title">Chào mừng đến BioVision 3D</div>
@@ -636,51 +692,47 @@
         </div>
       </div>
     </div>
-    <div id="detailBox" class="hidden bg-white/95 backdrop-blur border-2 border-blue-200 rounded-2xl shadow-2xl">
+    <div id="detailBox" class="hidden card">
       <div class="p-4">
         <div class="flex items-start justify-between gap-3">
           <div>
-            <div class="text-xs font-semibold text-blue-700">🧩 Chi tiết điểm</div>
-            <div id="detailTitle" class="mt-1 text-lg font-bold text-gray-900"></div>
+            <div class="text-xs font-semibold text-slate-600">🧩 Chi tiết điểm</div>
+            <div id="detailTitle" class="mt-1 text-lg font-bold text-slate-900"></div>
           </div>
-          <button id="detailClose" class="shrink-0 px-2 py-1 text-xs font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">✕</button>
+          <button id="detailClose" class="topbar-btn" title="Đóng">✕</button>
         </div>
-        <div id="detailContent" class="mt-3 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed"></div>
+        <div id="detailContent" class="mt-3 text-sm text-slate-700 whitespace-pre-wrap leading-relaxed"></div>
         <div id="detailLinkWrap" class="hidden mt-4">
-          <a id="detailLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-block px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold">
+          <a id="detailLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             Mở liên kết
           </a>
         </div>
       </div>
     </div>
 
-    <div id="funFactBox" class="hidden bg-gradient-to-br from-yellow-50 via-amber-50 to-white/95 backdrop-blur border-2 border-yellow-300 rounded-2xl shadow-2xl">
+    <div id="funFactBox" class="hidden card">
       <div class="p-4">
         <div class="flex items-start justify-between gap-3">
           <div>
-            <div class="text-xs font-semibold text-yellow-800">✨ Góc thú vị</div>
-            <div id="funFactTitle" class="mt-1 text-base font-bold text-gray-900"></div>
+            <div class="text-xs font-semibold text-amber-700">✨ Góc thú vị</div>
+            <div id="funFactTitle" class="mt-1 text-base font-bold text-slate-900"></div>
           </div>
-          <button id="funFactClose" class="shrink-0 px-2 py-1 text-xs font-semibold text-gray-700 hover:text-gray-900 hover:bg-yellow-100 rounded-lg">✕</button>
+          <button id="funFactClose" class="topbar-btn" title="Đóng">✕</button>
         </div>
-        <div id="funFactContent" class="mt-3 text-sm text-gray-800 whitespace-pre-wrap leading-relaxed"></div>
+        <div id="funFactContent" class="mt-3 text-sm text-slate-800 whitespace-pre-wrap leading-relaxed"></div>
       </div>
     </div>
     <div class="viewer-controls">
       <button id="btnResetCamera" class="viewer-btn primary" title="Reset góc nhìn (R)">↺ Reset góc nhìn</button>
-      <button id="btnTestMode" class="viewer-btn" title="Kiểm tra Matching">🧪 Kiểm tra</button>
+      <button id="btnFocusMode" class="viewer-btn" title="Focus mode">🎯 Focus mode</button>
+      <button id="btnToggleLabels" class="viewer-btn" title="Ẩn/Hiện nhãn">🏷️ Nhãn</button>
     </div>
-    <div id="quizPanel" class="quiz-panel">
-      <div class="flex items-center justify-between">
-        <div class="font-semibold text-sm text-cyan-900">Kiểm tra Matching</div>
-        <button id="btnQuizClose" class="topbar-btn" title="Đóng">✕</button>
-      </div>
-      <div class="quiz-score" id="quizScore">0/0 đúng</div>
-      <div class="quiz-labels" id="quizLabels"></div>
-      <div class="flex items-center gap-2 mt-3">
-        <button id="btnQuizReset" class="topbar-btn">Làm lại</button>
-        <button id="btnQuizHint" class="topbar-btn">Gợi ý</button>
-      </div>
+    <div id="presenterToolbar">
+      <button id="btnPrevItem" class="btn btn-primary">← Prev</button>
+      <button id="btnNextItem" class="btn btn-primary">Next →</button>
+      <button id="btnPresenterFocus" class="btn">Focus</button>
+      <button id="btnPresenterReset" class="btn">Reset view</button>
+      <button id="btnPresenterLabels" class="btn">Nhãn</button>
     </div>
   </div>
 
@@ -704,13 +756,14 @@
   let pollHandle = null;
   let presenterMode = false;
   let sidebarOpen = false;
-  let isTestMode = false;
-  let isDraggingLabel = false;
-  let quizState = null;
-  let dropzoneElements = new Map(); // hotspotId -> element
+  let focusMode = false;
+  let labelsEnabled = true;
   const defaultCameras = new Map(); // modelUid -> { position, target }
+  let annotationList = [];
+  let viewerLoadTimeout = null;
 
   const el = (id) => document.getElementById(id);
+  // Matching quiz config giữ lại cho tương lai (tạm thời không dùng).
   const QUIZ_CONFIG = {
     dna: {
       modelNameIncludes: ["DNA"],
@@ -767,6 +820,11 @@
     if (presenterBtn) {
       presenterBtn.textContent = presenterMode ? "⬅️ Thoát trình chiếu" : "🖥️ Trình chiếu";
     }
+    try {
+      localStorage.setItem("biovision_presenter_mode", presenterMode ? "1" : "0");
+    } catch (e) {
+      // ignore storage errors
+    }
   }
 
   function toggleSidebar(force) {
@@ -776,11 +834,6 @@
     sidebarOpen = typeof force === "boolean" ? force : !sidebarOpen;
     left.classList.toggle("open", sidebarOpen);
     overlay.classList.toggle("active", sidebarOpen);
-  }
-
-  function setDraggingState(active) {
-    isDraggingLabel = active;
-    document.body.classList.toggle("dragging", active);
   }
 
   function getDefaultCamera(model) {
@@ -799,175 +852,101 @@
     if (!api || !CURRENT_MODEL) return;
     const cam = getDefaultCamera(CURRENT_MODEL);
     if (!cam) return;
-    api.setCameraLookAt(cam.position, cam.target, 1.2, function(){});
+    api.setCameraLookAt(cam.position, cam.target, 0.6, function(){});
   }
 
-  function isDnaLesson(model) {
-    if (!model) return false;
-    const name = (model.name || "").toLowerCase();
-    return QUIZ_CONFIG.dna.modelNameIncludes.some(token => name.includes(token.toLowerCase()));
-  }
-
-  function buildQuizState() {
-    if (!CURRENT_MODEL || !isDnaLesson(CURRENT_MODEL)) {
-      return null;
-    }
-    const items = QUIZ_CONFIG.dna.items
-      .map(entry => {
-        const target = (CURRENT_MODEL.items || []).find(it => it.id === entry.id);
-        if (!target) return null;
-        return {
-          id: entry.id,
-          label: entry.label,
-          targetId: entry.id,
-          status: "pending"
-        };
-      })
-      .filter(Boolean);
-    return {
-      lessonId: "dna",
-      items,
-      correctCount: 0
-    };
-  }
-
-  function updateQuizScore() {
-    const scoreEl = el("quizScore");
-    if (!scoreEl || !quizState) return;
-    const total = quizState.items.length;
-    const correct = quizState.items.filter(it => it.status === "correct").length;
-    scoreEl.textContent = `${correct}/${total} đúng`;
-  }
-
-  function renderQuizLabels() {
-    const labelsEl = el("quizLabels");
-    if (!labelsEl || !quizState) return;
-    labelsEl.innerHTML = "";
-    quizState.items.forEach(item => {
-      if (item.status === "correct") return;
-      const label = document.createElement("div");
-      label.className = "quiz-label";
-      label.textContent = item.label;
-      label.dataset.labelId = item.id;
-      label.addEventListener("pointerdown", startLabelDrag);
-      labelsEl.appendChild(label);
-    });
-    updateQuizScore();
-  }
-
-  function renderDropzones(active) {
-    const container = el("quizDropzones");
-    if (!container) return;
-    container.innerHTML = "";
-    dropzoneElements.clear();
-    if (!quizState) return;
-    quizState.items.forEach(item => {
-      const zone = document.createElement("div");
-      zone.className = "quiz-dropzone";
-      zone.dataset.targetId = item.targetId;
-      if (active) zone.classList.add("active");
-      container.appendChild(zone);
-      dropzoneElements.set(item.targetId, zone);
-    });
-  }
-
-  function setTestMode(enabled) {
-    if (enabled && !CURRENT_MODEL) {
-      alert("Hãy chọn mô hình trước khi vào chế độ kiểm tra.");
-      return;
-    }
-    if (enabled && !isDnaLesson(CURRENT_MODEL)) {
-      alert("Chế độ kiểm tra hiện chỉ mở cho bài DNA.");
-      return;
-    }
-    isTestMode = enabled;
-    const panel = el("quizPanel");
-    if (panel) panel.classList.toggle("active", isTestMode);
-    if (isTestMode) {
-      quizState = buildQuizState();
-      renderDropzones(true);
-      renderQuizLabels();
-      updateLabels();
-    } else {
-      quizState = null;
-      renderDropzones(false);
-      updateLabels();
+  function setFocusMode(enabled) {
+    focusMode = enabled;
+    document.body.classList.toggle("focus-mode", focusMode);
+    const focusBtn = el("btnFocusMode");
+    if (focusBtn) focusBtn.textContent = focusMode ? "🎯 Focus ON" : "🎯 Focus mode";
+    const presenterFocusBtn = el("btnPresenterFocus");
+    if (presenterFocusBtn) presenterFocusBtn.textContent = focusMode ? "Focus ON" : "Focus";
+    if (focusMode && selectedId) {
+      const item = (DATA.items || []).find(it => it.id === selectedId);
+      if (item) focusOnItem(item, 0.6);
     }
   }
 
-  function resetQuiz() {
-    if (!quizState) return;
-    quizState.items.forEach(it => { it.status = "pending"; });
-    renderDropzones(true);
-    renderQuizLabels();
+  function setLabelsEnabled(enabled) {
+    labelsEnabled = enabled;
+    document.body.classList.toggle("hide-labels", !labelsEnabled);
+    const labelBtn = el("btnToggleLabels");
+    if (labelBtn) labelBtn.textContent = labelsEnabled ? "🏷️ Nhãn" : "🏷️ Ẩn nhãn";
+    const presenterLabelsBtn = el("btnPresenterLabels");
+    if (presenterLabelsBtn) presenterLabelsBtn.textContent = labelsEnabled ? "Nhãn" : "Ẩn nhãn";
     updateLabels();
   }
 
-  function highlightHint() {
-    if (!quizState) return;
-    const pending = quizState.items.find(it => it.status !== "correct");
-    if (!pending) return;
-    const zone = dropzoneElements.get(pending.targetId);
-    if (zone) {
-      zone.classList.add("active");
-      zone.classList.add("correct");
-      setTimeout(() => zone.classList.remove("correct"), 600);
+  function showLoading(title, message, showRetry = false) {
+    const overlay = el("viewerLoading");
+    if (!overlay) return;
+    overlay.classList.remove("hidden");
+    el("loadingTitle").textContent = title || "Đang tải mô hình…";
+    el("loadingMessage").textContent = message || "Khởi tạo viewer, vui lòng chờ.";
+    const retryBtn = el("loadingRetry");
+    if (retryBtn) retryBtn.classList.toggle("hidden", !showRetry);
+  }
+
+  function hideLoading() {
+    const overlay = el("viewerLoading");
+    if (overlay) overlay.classList.add("hidden");
+  }
+
+  function scheduleViewerTimeout() {
+    if (viewerLoadTimeout) clearTimeout(viewerLoadTimeout);
+    viewerLoadTimeout = setTimeout(() => {
+      showLoading("Không tải được mô hình", "Vui lòng kiểm tra mạng hoặc thử lại.", true);
+    }, 25000);
+  }
+
+  function focusOnItem(item, duration = 0.6) {
+    if (!api || !item) return;
+    const name = (item.name || "").toLowerCase();
+    const annotationIndex = annotationList.findIndex(ann => {
+      const annName = (ann.name || "").toLowerCase();
+      return annName === name || annName.includes(name) || name.includes(annName);
+    });
+    if (annotationIndex >= 0 && typeof api.gotoAnnotation === "function") {
+      api.gotoAnnotation(annotationIndex, { duration });
+      return;
+    }
+    if (item.cam && item.cam.position && item.cam.target) {
+      api.setCameraLookAt(item.cam.position, item.cam.target, duration, function(){});
     }
   }
 
-  function startLabelDrag(ev) {
-    if (!quizState) return;
-    const labelId = ev.currentTarget.dataset.labelId;
-    if (!labelId) return;
-    const label = ev.currentTarget;
-    const rect = label.getBoundingClientRect();
-    const ghost = label.cloneNode(true);
-    ghost.style.position = "fixed";
-    ghost.style.left = `${rect.left}px`;
-    ghost.style.top = `${rect.top}px`;
-    ghost.style.width = `${rect.width}px`;
-    ghost.style.zIndex = "1200";
-    ghost.style.pointerEvents = "none";
-    ghost.classList.add("dragging");
-    document.body.appendChild(ghost);
-    const offsetX = ev.clientX - rect.left;
-    const offsetY = ev.clientY - rect.top;
-    setDraggingState(true);
-
-    const move = (e) => {
-      ghost.style.left = `${e.clientX - offsetX}px`;
-      ghost.style.top = `${e.clientY - offsetY}px`;
-      const target = document.elementFromPoint(e.clientX, e.clientY);
-      dropzoneElements.forEach(zone => zone.classList.remove("wrong"));
-      if (target && target.classList.contains("quiz-dropzone")) {
-        target.classList.add("active");
+  function getOrderedItems(model) {
+    if (!model || !Array.isArray(model.items)) return [];
+    let items = model.items.slice();
+    if (mindmapOrder && mindmapOrder.components_by_model) {
+      const key = `${normalizeGrade(model.grade)}::${normalizeChapter(model.chapter)}::${model.name || ""}`;
+      if (mindmapOrder.components_by_model[key]) {
+        items = items.sort((a, b) => {
+          const idxA = mindmapOrder.components_by_model[key].indexOf(a.name || "");
+          const idxB = mindmapOrder.components_by_model[key].indexOf(b.name || "");
+          if (idxA === -1 && idxB === -1) return (a.name || "").localeCompare(b.name || "");
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
       }
-    };
+    }
+    return items;
+  }
 
-    const end = (e) => {
-      document.removeEventListener("pointermove", move);
-      document.removeEventListener("pointerup", end);
-      const target = document.elementFromPoint(e.clientX, e.clientY);
-      const zone = target && target.classList.contains("quiz-dropzone") ? target : null;
-      const item = quizState.items.find(it => it.id === labelId);
-      if (zone && item && zone.dataset.targetId === item.targetId) {
-        item.status = "correct";
-        zone.classList.add("correct");
-        const locked = document.createElement("div");
-        locked.className = "quiz-label locked";
-        locked.textContent = item.label;
-        zone.appendChild(locked);
-        updateQuizScore();
-        renderQuizLabels();
-      } else {
-        if (zone) zone.classList.add("wrong");
-      }
-      ghost.remove();
-      setDraggingState(false);
-    };
-
-    document.addEventListener("pointermove", move);
-    document.addEventListener("pointerup", end);
+  function selectPrevNext(direction) {
+    if (!CURRENT_MODEL) return;
+    const items = getOrderedItems(CURRENT_MODEL);
+    if (!items.length) return;
+    const currentIndex = items.findIndex(it => it.id === selectedId);
+    let nextIndex = currentIndex;
+    if (direction === "next") {
+      nextIndex = currentIndex >= 0 ? (currentIndex + 1) % items.length : 0;
+    } else {
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+    }
+    selectItem(items[nextIndex]);
   }
 
   // Load mindmap order
@@ -1153,8 +1132,7 @@
     gradeDiv.className = "mb-1";
     
     const gradeHeader = document.createElement("div");
-    gradeHeader.className = "flex items-center px-3 py-2 rounded-lg cursor-pointer transition-all hover:bg-pink-100 group";
-    gradeHeader.style.backgroundColor = isExpanded ? '#fce7f3' : '#fef3f2';
+    gradeHeader.className = `tree-item ${isExpanded ? "active" : ""}`;
     
     const icon = document.createElement("span");
     icon.className = "text-lg mr-2 transition-transform";
@@ -1162,14 +1140,14 @@
     icon.style.transform = isExpanded ? "rotate(0deg)" : "rotate(-90deg)";
     
     const gradeText = document.createElement("span");
-    gradeText.className = "font-bold text-sm text-pink-800";
+    gradeText.className = "font-semibold text-sm";
     gradeText.textContent = `Khối ${grade}`;
     
     gradeHeader.appendChild(icon);
     gradeHeader.appendChild(gradeText);
     
     const chaptersContainer = document.createElement("div");
-    chaptersContainer.className = "ml-4 mt-1 space-y-1";
+    chaptersContainer.className = "ml-3 mt-1 space-y-1";
     chaptersContainer.style.display = isExpanded ? "block" : "none";
     
     // Sắp xếp chapters theo mindmap order
@@ -1214,22 +1192,21 @@
     chapterDiv.className = "mb-1";
     
     const chapterHeader = document.createElement("div");
-    chapterHeader.className = "flex items-center px-3 py-1.5 rounded-lg cursor-pointer transition-all hover:bg-purple-100 group";
-    chapterHeader.style.backgroundColor = isExpanded ? '#f3e8ff' : '#faf5ff';
+    chapterHeader.className = `tree-item ${isExpanded ? "active" : ""}`;
     
     const icon = document.createElement("span");
     icon.className = "text-sm mr-2";
     icon.textContent = isExpanded ? "📁" : "📂";
     
     const chapterText = document.createElement("span");
-    chapterText.className = "font-semibold text-xs text-purple-800";
+    chapterText.className = "font-semibold text-xs";
     chapterText.textContent = escapeHtml(chapter);
     
     chapterHeader.appendChild(icon);
     chapterHeader.appendChild(chapterText);
     
     const modelsContainer = document.createElement("div");
-    modelsContainer.className = "ml-4 mt-1 space-y-1";
+    modelsContainer.className = "ml-3 mt-1 space-y-1";
     modelsContainer.style.display = isExpanded ? "block" : "none";
     
     // Sắp xếp models theo mindmap order
@@ -1279,20 +1256,18 @@
     modelDiv.className = "mb-1";
     
     const modelHeader = document.createElement("div");
-    modelHeader.className = `flex items-center px-3 py-1.5 rounded-lg cursor-pointer transition-all ${
-      isSelected ? "bg-blue-200 border-2 border-blue-400" : "hover:bg-blue-50"
-    }`;
+    modelHeader.className = `tree-item ${isSelected ? "active" : ""}`;
     
     const icon = document.createElement("span");
     icon.className = "text-xs mr-2";
     icon.textContent = isExpanded ? "🎯" : "🎨";
     
     const modelText = document.createElement("span");
-    modelText.className = `font-medium text-xs ${isSelected ? "text-blue-900" : "text-blue-800"}`;
+    modelText.className = "font-medium text-xs";
     modelText.textContent = escapeHtml(model.name || "Mô hình");
     
     const itemsCount = document.createElement("span");
-    itemsCount.className = "ml-auto text-xs text-gray-500";
+    itemsCount.className = "ml-auto text-xs";
     itemsCount.textContent = `(${(model.items || []).length})`;
     
     modelHeader.appendChild(icon);
@@ -1300,7 +1275,7 @@
     modelHeader.appendChild(itemsCount);
     
     const componentsContainer = document.createElement("div");
-    componentsContainer.className = "ml-4 mt-1 space-y-0.5";
+    componentsContainer.className = "ml-3 mt-1 space-y-0.5";
     componentsContainer.style.display = isExpanded ? "block" : "none";
     
     // Sắp xếp components theo mindmap order
@@ -1347,12 +1322,10 @@
   function createComponentNode(model, item) {
     const isSelected = selectedId === item.id;
     const itemDiv = document.createElement("div");
-    itemDiv.className = `px-3 py-1 rounded-md cursor-pointer transition-all text-xs ${
-      isSelected ? "bg-yellow-200 border-l-4 border-yellow-500" : "hover:bg-yellow-50"
-    }`;
+    itemDiv.className = `tree-item text-xs ${isSelected ? "active" : ""}`;
     
     const itemText = document.createElement("span");
-    itemText.className = isSelected ? "text-yellow-900 font-medium" : "text-yellow-800";
+    itemText.className = isSelected ? "font-semibold" : "";
     itemText.textContent = "• " + escapeHtml(item.name || "Thành phần");
     
     itemDiv.appendChild(itemText);
@@ -1380,9 +1353,7 @@
     expandToModel(model);
     hideWelcome();
     clearInfoPanels();
-    if (isTestMode && !isDnaLesson(model)) {
-      setTestMode(false);
-    }
+    annotationList = [];
     if (window.innerWidth <= 768) {
       toggleSidebar(false);
     }
@@ -1411,9 +1382,6 @@
     }
     labelElements.clear();
     hotspotElements.clear();
-    dropzoneElements.clear();
-    const dropzoneContainer = el("quizDropzones");
-    if (dropzoneContainer) dropzoneContainer.innerHTML = "";
   }
 
   function setPanel(it, isModel = false) {
@@ -1466,9 +1434,7 @@
 
   function selectItem(it) {
     selectedId = it.id;
-    if (api && it.cam) {
-      api.setCameraLookAt(it.cam.position, it.cam.target, it.cam.duration || 1.2, function(){});
-    }
+    focusOnItem(it, 0.6);
     setPanel(it, false);
     showDetailBox(it);
     showFunFactBox(it);
@@ -1618,6 +1584,14 @@
   function updateLabels() {
     if (!api) return;
     if (!DATA.items || DATA.items.length === 0) return;
+    if (!labelsEnabled) {
+      labelElements.forEach((val) => {
+        if (val.element && val.element.parentNode) {
+          val.element.parentNode.removeChild(val.element);
+        }
+      });
+      labelElements.clear();
+    }
     
     const overlay = el("overlay");
     if (!overlay) return;
@@ -1691,20 +1665,16 @@
         hs.style.top = coord.y + "px";
         hs.title = it.name || "Điểm";
 
-        // Label (name only): reuse element
-        const existingLabelEntry = labelElements.get(it.id);
-        const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
-        createFloatingLabel(it, coord.x, coord.y, existingLabel);
+        // Track seen hotspot
         seen.add(it.id);
 
-        if (isTestMode && quizState) {
-          const zone = dropzoneElements.get(it.id);
-          if (zone) {
-            zone.style.left = coord.x + "px";
-            zone.style.top = coord.y + "px";
-            zone.classList.add("active");
-          }
+        if (labelsEnabled) {
+          // Label (name only): reuse element
+          const existingLabelEntry = labelElements.get(it.id);
+          const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
+          createFloatingLabel(it, coord.x, coord.y, existingLabel);
         }
+
         
         if (processedCount === totalItems) {
           cleanupOverlay(seen);
@@ -1775,6 +1745,8 @@
     }
 
     clearOverlays();
+    showLoading("Đang tải mô hình…", "Khởi tạo viewer, vui lòng chờ.");
+    scheduleViewerTimeout();
 
     const iframe = el("api-frame");
     const client = new Sketchfab(iframe);
@@ -1785,8 +1757,14 @@
       ui_controls: 1,
       success: function(_api) {
         api = _api;
+        showLoading("Đang tải mô hình…", "Đang tải dữ liệu 3D…");
         api.start(function() {
           api.addEventListener("viewerready", function() {
+            if (viewerLoadTimeout) {
+              clearTimeout(viewerLoadTimeout);
+              viewerLoadTimeout = null;
+            }
+            hideLoading();
             renderList();
             setTimeout(() => {
               updateLabels();
@@ -1798,15 +1776,24 @@
                 defaultCameras.set(DATA.modelUid, { position: cam.position, target: cam.target });
               }
             });
+
+            if (typeof api.getAnnotationList === "function") {
+              api.getAnnotationList(function(err, list) {
+                if (!err && Array.isArray(list)) {
+                  annotationList = list;
+                }
+              });
+            }
           });
         });
       },
       error: function(err) {
         console.error("Error initializing viewer:", err);
-        const listEl = el("list");
-        if (listEl) {
-          listEl.innerHTML = "<div class='px-4 py-6 text-center text-sm text-red-500 bg-red-50 border-2 border-red-200 rounded-2xl'>Không tải được mô hình. (Model có thể chặn embed/API hoặc mạng lỗi.)</div>";
+        if (viewerLoadTimeout) {
+          clearTimeout(viewerLoadTimeout);
+          viewerLoadTimeout = null;
         }
+        showLoading("Không tải được mô hình", "Model có thể chặn embed/API hoặc mạng lỗi.", true);
       }
     });
   }
@@ -1829,17 +1816,32 @@
   if (el("btnResetCamera")) {
     el("btnResetCamera").addEventListener("click", resetCamera);
   }
-  if (el("btnTestMode")) {
-    el("btnTestMode").addEventListener("click", () => setTestMode(!isTestMode));
+  if (el("btnFocusMode")) {
+    el("btnFocusMode").addEventListener("click", () => setFocusMode(!focusMode));
   }
-  if (el("btnQuizClose")) {
-    el("btnQuizClose").addEventListener("click", () => setTestMode(false));
+  if (el("btnToggleLabels")) {
+    el("btnToggleLabels").addEventListener("click", () => setLabelsEnabled(!labelsEnabled));
   }
-  if (el("btnQuizReset")) {
-    el("btnQuizReset").addEventListener("click", resetQuiz);
+  if (el("btnPresenterFocus")) {
+    el("btnPresenterFocus").addEventListener("click", () => setFocusMode(!focusMode));
   }
-  if (el("btnQuizHint")) {
-    el("btnQuizHint").addEventListener("click", highlightHint);
+  if (el("btnPresenterReset")) {
+    el("btnPresenterReset").addEventListener("click", resetCamera);
+  }
+  if (el("btnPresenterLabels")) {
+    el("btnPresenterLabels").addEventListener("click", () => setLabelsEnabled(!labelsEnabled));
+  }
+  if (el("btnPrevItem")) {
+    el("btnPrevItem").addEventListener("click", () => selectPrevNext("prev"));
+  }
+  if (el("btnNextItem")) {
+    el("btnNextItem").addEventListener("click", () => selectPrevNext("next"));
+  }
+  if (el("loadingRetry")) {
+    el("loadingRetry").addEventListener("click", () => {
+      hideLoading();
+      initViewer();
+    });
   }
 
   document.addEventListener("keydown", (e) => {
@@ -1847,6 +1849,12 @@
     const typing = tag === "input" || tag === "textarea" || (e.target && e.target.isContentEditable);
     if (!typing && e.key.toLowerCase() === "r") {
       resetCamera();
+    }
+    if (!typing && e.key === "ArrowRight") {
+      selectPrevNext("next");
+    }
+    if (!typing && e.key === "ArrowLeft") {
+      selectPrevNext("prev");
     }
     if (e.key === "Escape" && sidebarOpen) {
       toggleSidebar(false);
@@ -1866,8 +1874,18 @@
   }).then(() => {
     renderModelTree();
     showWelcome();
+    setLabelsEnabled(labelsEnabled);
+    setFocusMode(false);
     if (!pollHandle) {
       pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
+    }
+    try {
+      const savedMode = localStorage.getItem("biovision_presenter_mode");
+      if (savedMode === "1") {
+        setPresenterMode(true);
+      }
+    } catch (e) {
+      // ignore storage errors
     }
     const params = new URLSearchParams(window.location.search);
     if (params.get("mode") === "present") {
@@ -1893,10 +1911,6 @@
     });
   }
   
-  // Search input listener
-  if (el("q")) {
-    el("q").addEventListener("input", renderModelTree);
-  }
 </script>
 </body>
 </html>
