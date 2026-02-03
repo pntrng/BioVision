@@ -236,7 +236,6 @@
       box-sizing: border-box;
     }
 
-    #left,
     #right {
       height: calc(100vh - var(--topbar-height));
     }
@@ -271,8 +270,17 @@
     }
 
     #left {
-      background: var(--color-surface);
-      border-color: var(--color-border);
+      position: absolute;
+      top: calc(var(--topbar-height) + 16px);
+      left: 16px;
+      height: calc(100vh - var(--topbar-height) - 32px);
+      width: 320px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      backdrop-filter: blur(8px);
+      z-index: 1002;
     }
 
     #left .section-title {
@@ -452,7 +460,10 @@
 
     @media (max-width: 1024px) {
       #left {
-        width: 320px;
+        width: 280px;
+        left: 12px;
+        top: calc(var(--topbar-height) + 12px);
+        height: calc(100vh - var(--topbar-height) - 24px);
       }
     }
 
@@ -470,6 +481,8 @@
         max-width: 360px;
         transition: left 0.25s ease;
         z-index: 1000;
+        border-radius: 0;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
       }
 
       #left.open {
@@ -568,7 +581,7 @@
   </div>
   <div id="drawerOverlay"></div>
   <!-- Sidebar -->
-  <div id="left" class="w-[400px] bg-white border-r-2 border-gray-200 shadow-xl overflow-y-auto">
+  <div id="left" class="bg-white/90 shadow-xl overflow-y-auto">
     <div class="p-8 space-y-6">
       <!-- Logo & Header -->
       <div class="border-b-2 border-gray-100 pb-6">
