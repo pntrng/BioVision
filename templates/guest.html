@@ -182,57 +182,14 @@
       to { transform: rotate(360deg); }
     }
 
-    #welcomePanel {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(720px, 90%);
-      max-height: 85%;
-      overflow: auto;
-      z-index: 1004;
-      pointer-events: auto;
-    }
-
-    .welcome-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 24px 28px;
-      box-shadow: var(--shadow);
+    .hero-tagline {
+      font-size: 12px;
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.35);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-
-    .welcome-title {
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--color-text);
-      margin-bottom: 8px;
-    }
-
-    .welcome-subtitle {
-      font-size: 14px;
-      color: var(--color-muted);
-      margin-bottom: 16px;
-    }
-
-    .welcome-steps {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--color-text);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .welcome-hint {
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: #f1f5ff;
-      border: 1px solid #dbeafe;
-      border-radius: 12px;
-      color: var(--color-muted);
-      font-size: 13px;
     }
 
     .float-in {
@@ -603,6 +560,7 @@
     <div class="flex items-center gap-3">
       <button id="btnSidebar" class="topbar-btn" title="Mở cây kiến thức">☰</button>
       <div class="topbar-title">BioVision 3D</div>
+      <div class="hero-tagline hidden md:block">Nền tảng học tập tương tác giúp bạn khám phá các mô hình Sinh học 3D trực quan.</div>
     </div>
     <div class="topbar-actions">
       <button id="btnPresenter" class="topbar-btn" title="Bật/Tắt trình chiếu">🖥️ Trình chiếu</button>
@@ -673,23 +631,6 @@
         <div id="loadingTitle" class="text-base font-semibold">Đang tải mô hình…</div>
         <div id="loadingMessage" class="text-sm text-slate-200 mt-2">Khởi tạo viewer, vui lòng chờ.</div>
         <button id="loadingRetry" class="btn btn-primary mt-4 hidden">Tải lại</button>
-      </div>
-    </div>
-    <div id="welcomePanel" class="hidden">
-      <div class="welcome-card">
-        <div class="welcome-title">Chào mừng đến BioVision 3D</div>
-        <div class="welcome-subtitle">
-          Nền tảng học tập tương tác giúp bạn khám phá mô hình Sinh học 3D bằng điểm hotspot trực quan.
-        </div>
-        <ol class="welcome-steps">
-          <li>Mở mục Khối → Chương → Mô hình ở cây kiến thức bên trái.</li>
-          <li>Click vào mô hình để tải 3D và hiển thị các hotspot.</li>
-          <li>Click trực tiếp vào hotspot (hoặc nhãn tên) để xem “Chi tiết điểm” và “Góc thú vị”.</li>
-          <li>Dùng ô tìm kiếm để tìm nhanh mô hình hoặc thành phần.</li>
-        </ol>
-        <div class="welcome-hint">
-          Mẹo: Nếu chưa thấy điểm, hãy xoay mô hình và zoom gần phần cần quan sát.
-        </div>
       </div>
     </div>
     <div id="detailBox" class="hidden card">
@@ -789,16 +730,6 @@
     expandedGrades.add(grade);
     expandedChapters.add(`${grade}::${chapter}`);
     if (model.id) expandedModels.add(model.id);
-  }
-
-  function showWelcome() {
-    const welcome = el("welcomePanel");
-    if (welcome) welcome.classList.remove("hidden");
-  }
-
-  function hideWelcome() {
-    const welcome = el("welcomePanel");
-    if (welcome) welcome.classList.add("hidden");
   }
 
   function clearInfoPanels() {
@@ -1348,7 +1279,6 @@
       items: model.items || []
     };
     expandToModel(model);
-    hideWelcome();
     clearInfoPanels();
     annotationList = [];
     if (window.innerWidth <= 768) {
@@ -1850,7 +1780,6 @@
     return loadAllData();
   }).then(() => {
     renderModelTree();
-    showWelcome();
     if (!pollHandle) {
       pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
     }
