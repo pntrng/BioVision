@@ -16,6 +16,7 @@
     /* Đảm bảo container viewer có position relative */
     #right {
       position: relative !important;
+      background: url("/static/img/biovision-hero.png") center/cover no-repeat;
     }
     
     /* Iframe nằm dưới overlay */
@@ -375,14 +376,13 @@
       border-color: #fde68a;
     }
 
-    body.hide-labels .floating-label {
-      display: none !important;
+    .card.show {
+      animation: cardIn 220ms ease-out;
     }
 
-    body.focus-mode #detailBox,
-    body.focus-mode #funFactBox {
-      border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
-      box-shadow: 0 12px 32px rgba(37, 99, 235, 0.18);
+    @keyframes cardIn {
+      from { transform: translateY(8px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .topbar-btn,
@@ -724,15 +724,11 @@
     </div>
     <div class="viewer-controls">
       <button id="btnResetCamera" class="viewer-btn primary" title="Reset góc nhìn (R)">↺ Reset góc nhìn</button>
-      <button id="btnFocusMode" class="viewer-btn" title="Focus mode">🎯 Focus mode</button>
-      <button id="btnToggleLabels" class="viewer-btn" title="Ẩn/Hiện nhãn">🏷️ Nhãn</button>
     </div>
     <div id="presenterToolbar">
       <button id="btnPrevItem" class="btn btn-primary">← Prev</button>
       <button id="btnNextItem" class="btn btn-primary">Next →</button>
-      <button id="btnPresenterFocus" class="btn">Focus</button>
       <button id="btnPresenterReset" class="btn">Reset view</button>
-      <button id="btnPresenterLabels" class="btn">Nhãn</button>
     </div>
   </div>
 
@@ -756,13 +752,12 @@
   let pollHandle = null;
   let presenterMode = false;
   let sidebarOpen = false;
-  let focusMode = false;
-  let labelsEnabled = true;
   const defaultCameras = new Map(); // modelUid -> { position, target }
   let annotationList = [];
   let viewerLoadTimeout = null;
 
   const el = (id) => document.getElementById(id);
+  const typingTimers = new Map();
   // Matching quiz config giữ lại cho tương lai (tạm thời không dùng).
   const QUIZ_CONFIG = {
     dna: {
@@ -841,10 +836,6 @@
     if (defaultCameras.has(model.modelUid)) {
       return defaultCameras.get(model.modelUid);
     }
-    const camItem = (model.items || []).find(it => it.cam && it.cam.position && it.cam.target);
-    if (camItem) {
-      return { position: camItem.cam.position, target: camItem.cam.target };
-    }
     return null;
   }
 
@@ -852,31 +843,9 @@
     if (!api || !CURRENT_MODEL) return;
     const cam = getDefaultCamera(CURRENT_MODEL);
     if (!cam) return;
-    api.setCameraLookAt(cam.position, cam.target, 0.6, function(){});
+    api.setCameraLookAt(cam.position, cam.target, 1.0, function(){});
   }
 
-  function setFocusMode(enabled) {
-    focusMode = enabled;
-    document.body.classList.toggle("focus-mode", focusMode);
-    const focusBtn = el("btnFocusMode");
-    if (focusBtn) focusBtn.textContent = focusMode ? "🎯 Focus ON" : "🎯 Focus mode";
-    const presenterFocusBtn = el("btnPresenterFocus");
-    if (presenterFocusBtn) presenterFocusBtn.textContent = focusMode ? "Focus ON" : "Focus";
-    if (focusMode && selectedId) {
-      const item = (DATA.items || []).find(it => it.id === selectedId);
-      if (item) focusOnItem(item, 0.6);
-    }
-  }
-
-  function setLabelsEnabled(enabled) {
-    labelsEnabled = enabled;
-    document.body.classList.toggle("hide-labels", !labelsEnabled);
-    const labelBtn = el("btnToggleLabels");
-    if (labelBtn) labelBtn.textContent = labelsEnabled ? "🏷️ Nhãn" : "🏷️ Ẩn nhãn";
-    const presenterLabelsBtn = el("btnPresenterLabels");
-    if (presenterLabelsBtn) presenterLabelsBtn.textContent = labelsEnabled ? "Nhãn" : "Ẩn nhãn";
-    updateLabels();
-  }
 
   function showLoading(title, message, showRetry = false) {
     const overlay = el("viewerLoading");
@@ -900,7 +869,7 @@
     }, 25000);
   }
 
-  function focusOnItem(item, duration = 0.6) {
+  function focusOnItem(item, duration = 1.2) {
     if (!api || !item) return;
     const name = (item.name || "").toLowerCase();
     const annotationIndex = annotationList.findIndex(ann => {
@@ -966,6 +935,34 @@
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function typeText(elm, text, speed = 14) {
+    if (!elm) return;
+    const content = text || "";
+    if (typingTimers.has(elm)) {
+      clearInterval(typingTimers.get(elm));
+      typingTimers.delete(elm);
+    }
+    if (prefersReducedMotion() || content.length === 0) {
+      elm.textContent = content;
+      return;
+    }
+    elm.textContent = "";
+    let idx = 0;
+    const timer = setInterval(() => {
+      elm.textContent = content.slice(0, idx + 1);
+      idx += 1;
+      if (idx >= content.length) {
+        clearInterval(timer);
+        typingTimers.delete(elm);
+      }
+    }, speed);
+    typingTimers.set(elm, timer);
   }
 
   // Fetch all data from server
@@ -1434,7 +1431,7 @@
 
   function selectItem(it) {
     selectedId = it.id;
-    focusOnItem(it, 0.6);
+    focusOnItem(it);
     setPanel(it, false);
     showDetailBox(it);
     showFunFactBox(it);
@@ -1451,8 +1448,12 @@
       box.classList.add("hidden");
       return;
     }
-    el("detailTitle").textContent = it.name || "Điểm";
-    el("detailContent").textContent = it.content || "";
+    box.classList.remove("hidden");
+    box.classList.remove("show");
+    requestAnimationFrame(() => box.classList.add("show"));
+
+    typeText(el("detailTitle"), it.name || "Điểm", 12);
+    typeText(el("detailContent"), it.content || "", 10);
 
     const linkWrap = el("detailLinkWrap");
     const linkEl = el("detailLink");
@@ -1466,10 +1467,7 @@
 
     // Only show box if there is detail content/funfact/link
     const hasAny = (it.content && it.content.trim()) || (it.link && it.link.trim());
-    if (hasAny) {
-      box.classList.remove("hidden");
-      box.classList.add("float-in");
-    } else {
+    if (!hasAny) {
       box.classList.add("hidden");
     }
   }
@@ -1481,10 +1479,11 @@
       box.classList.add("hidden");
       return;
     }
-    el("funFactTitle").textContent = it.name || "Điểm";
-    el("funFactContent").textContent = it.funFact;
     box.classList.remove("hidden");
-    box.classList.add("float-in");
+    box.classList.remove("show");
+    requestAnimationFrame(() => box.classList.add("show"));
+    typeText(el("funFactTitle"), it.name || "Điểm", 12);
+    typeText(el("funFactContent"), it.funFact, 10);
   }
 
 
@@ -1584,14 +1583,6 @@
   function updateLabels() {
     if (!api) return;
     if (!DATA.items || DATA.items.length === 0) return;
-    if (!labelsEnabled) {
-      labelElements.forEach((val) => {
-        if (val.element && val.element.parentNode) {
-          val.element.parentNode.removeChild(val.element);
-        }
-      });
-      labelElements.clear();
-    }
     
     const overlay = el("overlay");
     if (!overlay) return;
@@ -1668,12 +1659,10 @@
         // Track seen hotspot
         seen.add(it.id);
 
-        if (labelsEnabled) {
-          // Label (name only): reuse element
-          const existingLabelEntry = labelElements.get(it.id);
-          const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
-          createFloatingLabel(it, coord.x, coord.y, existingLabel);
-        }
+        // Label (name only): reuse element
+        const existingLabelEntry = labelElements.get(it.id);
+        const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
+        createFloatingLabel(it, coord.x, coord.y, existingLabel);
 
         
         if (processedCount === totalItems) {
@@ -1816,20 +1805,8 @@
   if (el("btnResetCamera")) {
     el("btnResetCamera").addEventListener("click", resetCamera);
   }
-  if (el("btnFocusMode")) {
-    el("btnFocusMode").addEventListener("click", () => setFocusMode(!focusMode));
-  }
-  if (el("btnToggleLabels")) {
-    el("btnToggleLabels").addEventListener("click", () => setLabelsEnabled(!labelsEnabled));
-  }
-  if (el("btnPresenterFocus")) {
-    el("btnPresenterFocus").addEventListener("click", () => setFocusMode(!focusMode));
-  }
   if (el("btnPresenterReset")) {
     el("btnPresenterReset").addEventListener("click", resetCamera);
-  }
-  if (el("btnPresenterLabels")) {
-    el("btnPresenterLabels").addEventListener("click", () => setLabelsEnabled(!labelsEnabled));
   }
   if (el("btnPrevItem")) {
     el("btnPrevItem").addEventListener("click", () => selectPrevNext("prev"));
@@ -1874,8 +1851,6 @@
   }).then(() => {
     renderModelTree();
     showWelcome();
-    setLabelsEnabled(labelsEnabled);
-    setFocusMode(false);
     if (!pollHandle) {
       pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
     }

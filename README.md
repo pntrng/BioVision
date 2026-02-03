@@ -155,8 +155,6 @@ pytest tests/
 
 - **Reset góc nhìn:** nút `↺ Reset góc nhìn` trong cụm controls hoặc phím tắt `R`.
 - **Trình chiếu:** nút `🖥️ Trình chiếu` trên topbar (ẩn sidebar, phóng to viewer). Có thể mở bằng URL: `/?mode=present`.
-- **Focus mode:** nút `🎯 Focus mode` để nhấn mạnh điểm đang chọn (camera mượt + highlight UI).
-- **Ẩn/Hiện nhãn:** nút `🏷️ Nhãn` để bật/tắt nhãn hotspot.
 
 ### Default Camera per Lesson
 
