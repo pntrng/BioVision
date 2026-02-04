@@ -117,11 +117,11 @@
       white-space: normal;
     }
 
-    /* Fixed detail box (top-left) */
+    /* Fixed detail box (top-right) */
     #detailBox {
       position: absolute;
-      top: 16px;
-      left: 16px;
+      top: 80px;
+      right: 16px;
       width: 360px;
       max-width: calc(100% - 32px);
       max-height: calc(100% - 32px);
@@ -130,10 +130,10 @@
       pointer-events: auto;
     }
 
-    /* Fun fact box (bottom-left) */
+    /* Fun fact box (bottom-right) */
     #funFactBox {
       position: absolute;
-      left: 16px;
+      right: 16px;
       bottom: 16px;
       width: 360px;
       max-width: calc(100% - 32px);
@@ -1452,7 +1452,6 @@
     
     // Append if new to measure real size
     if (!existingLabel) {
-      label.style.opacity = "0";
       overlay.appendChild(label);
     }
     
@@ -1461,14 +1460,14 @@
     const containerHeight = rightContainer ? rightContainer.offsetHeight : window.innerHeight;
     const padding = 12;
 
-    const labelWidth = label.offsetWidth || 180;
-    const labelHeight = label.offsetHeight || 80;
+    const labelWidth = label.offsetWidth || 140;
+    const labelHeight = label.offsetHeight || 28;
 
-    // Prefer positioning above/right a bit to avoid covering the part
-    let x = screenX + 18;
-    if (x + labelWidth + padding > containerWidth) x = screenX - labelWidth - 18;
-    let y = screenY - labelHeight - 14;
-    if (y < padding) y = screenY + 14;
+    // Prefer positioning near point
+    let x = screenX + 12;
+    if (x + labelWidth + padding > containerWidth) x = screenX - labelWidth - 12;
+    let y = screenY - labelHeight - 8;
+    if (y < padding) y = screenY + 8;
     if (y < padding) y = padding;
     if (y + labelHeight > containerHeight - padding) {
       y = containerHeight - labelHeight - padding;
@@ -1485,9 +1484,7 @@
     // Update line anchor (center of label)
     labelElements.set(item.id, { element: label, screenX, screenY, labelX: x + labelWidth/2, labelY: y + labelHeight/2 });
     
-    if (!existingLabel) {
-      requestAnimationFrame(() => label.classList.add("visible"));
-    }
+    label.classList.add("visible");
     
     return { x: x + labelWidth/2, y: y + labelHeight/2 };
   }
