@@ -1434,7 +1434,7 @@
   function navigateToModel(linkValue) {
     if (!linkValue) return;
     const key = linkValue.trim();
-    const models = allData.models || [];
+    const models = ALL_DATA.models || [];
     let target = null;
 
     if (key.startsWith("model:")) {
