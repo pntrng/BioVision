@@ -1406,7 +1406,19 @@
     const linkEl = el("detailLink");
     if (it.link) {
       linkWrap.classList.remove("hidden");
-      linkEl.href = it.link;
+      const linkValue = (it.link || "").trim();
+      if (/^https?:\/\//i.test(linkValue)) {
+        linkEl.href = linkValue;
+        linkEl.onclick = null;
+        linkEl.textContent = "Mở liên kết";
+      } else {
+        linkEl.href = "#";
+        linkEl.textContent = "Xem mô hình";
+        linkEl.onclick = (e) => {
+          e.preventDefault();
+          navigateToModel(linkValue);
+        };
+      }
     } else {
       linkWrap.classList.add("hidden");
       linkEl.href = "#";
@@ -1417,6 +1429,37 @@
     if (!hasAny) {
       box.classList.add("hidden");
     }
+  }
+
+  function navigateToModel(linkValue) {
+    if (!linkValue) return;
+    const key = linkValue.trim();
+    const models = allData.models || [];
+    let target = null;
+
+    if (key.startsWith("model:")) {
+      const modelId = key.replace("model:", "").trim();
+      target = models.find(m => m.id === modelId);
+    }
+
+    if (!target) {
+      target = models.find(m => m.id === key);
+    }
+    if (!target) {
+      target = models.find(m => m.modelUid === key);
+    }
+    if (!target) {
+      target = models.find(m => (m.name || "").toLowerCase() === key.toLowerCase());
+    }
+
+    if (!target) {
+      alert("Không tìm thấy mô hình để chuyển. Kiểm tra lại link.");
+      return;
+    }
+
+    selectModel(target);
+    renderModelTree();
+    setStatus(`Đã chuyển sang mô hình: ${target.name || target.modelUid}`);
   }
 
   function showFunFactBox(it) {

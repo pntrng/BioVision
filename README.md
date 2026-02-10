@@ -144,6 +144,16 @@ pytest tests/
    - Model UID từ Sketchfab
 4. Load model → Tạo hotspot → Lưu
 
+### Link nội bộ (tùy chọn)
+
+Trong ô `Link` của điểm, bạn có thể dẫn người xem sang mô hình khác:
+- **model id nội bộ**: `model_1700000000000` (khuyên dùng, lấy từ dữ liệu model)
+- **modelUid Sketchfab**: `acc7d71759a1441e8409ebb31e3c3c0d`
+- **tên mô hình**: `Bộ máy Golgi` (khớp chính xác tên model)
+- **URL đầy đủ**: `https://...` để mở link ngoài
+
+Nếu dùng dạng nội bộ, nút sẽ hiển thị “Xem mô hình” và chuyển ngay trong trang guest.
+
 ### Student Interface
 
 1. Truy cập `/`
