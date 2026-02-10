@@ -476,6 +476,21 @@ function renderAdminTree() {
         };
         modelActions.appendChild(addItemBtn);
 
+        const copyIdBtn = document.createElement("button");
+        copyIdBtn.className = "tree-btn";
+        copyIdBtn.textContent = "📋";
+        copyIdBtn.title = "Copy model ID";
+        copyIdBtn.onclick = async (e) => {
+          e.stopPropagation();
+          try {
+            await navigator.clipboard.writeText(model.id || "");
+            setStatus("✅ Đã copy Model ID: " + (model.id || ""));
+          } catch (err) {
+            setStatus("⚠️ Không copy được. Model ID: " + (model.id || ""));
+          }
+        };
+        modelActions.appendChild(copyIdBtn);
+
         const delModelBtn = document.createElement("button");
         delModelBtn.className = "tree-btn danger";
         delModelBtn.textContent = "×";
