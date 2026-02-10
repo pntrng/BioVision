@@ -65,6 +65,94 @@
       font-size:12px;
       white-space:nowrap;
     }
+
+    /* Admin tree */
+    .admin-tree {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .tree-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .tree-row:hover {
+      background: #f3f4f6;
+    }
+
+    .tree-row.active {
+      background: #e0f2fe;
+      border-left: 3px solid #2563eb;
+      padding-left: 6px;
+      font-weight: 600;
+    }
+
+    .tree-actions {
+      display: inline-flex;
+      gap: 6px;
+    }
+
+    .tree-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #111827;
+      font-size: 12px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .tree-btn.danger {
+      color: #b91c1c;
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
+    /* Lowerbar */
+    #lowerbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1200;
+      background: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.12);
+      padding: 14px 18px;
+      display: none;
+    }
+
+    #lowerbar.show {
+      display: block;
+    }
+
+    #lowerbar .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    #lowerbar .field label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
   </style>
 
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
@@ -142,109 +230,32 @@
         </div>
       </div>
 
-      <!-- Grade Input -->
+      <!-- Admin Tree -->
       <div>
-        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Khối lớp</h3>
-        <select 
-          id="grade" 
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
+        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">Cây cấu trúc</h3>
+        <div id="adminTree" class="admin-tree space-y-1 text-xs">
+          <!-- tree render -->
+        </div>
+      </div>
+
+      <!-- Hidden legacy inputs (used by existing logic) -->
+      <div class="hidden">
+        <select id="grade">
           <option value="">Chọn khối lớp</option>
           <option value="10">Lớp 10</option>
           <option value="11">Lớp 11</option>
           <option value="12">Lớp 12</option>
         </select>
-      </div>
-
-      <!-- Chapter Input -->
-      <div class="space-y-2">
-        <h3 class="text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">Chương</h3>
-        <!-- Dropdown (tự sinh từ dữ liệu) -->
-        <select
-          id="chapterSelect"
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
+        <select id="chapterSelect">
           <option value="">Chọn chương (lọc theo khối lớp)</option>
           <option value="__custom__">+ Tự nhập chương mới...</option>
         </select>
-        <!-- Ô text thực tế lưu giá trị (đồng bộ với dropdown) -->
-        <input 
-          id="chapter" 
-          type="text" 
-          placeholder="VD: Tế bào nhân sơ, Tế bào nhân thực, Virus..." 
-          class="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-400"
-        />
-      </div>
-      
-      <!-- Model name -->
-      <div class="space-y-2">
-        <h3 class="text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">Tên mô hình</h3>
-        <!-- Dropdown (tự sinh theo chương + khối lớp) -->
-        <select
-          id="modelNameSelect"
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
+        <input id="chapter" type="text" />
+        <select id="modelNameSelect">
           <option value="">Chọn mô hình (lọc theo khối & chương)</option>
           <option value="__custom__">+ Tự nhập mô hình mới...</option>
         </select>
-        <!-- Ô text thực tế lưu giá trị (đồng bộ với dropdown) -->
-        <input 
-          id="modelName" 
-          type="text" 
-          placeholder="VD: DNA, Ti thể, Virus..." 
-          class="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-400"
-        />
-      </div>
-
-      <!-- Model UID Input -->
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">UID Sketchfab</h3>
-        <div class="flex gap-2">
-          <input 
-            id="modelUid" 
-            type="text" 
-            placeholder="Model UID (chuỗi sau /models/ ...)" 
-            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button 
-            id="btnLoad" 
-            class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
-          >
-            Load
-          </button>
-        </div>
-        <p class="text-xs text-gray-500 mt-2">Ví dụ UID: <code class="bg-gray-100 px-1.5 py-0.5 rounded">acc7d71759a1441e8409ebb31e3c3c0d</code></p>
-      </div>
-
-      <!-- Model feature/funfact -->
-      <div class="space-y-3">
-        <div>
-          <h3 class="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Đặc điểm (mô hình)</h3>
-          <textarea
-            id="modelFeature"
-            placeholder="Đặc điểm của mô hình..."
-            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            rows="3"
-          ></textarea>
-        </div>
-        <div>
-          <h3 class="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Góc thú vị (mô hình)</h3>
-          <textarea
-            id="modelFunFact"
-            placeholder="Góc thú vị của mô hình..."
-            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            rows="3"
-          ></textarea>
-        </div>
-      </div>
-
-      <!-- Hotspot List Section (Dropdown điểm) -->
-      <div class="space-y-2">
-        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Điểm trong mô hình</h3>
-        <select
-          id="itemSelect"
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
+        <select id="itemSelect">
           <option value="">Chọn điểm để chỉnh sửa / gán góc</option>
           <option value="__new__">+ Thêm điểm mới từ world/camera hiện tại...</option>
         </select>
@@ -283,45 +294,6 @@
         ></textarea>
       </div>
 
-      <!-- Hotspot Info Section -->
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Thông tin điểm (đang chọn)</h3>
-        <input 
-          id="name" 
-          type="text" 
-          placeholder="Nhãn điểm (tên ngắn gọn, VD: Màng trong)" 
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-3"
-        />
-        <textarea 
-          id="content" 
-          placeholder="Mô tả điểm (mô tả chi tiết về điểm)" 
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none mb-3"
-          rows="4"
-        ></textarea>
-        <textarea 
-          id="funFact" 
-          placeholder="Góc thú vị của điểm (tùy chọn)" 
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none mb-3"
-          rows="3"
-        ></textarea>
-        <input 
-          id="link" 
-          type="text" 
-          placeholder="Link tới điểm khác (tùy chọn, VD: model_id hoặc URL)" 
-          class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
-      </div>
-
-      <!-- Actions -->
-      <div class="mt-4">
-        <button 
-          id="btnUpdate" 
-          class="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
-        >
-          💾 Cập nhật & lưu điểm
-        </button>
-      </div>
-
       <!-- Status -->
       <div 
         id="status" 
@@ -336,6 +308,56 @@
   <div id="right" class="flex-1 relative bg-black" style="position: relative;">
     <iframe id="api-frame" class="w-full h-full border-0" allow="autoplay; fullscreen; xr-spatial-tracking" style="position: relative; z-index: 1;"></iframe>
     <div id="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; pointer-events: none; overflow: visible;"></div>
+  </div>
+
+  <!-- Lowerbar: edit model + point -->
+  <div id="lowerbar">
+    <div class="grid grid-cols-4 gap-4">
+      <div class="field">
+        <label>Tên mô hình</label>
+        <input id="modelName" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+      </div>
+      <div class="field">
+        <label>UID</label>
+        <div class="flex gap-2">
+          <input id="modelUid" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+          <button id="btnLoad" class="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm">Load</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Đặc điểm mô hình</label>
+        <textarea id="modelFeature" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm resize-none"></textarea>
+      </div>
+      <div class="field">
+        <label>Góc thú vị mô hình</label>
+        <textarea id="modelFunFact" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm resize-none"></textarea>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-4 gap-4 mt-3">
+      <div class="field">
+        <label>Tên điểm</label>
+        <input id="name" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+      </div>
+      <div class="field">
+        <label>Đặc điểm điểm</label>
+        <textarea id="content" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm resize-none"></textarea>
+      </div>
+      <div class="field">
+        <label>Góc thú vị điểm</label>
+        <textarea id="funFact" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm resize-none"></textarea>
+      </div>
+      <div class="field">
+        <label>Link (tuỳ chọn)</label>
+        <input id="link" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+      </div>
+    </div>
+
+    <div class="flex justify-end mt-3">
+      <button id="btnUpdate" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium">
+        💾 Cập nhật & lưu điểm
+      </button>
+    </div>
   </div>
 
 <script>
@@ -382,6 +404,151 @@ const setStatus = (msg) => { el("status").textContent = msg; };
 
 const markDirty = () => { isDirty = true; };
 const clearDirty = () => { isDirty = false; };
+
+function renderAdminTree() {
+  const tree = el("adminTree");
+  if (!tree) return;
+  tree.innerHTML = "";
+
+  const models = allData.models || [];
+  const treeData = {};
+
+  models.forEach(m => {
+    const grade = m.grade || "Khác";
+    const chapter = m.chapter || "Khác";
+    if (!treeData[grade]) treeData[grade] = {};
+    if (!treeData[grade][chapter]) treeData[grade][chapter] = [];
+    treeData[grade][chapter].push(m);
+  });
+
+  Object.keys(treeData).sort().forEach(grade => {
+    const gradeRow = document.createElement("div");
+    gradeRow.className = "tree-row";
+    gradeRow.innerHTML = `<span>📚 Khối ${grade}</span>`;
+    tree.appendChild(gradeRow);
+
+    Object.keys(treeData[grade]).sort().forEach(chapter => {
+      const chapterRow = document.createElement("div");
+      chapterRow.className = "tree-row";
+      chapterRow.style.marginLeft = "12px";
+      chapterRow.innerHTML = `<span>📁 ${chapter}</span>`;
+      const chapterActions = document.createElement("div");
+      chapterActions.className = "tree-actions";
+      const addModelBtn = document.createElement("button");
+      addModelBtn.className = "tree-btn";
+      addModelBtn.textContent = "+";
+      addModelBtn.title = "Thêm mô hình";
+      addModelBtn.onclick = async (e) => {
+        e.stopPropagation();
+        const m = {
+          id: "model_" + Date.now(),
+          grade,
+          chapter,
+          name: "Mô hình mới",
+          modelUid: "",
+          feature: "",
+          funFact: "",
+          items: []
+        };
+        allData.models = allData.models || [];
+        allData.models.unshift(m);
+        selectModel(m.id);
+        await saveToServer();
+      };
+      chapterActions.appendChild(addModelBtn);
+      chapterRow.appendChild(chapterActions);
+      tree.appendChild(chapterRow);
+
+      treeData[grade][chapter].forEach(model => {
+        const modelRow = document.createElement("div");
+        modelRow.className = `tree-row ${state.currentModelId === model.id ? "active" : ""}`;
+        modelRow.style.marginLeft = "24px";
+        modelRow.innerHTML = `<span>🎨 ${model.name || "Mô hình"}</span>`;
+        const modelActions = document.createElement("div");
+        modelActions.className = "tree-actions";
+
+        const addItemBtn = document.createElement("button");
+        addItemBtn.className = "tree-btn";
+        addItemBtn.textContent = "+";
+        addItemBtn.title = "Thêm điểm";
+        addItemBtn.onclick = async (e) => {
+          e.stopPropagation();
+          const it = {
+            id: uid(),
+            name: "Điểm mới",
+            content: "",
+            funFact: "",
+            link: ""
+          };
+          model.items = model.items || [];
+          model.items.push(it);
+          selectModel(model.id);
+          state.selectedId = it.id;
+          fillForm(it);
+          updateLowerbarVisibility();
+          await saveToServer();
+        };
+        modelActions.appendChild(addItemBtn);
+
+        const delModelBtn = document.createElement("button");
+        delModelBtn.className = "tree-btn danger";
+        delModelBtn.textContent = "×";
+        delModelBtn.title = "Xóa mô hình";
+        delModelBtn.onclick = async (e) => {
+          e.stopPropagation();
+          if (!confirm("Xóa mô hình này và tất cả điểm?")) return;
+          allData.models = (allData.models || []).filter(m => m.id !== model.id);
+          state.currentModelId = null;
+          state.items = [];
+          state.selectedId = null;
+          renderAdminTree();
+          updateLowerbarVisibility();
+          await saveToServer();
+        };
+        modelActions.appendChild(delModelBtn);
+
+        modelRow.appendChild(modelActions);
+        modelRow.onclick = () => selectModel(model.id);
+        tree.appendChild(modelRow);
+
+        (model.items || []).forEach(item => {
+          const itemRow = document.createElement("div");
+          itemRow.className = `tree-row ${state.selectedId === item.id ? "active" : ""}`;
+          itemRow.style.marginLeft = "36px";
+          itemRow.innerHTML = `<span>• ${item.name || "Điểm"}</span>`;
+          const itemActions = document.createElement("div");
+          itemActions.className = "tree-actions";
+
+          const delItemBtn = document.createElement("button");
+          delItemBtn.className = "tree-btn danger";
+          delItemBtn.textContent = "×";
+          delItemBtn.title = "Xóa điểm";
+          delItemBtn.onclick = async (e) => {
+            e.stopPropagation();
+            model.items = (model.items || []).filter(i => i.id !== item.id);
+            if (state.selectedId === item.id) {
+              state.selectedId = null;
+            }
+            fillForm(getSelected());
+            renderAdminTree();
+            updateLowerbarVisibility();
+            await saveToServer();
+          };
+
+          itemActions.appendChild(delItemBtn);
+          itemRow.appendChild(itemActions);
+          itemRow.onclick = () => {
+            selectModel(model.id);
+            state.selectedId = item.id;
+            fillForm(item);
+            updateLowerbarVisibility();
+          };
+          tree.appendChild(itemRow);
+        });
+      });
+    });
+  });
+}
 
 // Token management
 function updateTokenUI() {
@@ -480,6 +647,7 @@ async function loadFromServer() {
 
     rebuildChapterAndModelOptions();
     renderModelListAdmin();
+    renderAdminTree();
     rebuildList();
     clearDirty();
     const meta = serverVersion ? ` (v${serverVersion}${serverUpdatedAt ? " • " + serverUpdatedAt : ""})` : "";
@@ -490,6 +658,7 @@ async function loadFromServer() {
     clearModelState();
     rebuildChapterAndModelOptions();
     renderModelListAdmin();
+    renderAdminTree();
     rebuildList();
   }
 }
@@ -750,6 +919,8 @@ function selectModel(modelId) {
   rebuildList();
   rebuildChapterAndModelOptions();
   renderModelListAdmin();
+  renderAdminTree();
+  updateLowerbarVisibility();
   if (state.modelUid) initViewer(state.modelUid);
 }
 
@@ -832,6 +1003,7 @@ async function saveToServer() {
     setStatus(`✅ Đã lưu thành công (v${serverVersion || "?"}${serverUpdatedAt ? " • " + serverUpdatedAt : ""})`);
     await loadFromServer();
     renderModelListAdmin();
+    renderAdminTree();
     return true;
   } catch (e) {
     console.error('Save error:', e);
@@ -880,7 +1052,9 @@ function rebuildList() {
 
   select.value = state.selectedId || "";
   fillForm(getSelected());
+  updateLowerbarVisibility();
   needsRender = true;
+  renderAdminTree();
 }
 
 function getSelected() {
@@ -900,6 +1074,12 @@ function fillForm(it) {
   el("camOut").value = it?.cam
     ? JSON.stringify({ cam: it.cam }, null, 2)
     : (state.lastCam ? JSON.stringify({ cam: state.lastCam }, null, 2) : "");
+}
+
+function updateLowerbarVisibility() {
+  const lb = el("lowerbar");
+  if (!lb) return;
+  lb.classList.toggle("show", !!state.selectedId);
 }
 
 function ensureApiReady() {
@@ -1277,6 +1457,7 @@ el("btnPick").onclick = () => {
 
 el("btnGetCam").onclick = getCamera;
 el("btnUpdate").onclick = updateSelectedFromForm;
+renderAdminTree();
 
 // Đánh dấu thay đổi cục bộ để tránh auto-sync ghi đè
 [
