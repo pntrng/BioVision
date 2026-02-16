@@ -953,6 +953,478 @@
             ],
             "modelUid": "8da918211f4f4194a53c25573dbd20bf",
             "name": "Virus"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_nguyen_to_da_luong",
+            "items": [],
+            "modelUid": "6e05dda8d97746c086d5b4dc8ada22f1",
+            "name": "Nguyên tố đa lượng"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_than",
+            "items": [],
+            "modelUid": "74554b702184450fbfdf3c5ace31468b",
+            "name": "Thân"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tieu_hoa_chua_co_co_quan_tieu_hoa",
+            "items": [],
+            "modelUid": "f9a5e0b423e345cb90416ef1be1109ed",
+            "name": "Tiêu hóa chưa có cơ quan tiêu hóa"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tieu_hoa_trong_ong_tieu_hoa",
+            "items": [],
+            "modelUid": "b5b571c21077429d804354dd3f3cc308",
+            "name": "Tiêu hóa trong ống tiêu hóa"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_gan",
+            "items": [],
+            "modelUid": "bf6273bdf0664f8b809a27fcac8693cb",
+            "name": "Gan"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tuyen_tuy_tui_mat",
+            "items": [],
+            "modelUid": "8acf64dc315b49308b4fcbd47e48b92b",
+            "name": "Tuyến tụy, túi mật"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_be_mat_co_the",
+            "items": [],
+            "modelUid": "693db7a8e44e4b90a1afef81204459ce",
+            "name": "Trao đổi khí qua bề mặt cơ thể"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_he_thong_ong_khi",
+            "items": [],
+            "modelUid": "e951a812971049bfbbdc3c3685a30b3f",
+            "name": "Trao đổi khí qua hệ thống ống khí"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_mang",
+            "items": [],
+            "modelUid": "7bf7115377f14f138d0b99dc689c1ace",
+            "name": "Trao đổi khí qua mang"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_phoi",
+            "items": [],
+            "modelUid": "c0ca6af6c6a1449084341a96eea515ea",
+            "name": "Trao đổi khí qua phổi"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tim",
+            "items": [],
+            "modelUid": "7241b29839804855a6d2cc101d73db55",
+            "name": "Tim"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_he_mach",
+            "items": [],
+            "modelUid": "50d55a6208604c1ca04d917aa4f17e3b",
+            "name": "Hệ mạch"
+        },
+        {
+            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_than_1",
+            "items": [],
+            "modelUid": "d3dc9bcc490c42f7a3bd9176de169e00",
+            "name": "Thận"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_huong_dong",
+            "items": [],
+            "modelUid": "8984903df2fb49cf99082ba9c7743136",
+            "name": "Hướng động"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_he_than_kinh_dang_luoi",
+            "items": [],
+            "modelUid": "46d8b5fb50654425b661d6c6f347edbc",
+            "name": "Hệ thần kinh dạng lưới"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_he_than_kinh_dang_chuoi_hach",
+            "items": [],
+            "modelUid": "db0b1b8d18f940c4b9528f0e50001b31",
+            "name": "Hệ thần kinh dạng chuỗi hạch"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_he_than_kinh_dang_ong",
+            "items": [],
+            "modelUid": "c1ba7fe29e7f44b28186e56a07502463",
+            "name": "Hệ thần kinh dạng ống"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_synapse",
+            "items": [],
+            "modelUid": "d3be9054e57b4104b3f029cb8c6f19a9",
+            "name": "Synapse"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_neuron",
+            "items": [],
+            "modelUid": "f33ea01f8e674578b55ac51d110b1721",
+            "name": "Neuron"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_mat",
+            "items": [],
+            "modelUid": "9fc8c2d381b34220a330c68876840783",
+            "name": "Mắt"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_nao",
+            "items": [],
+            "modelUid": "01b31600fc1140bc96394cb5ec6d6825",
+            "name": "Não"
+        },
+        {
+            "chapter": "Cảm ứng ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_cam_ung_o_sinh_vat_tai",
+            "items": [],
+            "modelUid": "e14ca6ebb8de411695ce04eb5089266c",
+            "name": "Tai"
+        },
+        {
+            "chapter": "Sinh trưởng và phát triển ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_sinh_truong_va_phat_trien_o_sinh_vat_phoi",
+            "items": [],
+            "modelUid": "9fb225b983c14b20b67b639e17126f5b",
+            "name": "Phôi"
+        },
+        {
+            "chapter": "Sinh trưởng và phát triển ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_sinh_truong_va_phat_trien_o_sinh_vat_phat_trien_qua_bien_thai",
+            "items": [],
+            "modelUid": "97a185a69e25467e8931da7639c64f2e",
+            "name": "Phát triển qua biến thái"
+        },
+        {
+            "chapter": "Sinh trưởng và phát triển ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_sinh_truong_va_phat_trien_o_sinh_vat_phat_trien_khong_qua_bien_thai",
+            "items": [],
+            "modelUid": "5ade58cf25a34a928d0c88dddba83c35",
+            "name": "Phát triển không qua biến thái"
+        },
+        {
+            "chapter": "Sinh sản ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_sinh_san_o_sinh_vat_hoa",
+            "items": [],
+            "modelUid": "5aff81d16da5429bb66e14b0b8167780",
+            "name": "Hoa"
+        },
+        {
+            "chapter": "Sinh sản ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_sinh_san_o_sinh_vat_trung",
+            "items": [],
+            "modelUid": "d6b46f8a975848249edbbfb33d4882dd",
+            "name": "Trứng"
+        },
+        {
+            "chapter": "Sinh sản ở sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_sinh_san_o_sinh_vat_tu_cung",
+            "items": [],
+            "modelUid": "08d5cdbca98d452eb7660334a7ad2780",
+            "name": "Tử cung"
+        },
+        {
+            "chapter": "Mối quan hệ giữa các quá trình sinh lí trong cơ thể sinh vật với một số ngành nghề liên quan đến sinh học cơ thể",
+            "feature": "",
+            "funFact": "",
+            "grade": "11",
+            "id": "11_moi_quan_he_giua_cac_qua_trinh_sinh_li_trong_co_the_sinh_vat_voi_mot_so_nganh_nghe_lien_quan_den_sinh_hoc_co_the_cay",
+            "items": [],
+            "modelUid": "047bd0fe057547e993c56a7ebc147731",
+            "name": "Cây"
+        },
+        {
+            "chapter": "Di truyền phân tử",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_phan_tu_dna",
+            "items": [],
+            "modelUid": "4ff9b29e7952443ca050e15dff05256a",
+            "name": "DNA"
+        },
+        {
+            "chapter": "Di truyền phân tử",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_phan_tu_mrna",
+            "items": [],
+            "modelUid": "86d3572002254365bc52c0c034445718",
+            "name": "mRNA"
+        },
+        {
+            "chapter": "Di truyền phân tử",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_phan_tu_trna",
+            "items": [],
+            "modelUid": "8ab8a1d412404d73ba66ee82bdd22f4f",
+            "name": "tRNA"
+        },
+        {
+            "chapter": "Di truyền phân tử",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_phan_tu_phien_ma_dich_ma",
+            "items": [],
+            "modelUid": "8d7833756c3d402f8572db722c735e3f",
+            "name": "Phiên mã, dịch mã"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_cau_truc_sieu_hien_vi",
+            "items": [],
+            "modelUid": "16f57ae67f3a4fbdb2f4b22d80c2d10d",
+            "name": "Cấu trúc siêu hiển vi"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_cau_tao_nst",
+            "items": [],
+            "modelUid": "2cb7bdde1f274b089eef2ca48e9c68f0",
+            "name": "Cấu tạo NST"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_allele_locus",
+            "items": [],
+            "modelUid": "68881ccde9954fdeaadd74b64ea89495",
+            "name": "Allele, locus"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_nst_don_kep",
+            "items": [],
+            "modelUid": "8fbd0eba37b64e68993311faffb5e57b",
+            "name": "NST đơn, kép"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_tuong_tac_gene_at_che",
+            "items": [],
+            "modelUid": "f8edc1a410384141bbbc3980e5d91e9c",
+            "name": "Tương tác gene át chế"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_nst_x",
+            "items": [],
+            "modelUid": "4ab2fe1dfcba469097e2d0fe4a0f942b",
+            "name": "NST X"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_nst_y",
+            "items": [],
+            "modelUid": "388d29fb827845bfbec65dd0614c4fb7",
+            "name": "NST Y"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_ruoi_giam",
+            "items": [],
+            "modelUid": "6a4470f884554864827d848718b2b6bc",
+            "name": "Ruồi giấm"
+        },
+        {
+            "chapter": "Di truyền NST",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_di_truyen_nst_bo_nst_do_cua_nguoi_binh_thuong",
+            "items": [],
+            "modelUid": "caec92fcc43d4098888c981975558667",
+            "name": "Bộ NST đồ của người bình thường"
+        },
+        {
+            "chapter": "Bằng chứng và các học thuyết tiến hóa",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_bang_chung_va_cac_hoc_thuyet_tien_hoa_hoa_thach",
+            "items": [],
+            "modelUid": "75e59d79f2a042f1aad2b6cded8b65bf",
+            "name": "Hóa thạch"
+        },
+        {
+            "chapter": "Bằng chứng và các học thuyết tiến hóa",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_bang_chung_va_cac_hoc_thuyet_tien_hoa_ho_phach",
+            "items": [],
+            "modelUid": "53a61d58c09b4d2ab30e269aa3e22078",
+            "name": "Hổ phách"
+        },
+        {
+            "chapter": "Bằng chứng và các học thuyết tiến hóa",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_bang_chung_va_cac_hoc_thuyet_tien_hoa_phat_sinh_loai_nguoi",
+            "items": [],
+            "modelUid": "95eae619af884dafb7191945adf95b9c",
+            "name": "Phát sinh loài người"
+        },
+        {
+            "chapter": "Sinh thái học quần xã",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_sinh_thai_hoc_quan_xa_he_sinh_thai",
+            "items": [],
+            "modelUid": "e6ae5b861c914f0bafb8a2766d899bb8",
+            "name": "Hệ sinh thái"
+        },
+        {
+            "chapter": "Sinh thái học quần xã",
+            "feature": "",
+            "funFact": "",
+            "grade": "12",
+            "id": "12_sinh_thai_hoc_quan_xa_chu_trinh_nuoc",
+            "items": [],
+            "modelUid": "033545715b344616bf08431a290d69c2",
+            "name": "Chu trình nước"
         }
-    ]
+    ],
+    "version": 2,
+    "updatedAt": "2026-02-16T02:39:32.172402+00:00"
 }

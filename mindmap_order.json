@@ -1,6 +1,8 @@
 {
   "grades": [
-    "10"
+    "10",
+    "11",
+    "12"
   ],
   "chapters_by_grade": {
     "10": [
@@ -11,6 +13,20 @@
       "Chu kì tế bào và phân bào",
       "Sinh học vi sinh vật",
       "Virus"
+    ],
+    "11": [
+      "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+      "Cảm ứng ở sinh vật",
+      "Sinh trưởng và phát triển ở sinh vật",
+      "Sinh sản ở sinh vật",
+      "Mối quan hệ giữa các quá trình sinh lí trong cơ thể sinh vật với một số ngành nghề liên quan đến sinh học cơ thể"
+    ],
+    "12": [
+      "Di truyền phân tử",
+      "Di truyền NST",
+      "Mở rộng học thuyết di truyền NST",
+      "Bằng chứng và các học thuyết tiến hóa",
+      "Sinh thái học quần xã"
     ]
   },
   "models_by_chapter": {
@@ -46,10 +62,10 @@
     ],
     "10::Chu kì tế bào và phân bào": [
       "Chu kì tế bào",
-      "Nguyên phân - kì đầu",
-      "Nguyên phân - kì giữa",
-      "Nguyên phân - kì sau",
-      "Nguyên phân - kì cuối",
+      "Kì đầu nguyên phân",
+      "Kì giữa nguyên phân",
+      "Kì sau nguyên phân",
+      "Kì cuối nguyên phân",
       "Giảm phân"
     ],
     "10::Sinh học vi sinh vật": [
@@ -57,6 +73,81 @@
     ],
     "10::Virus": [
       "Virus"
+    ],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật": [
+      "Nguyên tố đa lượng",
+      "Rễ",
+      "Thân",
+      "Lá",
+      "Nitrogen",
+      "Pha sáng",
+      "Pha tối",
+      "Tiêu hóa chưa có cơ quan tiêu hóa",
+      "Tiêu hóa trong túi tiêu hóa",
+      "Tiêu hóa trong ống tiêu hóa",
+      "Gan",
+      "Tuyến tụy, túi mật",
+      "Trao đổi khí qua bề mặt cơ thể",
+      "Trao đổi khí qua hệ thống ống khí",
+      "Trao đổi khí qua mang",
+      "Trao đổi khí qua phổi",
+      "Tim",
+      "Hệ mạch",
+      "Thận"
+    ],
+    "11::Cảm ứng ở sinh vật": [
+      "Hướng động",
+      "Hệ thần kinh dạng lưới",
+      "Hệ thần kinh dạng chuỗi hạch",
+      "Hệ thần kinh dạng ống",
+      "Synapse",
+      "Neuron",
+      "Mắt",
+      "Não",
+      "Tai"
+    ],
+    "11::Sinh trưởng và phát triển ở sinh vật": [
+      "Phôi",
+      "Phát triển qua biến thái",
+      "Phát triển không qua biến thái"
+    ],
+    "11::Sinh sản ở sinh vật": [
+      "Hoa",
+      "Tinh trùng",
+      "Trứng",
+      "Tử cung"
+    ],
+    "11::Mối quan hệ giữa các quá trình sinh lí trong cơ thể sinh vật với một số ngành nghề liên quan đến sinh học cơ thể": [
+      "Cây"
+    ],
+    "12::Di truyền phân tử": [
+      "DNA",
+      "mRNA",
+      "tRNA",
+      "Phiên mã, dịch mã"
+    ],
+    "12::Di truyền NST": [
+      "Cấu trúc siêu hiển vi",
+      "Cấu tạo NST",
+      "Allele, locus",
+      "NST đơn, kép",
+      "Tương tác gene át chế",
+      "NST X",
+      "NST Y",
+      "Ruồi giấm",
+      "Bộ NST đồ của người bình thường"
+    ],
+    "12::Mở rộng học thuyết di truyền NST": [
+      "Lục lạp"
+    ],
+    "12::Bằng chứng và các học thuyết tiến hóa": [
+      "Hóa thạch",
+      "Hổ phách",
+      "Phát sinh loài người"
+    ],
+    "12::Sinh thái học quần xã": [
+      "Hệ sinh thái",
+      "Chu trình nước"
     ]
   },
   "components_by_model": {
@@ -173,19 +264,19 @@
       "Pha G2",
       "Nguyên phân"
     ],
-    "10::Chu kì tế bào và phân bào::Nguyên phân - kì đầu": [
+    "10::Chu kì tế bào và phân bào::Kì đầu nguyên phân": [
       "Thoi phân bào",
       "NST",
       "Màng nhân và hạch nhân"
     ],
-    "10::Chu kì tế bào và phân bào::Nguyên phân - kì giữa": [
+    "10::Chu kì tế bào và phân bào::Kì giữa nguyên phân": [
       "NST",
       "Vi ống"
     ],
-    "10::Chu kì tế bào và phân bào::Nguyên phân - kì sau": [
+    "10::Chu kì tế bào và phân bào::Kì sau nguyên phân": [
       "NST"
     ],
-    "10::Chu kì tế bào và phân bào::Nguyên phân - kì cuối": [
+    "10::Chu kì tế bào và phân bào::Kì cuối nguyên phân": [
       "NST",
       "Màng nhân và hạch nhân",
       "Thoi phân bào",
@@ -204,6 +295,61 @@
       "Lõi",
       "Capsid",
       "Vỏ ngoài"
-    ]
+    ],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Nguyên tố đa lượng": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Rễ": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Thân": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Lá": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Nitrogen": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Pha sáng": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Pha tối": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Tiêu hóa chưa có cơ quan tiêu hóa": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Tiêu hóa trong túi tiêu hóa": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Tiêu hóa trong ống tiêu hóa": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Gan": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Tuyến tụy, túi mật": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Trao đổi khí qua bề mặt cơ thể": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Trao đổi khí qua hệ thống ống khí": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Trao đổi khí qua mang": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Trao đổi khí qua phổi": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Tim": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Hệ mạch": [],
+    "11::Trao đổi chất và chuyển hóa năng lượng ở sinh vật::Thận": [],
+    "11::Cảm ứng ở sinh vật::Hướng động": [],
+    "11::Cảm ứng ở sinh vật::Hệ thần kinh dạng lưới": [],
+    "11::Cảm ứng ở sinh vật::Hệ thần kinh dạng chuỗi hạch": [],
+    "11::Cảm ứng ở sinh vật::Hệ thần kinh dạng ống": [],
+    "11::Cảm ứng ở sinh vật::Synapse": [],
+    "11::Cảm ứng ở sinh vật::Neuron": [],
+    "11::Cảm ứng ở sinh vật::Mắt": [],
+    "11::Cảm ứng ở sinh vật::Não": [],
+    "11::Cảm ứng ở sinh vật::Tai": [],
+    "11::Sinh trưởng và phát triển ở sinh vật::Phôi": [],
+    "11::Sinh trưởng và phát triển ở sinh vật::Phát triển qua biến thái": [],
+    "11::Sinh trưởng và phát triển ở sinh vật::Phát triển không qua biến thái": [],
+    "11::Sinh sản ở sinh vật::Hoa": [],
+    "11::Sinh sản ở sinh vật::Tinh trùng": [],
+    "11::Sinh sản ở sinh vật::Trứng": [],
+    "11::Sinh sản ở sinh vật::Tử cung": [],
+    "11::Mối quan hệ giữa các quá trình sinh lí trong cơ thể sinh vật với một số ngành nghề liên quan đến sinh học cơ thể::Cây": [],
+    "12::Di truyền phân tử::DNA": [],
+    "12::Di truyền phân tử::mRNA": [],
+    "12::Di truyền phân tử::tRNA": [],
+    "12::Di truyền phân tử::Phiên mã, dịch mã": [],
+    "12::Di truyền NST::Cấu trúc siêu hiển vi": [],
+    "12::Di truyền NST::Cấu tạo NST": [],
+    "12::Di truyền NST::Allele, locus": [],
+    "12::Di truyền NST::NST đơn, kép": [],
+    "12::Di truyền NST::Tương tác gene át chế": [],
+    "12::Di truyền NST::NST X": [],
+    "12::Di truyền NST::NST Y": [],
+    "12::Di truyền NST::Ruồi giấm": [],
+    "12::Di truyền NST::Bộ NST đồ của người bình thường": [],
+    "12::Mở rộng học thuyết di truyền NST::Lục lạp": [],
+    "12::Bằng chứng và các học thuyết tiến hóa::Hóa thạch": [],
+    "12::Bằng chứng và các học thuyết tiến hóa::Hổ phách": [],
+    "12::Bằng chứng và các học thuyết tiến hóa::Phát sinh loài người": [],
+    "12::Sinh thái học quần xã::Hệ sinh thái": [],
+    "12::Sinh thái học quần xã::Chu trình nước": []
   }
 }

@@ -128,3 +128,70 @@
     - Lõi
     - Capsid
     - Vỏ ngoài
+## Khối 11
+- **Trao đổi chất và chuyển hóa năng lượng ở sinh vật**
+  - **Nguyên tố đa lượng**
+  - **Rễ**
+  - **Thân**
+  - **Lá**
+  - **Nitrogen**
+  - **Pha sáng**
+  - **Pha tối**
+  - **Tiêu hóa chưa có cơ quan tiêu hóa**
+  - **Tiêu hóa trong túi tiêu hóa**
+  - **Tiêu hóa trong ống tiêu hóa**
+  - **Gan**
+  - **Tuyến tụy, túi mật**
+  - **Trao đổi khí qua bề mặt cơ thể**
+  - **Trao đổi khí qua hệ thống ống khí**
+  - **Trao đổi khí qua mang**
+  - **Trao đổi khí qua phổi**
+  - **Tim**
+  - **Hệ mạch**
+  - **Thận**
+- **Cảm ứng ở sinh vật**
+  - **Hướng động**
+  - **Hệ thần kinh dạng lưới**
+  - **Hệ thần kinh dạng chuỗi hạch**
+  - **Hệ thần kinh dạng ống**
+  - **Synapse**
+  - **Neuron**
+  - **Mắt**
+  - **Não**
+  - **Tai**
+- **Sinh trưởng và phát triển ở sinh vật**
+  - **Phôi**
+  - **Phát triển qua biến thái**
+  - **Phát triển không qua biến thái**
+- **Sinh sản ở sinh vật**
+  - **Hoa**
+  - **Tinh trùng**
+  - **Trứng**
+  - **Tử cung**
+- **Mối quan hệ giữa các quá trình sinh lí trong cơ thể sinh vật với một số ngành nghề liên quan đến sinh học cơ thể**
+  - **Cây**
+## Khối 12
+- **Di truyền phân tử**
+  - **DNA**
+  - **mRNA**
+  - **tRNA**
+  - **Phiên mã, dịch mã**
+- **Di truyền NST**
+  - **Cấu trúc siêu hiển vi**
+  - **Cấu tạo NST**
+  - **Allele, locus**
+  - **NST đơn, kép**
+  - **Tương tác gene át chế**
+  - **NST X**
+  - **NST Y**
+  - **Ruồi giấm**
+  - **Bộ NST đồ của người bình thường**
+- **Mở rộng học thuyết di truyền NST**
+  - **Lục lạp**
+- **Bằng chứng và các học thuyết tiến hóa**
+  - **Hóa thạch**
+  - **Hổ phách**
+  - **Phát sinh loài người**
+- **Sinh thái học quần xã**
+  - **Hệ sinh thái**
+  - **Chu trình nước**
