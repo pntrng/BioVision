@@ -40,7 +40,7 @@ if ENV == 'development':
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
 
 # Validation limits
-MAX_MODELS = 100
+MAX_MODELS = 500  # Tăng từ 100 để hỗ trợ tăng trưởng 5x (77 → 385 models)
 MAX_ITEMS_PER_MODEL = 500
 MAX_STRING_LENGTH = 1000
 MAX_NAME_LENGTH = 200

@@ -585,6 +585,7 @@
       <div class="hero-tagline hidden md:block">Nền tảng học tập tương tác giúp bạn khám phá các mô hình Sinh học 3D trực quan.</div>
     </div>
     <div class="topbar-actions">
+      <button id="btnViewMode" class="topbar-btn" title="Chuyển chế độ xem/chi tiết">👁️ Chế độ: Chi tiết</button>
       <button id="btnPresenter" class="topbar-btn" title="Bật/Tắt trình chiếu">🖥️ Trình chiếu</button>
     </div>
   </div>
@@ -699,6 +700,7 @@
   const POLL_INTERVAL_MS = 15000; // 15s check for fresh data
   let pollHandle = null;
   let presenterMode = false;
+  let viewMode = 'detail'; // 'detail' | 'view'
   let sidebarOpen = false;
   const defaultCameras = new Map(); // modelUid -> { position, target }
   let annotationList = [];
@@ -1379,11 +1381,17 @@
   function selectItem(it) {
     selectedId = it.id;
     focusOnItem(it);
-    setPanel(it, false);
-    showDetailBox(it);
-    showFunFactBox(it);
+    if (viewMode === 'detail') {
+      setPanel(it, false);
+      showDetailBox(it);
+      showFunFactBox(it);
+    } else {
+      // Chế độ Xem: không hiển thị nội dung/đáp án
+      showDetailBox(null);
+      showFunFactBox(null);
+    }
     updateLabels();
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 768 && viewMode === 'detail') {
       toggleSidebar(false);
     }
   }
@@ -1391,7 +1399,7 @@
   function showDetailBox(it) {
     const box = el("detailBox");
     if (!box) return;
-    if (!it) {
+    if (!it || viewMode === 'view') {
       box.classList.add("hidden");
       return;
     }
@@ -1465,7 +1473,7 @@
   function showFunFactBox(it) {
     const box = el("funFactBox");
     if (!box) return;
-    if (!it || !it.funFact || !it.funFact.trim()) {
+    if (!it || !it.funFact || !it.funFact.trim() || viewMode === 'view') {
       box.classList.add("hidden");
       return;
     }
@@ -1478,6 +1486,11 @@
 
 
   function createFloatingLabel(item, screenX, screenY, existingLabel = null) {
+    // Ở chế độ Xem: không tạo nhãn chứa tên/chi tiết điểm
+    if (viewMode === 'view') {
+      labelElements.delete(item.id);
+      return null;
+    }
     const overlay = el("overlay");
     if (!overlay) return;
     
@@ -1646,10 +1659,19 @@
         // Track seen hotspot
         seen.add(it.id);
 
-        // Label (name only): reuse element
-        const existingLabelEntry = labelElements.get(it.id);
-        const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
-        createFloatingLabel(it, coord.x, coord.y, existingLabel);
+        // Label (name only): reuse element (chỉ khi chế độ Chi tiết)
+        if (viewMode === 'detail') {
+          const existingLabelEntry = labelElements.get(it.id);
+          const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
+          createFloatingLabel(it, coord.x, coord.y, existingLabel);
+        } else {
+          // Ở chế độ Xem, nếu đang còn label cũ thì xoá đi
+          const existing = labelElements.get(it.id);
+          if (existing && existing.element && existing.element.parentNode) {
+            existing.element.parentNode.removeChild(existing.element);
+          }
+          labelElements.delete(it.id);
+        }
 
         
         if (processedCount === totalItems) {
@@ -1788,6 +1810,20 @@
   }
   if (el("btnPresenter")) {
     el("btnPresenter").addEventListener("click", () => setPresenterMode(!presenterMode));
+  }
+  if (el("btnViewMode")) {
+    el("btnViewMode").addEventListener("click", () => {
+      viewMode = viewMode === 'detail' ? 'view' : 'detail';
+      const btn = el("btnViewMode");
+      if (viewMode === 'detail') {
+        btn.textContent = "👁️ Chế độ: Chi tiết";
+      } else {
+        btn.textContent = "👁️ Chế độ: Xem";
+      }
+      // Cập nhật lại overlay & hộp thông tin theo mode mới
+      clearInfoPanels();
+      updateLabels();
+    });
   }
   if (el("btnResetCamera")) {
     el("btnResetCamera").addEventListener("click", resetCamera);

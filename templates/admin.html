@@ -940,46 +940,25 @@ async function saveToServer() {
     let m = getCurrentModel();
     if (!m) {
       const hasModelInfo = (state.modelName || state.modelUid || state.items.length > 0);
-      if (!hasModelInfo) {
-        // No current model and nothing to create, just persist allData
-        // (used after delete model)
-        const response = await fetch('/api/data', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${safeToken}`
-          },
-          body: JSON.stringify(allData)
-        });
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Server error (${response.status}): ${errorText}`);
-        }
-        const result = await response.json();
-        if (result.error) throw new Error(result.error);
-        serverVersion = typeof result.version === "number" ? result.version : serverVersion;
-        serverUpdatedAt = result.updatedAt || serverUpdatedAt;
-        clearDirty();
-        setStatus(`✅ Đã lưu thành công (v${serverVersion || "?"}${serverUpdatedAt ? " • " + serverUpdatedAt : ""})`);
-        await loadFromServer();
-        renderModelListAdmin();
-        renderAdminTree();
-        return true;
+      if (hasModelInfo) {
+        // create new model if none selected but we have enough info
+        m = {
+          id: "model_" + Date.now(),
+          grade: state.grade,
+          chapter: state.chapter,
+          name: state.modelName || state.modelUid,
+          modelUid: state.modelUid,
+          feature: state.modelFeature,
+          funFact: state.modelFunFact,
+          items: state.items
+        };
+        allData.models = allData.models || [];
+        allData.models.unshift(m);
+        state.currentModelId = m.id;
       }
-      // create new model if none selected
-      m = {
-        id: "model_" + Date.now(),
-        grade: state.grade,
-        chapter: state.chapter,
-        name: state.modelName || state.modelUid,
-        modelUid: state.modelUid,
-        feature: state.modelFeature,
-        funFact: state.modelFunFact,
-        items: state.items
-      };
-      allData.models = allData.models || [];
-      allData.models.unshift(m);
-      state.currentModelId = m.id;
+      // Nếu không có model hiện tại và cũng không có thông tin để tạo mới
+      // (ví dụ vừa xoá mô hình), ta vẫn tiếp tục phía dưới để lưu allData
+      // mà KHÔNG tạo model mới.
     } else {
       m.grade = state.grade;
       m.chapter = state.chapter;
@@ -990,9 +969,10 @@ async function saveToServer() {
       m.items = state.items;
     }
     
+    // Kiểm tra token SAU khi cập nhật allData nhưng TRƯỚC khi gọi fetch
     if (!adminToken) {
       setStatus("❌ Lỗi: Chưa có admin token! Vui lòng nhập token ở trên.");
-      return;
+      return false;
     }
     
     const safeToken = sanitizeToken(adminToken);
