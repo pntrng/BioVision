@@ -1463,7 +1463,17 @@ el("btnPick").onclick = () => {
 };
 
 el("btnGetCam").onclick = getCamera;
-el("btnUpdate").onclick = updateSelectedFromForm;
+function handleSaveClick() {
+  const selected = getSelected();
+  if (selected && selected.id) {
+    updateSelectedFromForm();
+    return;
+  }
+  // If no item selected, still allow saving model metadata
+  saveToServer();
+}
+
+el("btnUpdate").onclick = handleSaveClick;
 renderAdminTree();
 
 // Đánh dấu thay đổi cục bộ để tránh auto-sync ghi đè
