@@ -46,6 +46,15 @@ Thumbs.db
 data.json
 *.tmp
 
+# Local backups & one-off exports (not needed for deploy)
+backups/
+data_backup_before_reset.json
+
+# Reference docs only (app uses CSV/scripts; PDF/DOCX/TXT duplicates bloat the repo)
+/BioVision - cấu trúc nd chi tiết.pdf
+/BioVision - cấu trúc nd chi tiết.txt
+/PRD BioVision.docx
+
 # Logs
 *.log
 

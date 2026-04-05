@@ -244,8 +244,6 @@
         <select id="grade">
           <option value="">Chọn khối lớp</option>
           <option value="10">Lớp 10</option>
-          <option value="11">Lớp 11</option>
-          <option value="12">Lớp 12</option>
         </select>
         <select id="chapterSelect">
           <option value="">Chọn chương (lọc theo khối lớp)</option>
@@ -408,13 +406,27 @@ function renderAdminTree() {
     treeData[grade][chapter].push(m);
   });
 
-  Object.keys(treeData).sort().forEach(grade => {
+  let gradeKeys = Object.keys(treeData);
+  if (mindmapOrder && mindmapOrder.grades && mindmapOrder.grades.length) {
+    gradeKeys = sortByMindmapOrder(gradeKeys, mindmapOrder.grades);
+  } else {
+    gradeKeys.sort();
+  }
+
+  gradeKeys.forEach(grade => {
     const gradeRow = document.createElement("div");
     gradeRow.className = "tree-row";
     gradeRow.innerHTML = `<span>📚 Khối ${grade}</span>`;
     tree.appendChild(gradeRow);
 
-    Object.keys(treeData[grade]).sort().forEach(chapter => {
+    let chapterKeys = Object.keys(treeData[grade]);
+    if (mindmapOrder && mindmapOrder.chapters_by_grade && mindmapOrder.chapters_by_grade[grade]) {
+      chapterKeys = sortByMindmapOrder(chapterKeys, mindmapOrder.chapters_by_grade[grade]);
+    } else {
+      chapterKeys.sort();
+    }
+
+    chapterKeys.forEach(chapter => {
       const chapterRow = document.createElement("div");
       chapterRow.className = "tree-row";
       chapterRow.style.marginLeft = "12px";
@@ -446,7 +458,7 @@ function renderAdminTree() {
       chapterRow.appendChild(chapterActions);
       tree.appendChild(chapterRow);
 
-      treeData[grade][chapter].forEach(model => {
+      sortModelObjectsByMindmap(treeData[grade][chapter], grade, chapter).forEach(model => {
         const modelRow = document.createElement("div");
         modelRow.className = `tree-row ${state.currentModelId === model.id ? "active" : ""}`;
         modelRow.style.marginLeft = "24px";
@@ -612,6 +624,28 @@ function sortByMindmapOrder(items, orderArray) {
     const indexA = orderMap.has(a) ? orderMap.get(a) : Infinity;
     const indexB = orderMap.has(b) ? orderMap.get(b) : Infinity;
     return indexA - indexB;
+  });
+}
+
+/** Sắp xếp danh sách mô hình (object có .name) theo mindmap */
+function sortModelObjectsByMindmap(models, grade, chapter) {
+  const list = models.slice();
+  if (!mindmapOrder || !mindmapOrder.models_by_chapter) {
+    return list.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+  }
+  const key = `${grade}::${chapter}`;
+  const order = mindmapOrder.models_by_chapter[key];
+  if (!order) {
+    return list.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+  }
+  const orderMap = new Map();
+  order.forEach((name, index) => orderMap.set(name, index));
+  return list.sort((a, b) => {
+    const na = a.name || "";
+    const nb = b.name || "";
+    const ia = orderMap.has(na) ? orderMap.get(na) : Infinity;
+    const ib = orderMap.has(nb) ? orderMap.get(nb) : Infinity;
+    return ia - ib;
   });
 }
 

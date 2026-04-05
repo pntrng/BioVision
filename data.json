@@ -1,267 +1,919 @@
 {
     "models": [
         {
-            "chapter": "Trao đổi chất qua màng và truyền tin tế bào",
-            "feature": "Là khoảng thời gian từ khi tế bào được sinh ra, lớn lên và phân chia thành hai tế bào con. Gồm kì trung gian và quá trình phân bào.",
-            "funFact": "Giúp giải thích cho việc một số người mắc hội chứng bất dung nạp lactose không thể tiêu hóa được sữa. Đom đóm phát sáng trong bóng tối là nhờ phản ứng do enzyme luciferase xúc tác cho phản ứng giữa luciferin với O2 và ATP tạo ra sản phẩm trong đó có ánh sáng.",
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
             "grade": "10",
-            "id": "10_chu_k_t_b_o_v_ph_n_b_o_chu_k_t_b_o_35f52055",
-            "items": [
-                {
-                    "content": "Là pha tăng kích thước tế bào, tổng hợp các bào quan và tổng hợp, tích lũy các chất.",
-                    "funFact": "Trong pha G1 có điểm kiểm soát G1/S, nếu nhận diện điểm sai hỏng, điểm kiểm soát sẽ sử dụng cơ chế tín hiệu để ngừng chu kì tế bào cho đến khi các sai hỏng được khắc phục. Tại đây tế bào sẽ tiến vào trạng thái \"nghỉ\" ở pha G0.",
-                    "id": "pt_35f52055_pha_g1",
-                    "link": "",
-                    "name": "Pha G1"
-                },
-                {
-                    "content": "Là pha nhân đôi DNA dẫn đến nhân đôi NST tạo thành NST kép.",
-                    "funFact": "",
-                    "id": "pt_35f52055_pha_s",
-                    "link": "",
-                    "name": "Pha S"
-                },
-                {
-                    "content": "Là pha gia tăng kích thước, chuẩn bị phân chia.",
-                    "funFact": "Trong pha G2 có điểm kiểm soát G2/M, tại đây kiểm soát quá trình nhân đôi DNA đã hoàn tất và mọi sai sót đã được sữa chữa hay chưa.",
-                    "id": "pt_35f52055_pha_g2",
-                    "link": "",
-                    "name": "Pha G2"
-                },
-                {
-                    "content": "Là một trong các kiểu phân chia của tế bào nhân thực, xảy ra ở tế bào sinh dưỡng và các tế bào sinh dục sơ khai.",
-                    "funFact": "Tại đây có điểm kiểm soát thoi phân bào nhằm kiểm tra tất cả các NST đã gắn với thoi phân bào hay chưa. Nếu chưa hoạt tất, chu kì tế bào cũng sẽ dừng lại.",
-                    "id": "pt_35f52055_nguy_n_ph_n",
-                    "link": "",
-                    "name": "Nguyên phân"
-                }
-            ],
-            "modelUid": "35f5205532044fc880d88defee2bbc68",
-            "name": "Xuất bào"
+            "id": "model_bb0a368736fd3036",
+            "items": [],
+            "modelUid": "c2dc1e010c61429daea378c66a6e1b1c",
+            "name": "Khung carbon"
         },
         {
-            "chapter": "Chu kì tế bào và phân bào",
-            "feature": "Là hình thức phân chia của các tế bào mầm sinh dục trong quá trình sản sinh giao tử ở các cơ quan sinh sản. Giảm phân gồm hai lần phân bào liên tiếp là giảm phân I và giảm phân II.",
-            "funFact": "Trong giảm phân, bộ NST lưỡng bội (2n) trải qua hai lần phân bào liên tiếp nhưng chỉ nhân đôi một lần ở kì trung gian nên sinh ra giao tử có bộ NST đơn bội (n). Có nhiều yếu tố ảnh hưởng đến giảm phân bao gồm yếu tố di truyền và nhiều yếu tố môi trường bên ngoài, từ đó vận dụng vào thực tiến sản xuất để mang lại hiệu quả kinh tế cũng như phòng, chữa bệnh cho con người.",
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
             "grade": "10",
-            "id": "10_chu_k_t_b_o_v_ph_n_b_o_gi_m_ph_n_d153ae1e",
+            "id": "model_fd42a1146e974af6",
+            "items": [],
+            "modelUid": "960db05560484053b1c7f565b16b6c7d",
+            "name": "Nước"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_c74275f1b57bbfb2",
+            "items": [],
+            "modelUid": "10659ca1502c4ade88abba6284bb50f2",
+            "name": "Đường đơn"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_7219c9504c4acaeb",
+            "items": [],
+            "modelUid": "b0bbbbb2240e446daf4957ede947966d",
+            "name": "Đường đôi"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_a53e9f5092de4574",
+            "items": [],
+            "modelUid": "140a3d34ee254eaa81ba10828d257d2d",
+            "name": "Đường đa"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_1de6451410d5db43",
+            "items": [],
+            "modelUid": "e2f82ea57cc1411cb536f524c44c1249",
+            "name": "Lipid"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_0aed50d35bd5ac0e",
+            "items": [],
+            "modelUid": "4b5bb7735f834bb9ab2ccf6aba3dafcb",
+            "name": "Phospholipid"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_e7e72141506e0e79",
+            "items": [],
+            "modelUid": "a71b3d072d26435b92d4cc94f0961a19",
+            "name": "Steroid"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_e960dc47d92e84da",
+            "items": [],
+            "modelUid": "f4c776fb45c046e5a3fbbe13106b531f",
+            "name": "Amino acid"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_b25320379dd6a811",
+            "items": [],
+            "modelUid": "695fc24af5d342c3a24023ed3547748b",
+            "name": "Các bậc cấu trúc của protein"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_16f6abe0470894b1",
+            "items": [],
+            "modelUid": "83faecabd347463ea067c027ecd7c8ae",
+            "name": "Liên kết trong protein"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "Là một phân tử có cấu trúc xoắn kép gồm 2 mạch polynucleotide xoắn song song và ngược chiều nhau, có chức năng lưu trữ, bảo quản và truyền đạt thông tin di truyền.",
+            "funFact": "Ban đầu được phát hiện chủ yếu trong nhân tế bào, nhưng thực tế còn có trong tế bào chất tại bào quan ti thể và lục lạp hoặc là các plasmid. Trong hệ gene người có các trình tự nucleotide ngắn, được lặp lại nhiều lần và đặc trưng cho từng cá thể nên được dọi là dấu vân tay DNA giúp nhận dạng cá thể, điều tra tội phạm, xác định nhân thân và quan hệ họ hàng.",
+            "grade": "10",
+            "id": "10_th_nh_ph_n_h_a_h_c_c_a_t_b_o_dna_27714f2b",
             "items": [
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.010663327181007957,
+                            -0.010696928696564464,
+                            0.044947476233413115
+                        ],
+                        "target": [
+                            0.003982875524299633,
+                            0.0021883976220672006,
+                            0.041500372060463905
+                        ]
+                    },
+                    "content": "Là liên kết giữa nhóm phosphate ở carbon 5' của một nucleotide và nhóm hydroxyl ở carbon 3' của nucleotide kế tiếp giúp tạo thành chuỗi polynucleotide dài, ổn định và mang tính di truyền.",
+                    "funFact": "",
+                    "id": "pt_27714f2b_li_n_k_t_phosphodiester",
+                    "link": "",
+                    "name": "Liên kết phosphodiester",
+                    "world": [
+                        0.007324727756201938,
+                        4.4741787829213065e-05,
+                        0.04273279909300098
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.0030889958455354036,
+                            -0.012019368359603842,
+                            0.04039728904818244
+                        ],
+                        "target": [
+                            0.000863230043606585,
+                            -0.0004449298856318998,
+                            0.03984776078455556
+                        ]
+                    },
+                    "content": "Có bốn loại là Adenine (A), Guanine (G), Cytosine (C), và Thymine (T), thuộc hai nhóm: Purine (A, G - có cấu trúc vòng kép) và Pyrimidine (C, T - có cấu trúc vòng đơn) và gắn ở carbon 1' của một nucleotide.",
+                    "funFact": "",
+                    "id": "pt_27714f2b_nitrogenous_base",
+                    "link": "",
+                    "name": "Nitrogenous base",
+                    "world": [
+                        0.003776725931454034,
+                        -0.0024201952473672976,
+                        0.040262946203532844
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.005907256711800357,
+                            -0.010134235895804644,
+                            0.04234035661222456
+                        ],
+                        "target": [
+                            0.005907256711800314,
+                            -0.0006296026299933998,
+                            0.03925211405869198
+                        ]
+                    },
+                    "content": "Là deoxyribose - một loại đường đơn có công thức hóa học là C5H10O4.",
+                    "funFact": "",
+                    "id": "pt_27714f2b_ng_5_carbon",
+                    "link": "",
+                    "name": "Đường 5-carbon",
+                    "world": [
+                        0.005493459668820516,
+                        -0.003862377670330454,
+                        0.03933241169639552
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.007826896429969,
+                            -0.014589688002534091,
+                            0.04496361830144618
+                        ],
+                        "target": [
+                            0.0045087590278105,
+                            0.0008920625848094006,
+                            0.04087211482998988
+                        ]
+                    },
+                    "content": "Là nhóm (PO4)3- gắn ở carbon 5' của một nucleotide",
+                    "funFact": "",
+                    "id": "pt_27714f2b_nh_m_phosphate",
+                    "link": "",
+                    "name": "Nhóm phosphate",
+                    "world": [
+                        0.007963771672017051,
+                        -0.002597709077069511,
+                        0.04148939544764084
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.00879174505641202,
+                            -0.01615406357737727,
+                            0.040920765900055264
+                        ],
+                        "target": [
+                            -0.0008073476639816846,
+                            -8.622179717138961e-05,
+                            0.03970585241839598
+                        ]
+                    },
+                    "content": "Là liên kết hình thành giữa các cặp nitrogenous base (A-T và G-C) trên hai mạch polynucleotide giúp DNA giữ cấu trúc xoắn kép ổn định, trong đó A liên kết với T bằng 2 liên kết hydrogen, G liên kết với C bằng 3 liên kết hydrogen.",
+                    "funFact": "",
+                    "id": "pt_27714f2b_li_n_k_t_hydrogen",
+                    "link": "",
+                    "name": "Liên kết hydrogen",
+                    "world": [
+                        -0.0005277407814532864,
+                        -0.00020829220844034883,
+                        0.04006553565257041
+                    ]
+                }
+            ],
+            "modelUid": "27714f2b8e2a42f0aedb30f92bdd9c73",
+            "name": "DNA"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "Có cấu tạo mạch đơn, dạng thẳng và có chức năng làm khuôn cho quá trình dịch mã.",
+            "funFact": "- Các mRNA có kích thước đa dạng, phụ thuộc độ dài gene mã hóa và chiếm khoảng 4% tổng lượng RNA của tế bào.\n- Ở sinh vật nhân sơ, một phân tử mRNA thường chứa vài trình tự mã hóa của một số gene khác nhau, trong khi mỗi gene của sinh vật nhân thực tạo ra một loại mRNA riêng.",
+            "grade": "10",
+            "id": "12_di_truyen_phan_tu_mrna",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            27.191509995756213,
+                            -14.06496754779225,
+                            20.32523858637437
+                        ],
+                        "target": [
+                            26.80414624023365,
+                            0.00018316444083410488,
+                            13.721676156707199
+                        ]
+                    },
+                    "content": "Có bốn loại là Adenine (A), Guanine (G), Cytosine (C), và Uracil (U).",
+                    "funFact": "",
+                    "id": "org_c5b79a356e747_1771792191735",
+                    "link": "",
+                    "name": "Nucleotide",
+                    "world": [
+                        25.899690471187114,
+                        0.2655049266316325,
+                        12.071782498142557
+                    ]
+                }
+            ],
+            "modelUid": "86d3572002254365bc52c0c034445718",
+            "name": "mRNA"
+        },
+        {
+            "chapter": "Thành phần hóa học của tế bào",
+            "feature": "Có cấu trúc mạch đơn, trên phân tử tRNA có những đoạn có trình tự nucleotide bắt cặp bổ sung với nhau và những đoạn trình tự nucleotide không bắt cặp bổ sung với nhau. tRNA có chức năng vận chuyển amino acid tới ribosome và tiến hành dịch mã.",
+            "funFact": "Các tRNA dài khoảng 74-95 nucleotide.",
+            "grade": "10",
+            "id": "12_di_truyen_phan_tu_trna",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            8.247527153739238,
+                            -16.231415449750966,
+                            17.266143442473933
+                        ],
+                        "target": [
+                            1.4444910224178968,
+                            -5.847217234647368,
+                            13.226436391056085
+                        ]
+                    },
+                    "content": "Có bốn loại là Adenine (A), Guanine (G), Cytosine (C), và Uracil (U). Tại một số vùng các nucleotide tự bắt đôi với nhau tạo nên cấu trúc với ba thùy chức năng",
+                    "funFact": "",
+                    "id": "org_7ba6dab1e028_1771792834988",
+                    "link": "",
+                    "name": "Nucleotide",
+                    "world": [
+                        3.3872629402557095,
+                        -6.991602923456963,
+                        14.529261469879025
+                    ]
+                }
+            ],
+            "modelUid": "8ab8a1d412404d73ba66ee82bdd22f4f",
+            "name": "tRNA"
+        },
+        {
+            "chapter": "Cấu trúc tế bào",
+            "feature": "Tế bào nhân sơ có kích thước nhỏ, chưa có nhân hoàn chỉnh, có rất ít bào quan; trao đổi chất, sinh trưởng và sinh sản rất nhanh.",
+            "funFact": "",
+            "grade": "10",
+            "id": "10_c_u_tr_c_t_b_o_t_b_o_nh_n_s_8488cbee",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.36793931379878153,
+                            -0.4600491682494597,
+                            -0.16642058633697832
+                        ],
+                        "target": [
+                            0.16719886872080314,
+                            0.2373363974668819,
+                            0.5130317394869981
+                        ]
+                    },
+                    "content": "Có cấu trúc dạng sơi, có bản chất là protein giúp tế bào vi khuẩn bám dính, tiếp hợp với nhau hoặc bám vào bề mặt tế bào của sinh vật khác.",
+                    "funFact": "Ví dụ vi khuẩn Helicobacter pylori dùng lông bám dính vào tế bào niêm mạc dạ dày người gây bệnh viêm loét dạ dày.",
+                    "id": "pt_8488cbee_l_ng",
+                    "link": "",
+                    "name": "Lông",
+                    "world": [
+                        0.12232621452263555,
+                        0.08116385960811955,
+                        0.23348122064247467
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.390886754148781,
+                            -0.8905834383043538,
+                            0.4193199128802989
+                        ],
+                        "target": [
+                            -0.2995973001704518,
+                            -0.2018026240465222,
+                            0.24133691540305297
+                        ]
+                    },
+                    "content": "Được cấu tạo từ bó sợi protein, là cơ quan vận động của tế bào. Các tế bào vi khuẩn có thể có một hoặc một vài roi.",
+                    "funFact": "",
+                    "id": "pt_8488cbee_roi",
+                    "link": "",
+                    "name": "Roi",
+                    "world": [
+                        -0.4094615557269972,
+                        -0.14868470266763764,
+                        0.1325868056680698
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.2871100043367638,
+                            -0.5053402236189786,
+                            0.14332384005041887
+                        ],
+                        "target": [
+                            0.20752845499900743,
+                            0.1064988314523639,
+                            0.4552854984524686
+                        ]
+                    },
+                    "content": "Có cấu tạo từ lipopolysaccharide giúp bảo vệ vi khuẩn tránh sự tấn công của bạch cầu.",
+                    "funFact": "",
+                    "id": "pt_8488cbee_m_ng_ngo_i",
+                    "link": "",
+                    "name": "Màng ngoài",
+                    "world": [
+                        0.3273364390664541,
+                        -0.001457260755236437,
+                        0.37801989114063517
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.26894780161556897,
+                            -0.5183651208289987,
+                            0.7208465747136865
+                        ],
+                        "target": [
+                            0.26532871259665064,
+                            -0.11237574959767224,
+                            0.533625883553823
+                        ]
+                    },
+                    "content": "Có độ dày từ 10nm đến 20nm, được cấu tạo bởi peptidoglycan, có tác dụng giữ ổn định hình dạng và bảo vệ tế bào. Dựa vào cấu tạo thành tế bào, vi khuẩn được chia thành hai dạng là vi khuẩn Gram dương và vi khuẩn Gram âm.",
+                    "funFact": "Ứng dụng một số loại thuốc kháng sinh như penicillin diệt vi khuẩn bằng cách ngăn không có vi khuẩn tạo được thành tế bào, ức chế sự phân chia tế bào và tiêu diệt vi khuẩn.",
+                    "id": "pt_8488cbee_th_nh_t_b_o",
+                    "link": "",
+                    "name": "Thành tế bào",
+                    "world": [
+                        0.05042230794155518,
+                        0.07135872926857974,
+                        0.44437070525940725
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.28813583629239775,
+                            -0.35871187959252393,
+                            1.0230075854101435
+                        ],
+                        "target": [
+                            0.3346917565759649,
+                            0.0738276721429293,
+                            0.5081373662518226
+                        ]
+                    },
+                    "content": "Được cấu tạo bởi lớp kép phospholipid và protein giúp tế bào vi khuẩn trao đổi chất có chọn lọc và còn là nơi diễn ra các quá trình chuyển hóa vật chất và năng lượng của tế bào.",
+                    "funFact": "",
+                    "id": "pt_8488cbee_m_ng_t_b_o",
+                    "link": "",
+                    "name": "Màng tế bào",
+                    "world": [
+                        0.1978507982477523,
+                        0.11971305031949117,
+                        0.5036500177566774
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.3048165549055871,
+                            -0.22548320178777165,
+                            0.8415768496884855
+                        ],
+                        "target": [
+                            0.29641714044559325,
+                            -0.051519648211545324,
+                            0.650421348756226
+                        ]
+                    },
+                    "content": "Thành phần chính là bào tương (trong bào tương có các hạt dự trữ và nhiều ribosome) và là nơi diễn ra các phản ứng hóa sinh, đảm bảo duy trì các hoạt động sống của tế bào.",
+                    "funFact": "",
+                    "id": "pt_8488cbee_t_b_o_ch_t",
+                    "link": "",
+                    "name": "Tế bào chất",
+                    "world": [
+                        0.47824038260459734,
+                        0.1034122182303039,
+                        0.5684687625535942
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.3057867581583788,
+                            -0.08430952826941322,
+                            0.7483095643209051
+                        ],
+                        "target": [
+                            0.3036442786784083,
+                            -0.013808931544211062,
+                            0.6292157566270853
+                        ]
+                    },
+                    "content": "Không có màng bao bọc, chỉ chứa 1 phân tử DNA dạng vòng, mạch kép - mang thông tin di truyền điều khiển mọi hoạt động sống của tế bào vi khuẩn.",
+                    "funFact": "",
+                    "id": "pt_8488cbee_v_ng_nh_n_ch_a_dna",
+                    "link": "",
+                    "name": "Vùng nhân chứa DNA",
+                    "world": [
+                        0.2944106527132009,
+                        0.047526319730904994,
+                        0.48399704872274285
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.30497191310512717,
+                            -0.08707680899687792,
+                            0.7219700690290881
+                        ],
+                        "target": [
+                            0.2997612518383856,
+                            -0.026073111785828842,
+                            0.6438323295492552
+                        ]
+                    },
+                    "content": "Có số lượng khoảng 10000 đến 100000 và là nơi xảy ra quá trình tổng hợp protein của tế bào",
+                    "funFact": "",
+                    "id": "pt_8488cbee_ribosome",
+                    "link": "",
+                    "name": "Ribosome",
+                    "world": [
+                        0.26919300858819306,
+                        0.11622738294306012,
+                        0.5219612989533362
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.11402331738240466,
+                            -0.1746358539139226,
+                            0.6946700424977537
+                        ],
+                        "target": [
+                            0.13133289560765035,
+                            -0.10121725222987586,
+                            0.59856433512018
+                        ]
+                    },
+                    "content": "Là các DNA nhỏ, dạng vòng, mạch kép. Trên các plamid thường chứa nhiều gene kháng thuốc kháng sinh.",
+                    "funFact": "Các plasmid mang gene kháng thuốc kháng sinh có thể được truyền từ tế bào vi khuẩn này sang tế bào vi khuẩn khác bằng con đường tiếp hợp.",
+                    "id": "pt_8488cbee_plasmid",
+                    "link": "",
+                    "name": "Plasmid",
+                    "world": [
+                        0.10576089253033985,
+                        0.012934805498121177,
+                        0.41500290929576905
+                    ]
+                }
+            ],
+            "modelUid": "8488cbee912f48d38d3da676af129884",
+            "name": "Tế bào nhân sơ"
+        },
+        {
+            "chapter": "Cấu trúc tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_3e686db9c940516f",
+            "items": [],
+            "modelUid": "84f3dec894ac4c9fa19107a8de6ae6f8",
+            "name": "Vi khuẩn Gr- và Gr+"
+        },
+        {
+            "chapter": "Cấu trúc tế bào",
+            "feature": "Tế bào nhân thực có kích thước lớn và có cấu tạo phức tạp; đã có nhân chính thức với màng nhân ngăn cách chất nhân với tế bào chất, bộ khung xương tế bào cùng với hệ thống nội màng và hàng loạt các bào quan có màng bao bọc.",
+            "funFact": "",
+            "grade": "10",
+            "id": "10_c_u_tr_c_t_b_o_t_b_o_nh_n_th_c_cbdf7e67",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -1.6913137613087774,
+                            -1.145472416686233,
+                            -0.32911438301929474
+                        ],
+                        "target": [
+                            0.1996683839177139,
+                            -1.1821061428414787,
+                            -0.882336509314209
+                        ]
+                    },
                     "content": "",
-                    "funFact": "",
-                    "id": "pt_d153ae1e_2n",
+                    "funFact": "Tế bào thực vật không có trung thể, lysosome nhưng có thành tế bào, lục lạp và không bào trung tâm mà tế bào động vật không có.",
+                    "id": "org_1aa382a2db9398_1770564240097",
                     "link": "",
-                    "name": "2n"
-                }
-            ],
-            "modelUid": "d153ae1e016d49dc82d2813f0bf386c9",
-            "name": "Giảm phân"
-        },
-        {
-            "chapter": "Chu kì tế bào và phân bào",
-            "feature": "Kì đầu",
-            "funFact": "Giúp giải thích cho việc một số người mắc hội chứng bất dung nạp lactose không thể tiêu hóa được sữa. Đom đóm phát sáng trong bóng tối là nhờ phản ứng do enzyme luciferase xúc tác cho phản ứng giữa luciferin với O2 và ATP tạo ra sản phẩm trong đó có ánh sáng.",
-            "grade": "10",
-            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_5893c912",
-            "items": [
-                {
-                    "content": "Bắt đầu hình thành",
-                    "funFact": "",
-                    "id": "pt_5893c912_thoi_ph_n_b_o",
-                    "link": "",
-                    "name": "Thoi phân bào"
+                    "name": "Tế bào thực vật",
+                    "world": [
+                        0.22572777250709536,
+                        -1.5683216593832667,
+                        -0.5304421179397881
+                    ]
                 },
                 {
-                    "content": "Bắt đầu co xoắn",
-                    "funFact": "",
-                    "id": "pt_5893c912_nst",
-                    "link": "",
-                    "name": "NST"
-                },
-                {
-                    "content": "Tiêu biến",
-                    "funFact": "",
-                    "id": "pt_5893c912_m_ng_nh_n_v_h_ch_nh_n",
-                    "link": "",
-                    "name": "Màng nhân và hạch nhân"
-                }
-            ],
-            "modelUid": "5893c91271574463a9020d0deeaf95f0",
-            "name": "Nguyên phân"
-        },
-        {
-            "chapter": "Chu kì tế bào và phân bào",
-            "feature": "Kì giữa",
-            "funFact": "Giúp giải thích cho việc một số người mắc hội chứng bất dung nạp lactose không thể tiêu hóa được sữa. Đom đóm phát sáng trong bóng tối là nhờ phản ứng do enzyme luciferase xúc tác cho phản ứng giữa luciferin với O2 và ATP tạo ra sản phẩm trong đó có ánh sáng.",
-            "grade": "10",
-            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_68662e88",
-            "items": [
-                {
-                    "content": "Co xoắn tối đa và nằm ở mặt phẳng xích đạo của thoi phân bào.",
-                    "funFact": "",
-                    "id": "pt_68662e88_nst",
-                    "link": "",
-                    "name": "NST"
-                },
-                {
-                    "content": "Các vi ống của thoi phân bào đính vào 2 phía tâm động của NST.",
-                    "funFact": "",
-                    "id": "pt_68662e88_vi_ng",
-                    "link": "",
-                    "name": "Vi ống"
-                }
-            ],
-            "modelUid": "68662e881ab54dc09e5736984c1aa9b3",
-            "name": "Nguyên phân"
-        },
-        {
-            "chapter": "Chu kì tế bào và phân bào",
-            "feature": "Kì cuối",
-            "funFact": "Giúp giải thích cho việc một số người mắc hội chứng bất dung nạp lactose không thể tiêu hóa được sữa. Đom đóm phát sáng trong bóng tối là nhờ phản ứng do enzyme luciferase xúc tác cho phản ứng giữa luciferin với O2 và ATP tạo ra sản phẩm trong đó có ánh sáng.",
-            "grade": "10",
-            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_ebb24bc7",
-            "items": [
-                {
-                    "content": "Dãn xoắn",
-                    "funFact": "",
-                    "id": "pt_ebb24bc7_nst",
-                    "link": "",
-                    "name": "NST"
-                },
-                {
-                    "content": "Tái xuất hiện hình thành hai nhân mới",
-                    "funFact": "",
-                    "id": "pt_ebb24bc7_m_ng_nh_n_v_h_ch_nh_n",
-                    "link": "",
-                    "name": "Màng nhân và hạch nhân"
-                },
-                {
-                    "content": "Tiêu biến",
-                    "funFact": "",
-                    "id": "pt_ebb24bc7_thoi_ph_n_b_o",
-                    "link": "",
-                    "name": "Thoi phân bào"
-                },
-                {
-                    "content": "Tế bào chất phân chia dần và tách tế bào mẹ thành hai tế bào con.",
-                    "funFact": "",
-                    "id": "pt_ebb24bc7_t_b_o_ch_t",
-                    "link": "",
-                    "name": "Tế bào chất"
-                }
-            ],
-            "modelUid": "ebb24bc7cf8c44c480d3f462a96b9b99",
-            "name": "Nguyên phân"
-        },
-        {
-            "chapter": "Chu kì tế bào và phân bào",
-            "feature": "Kì sau",
-            "funFact": "Giúp giải thích cho việc một số người mắc hội chứng bất dung nạp lactose không thể tiêu hóa được sữa. Đom đóm phát sáng trong bóng tối là nhờ phản ứng do enzyme luciferase xúc tác cho phản ứng giữa luciferin với O2 và ATP tạo ra sản phẩm trong đó có ánh sáng.",
-            "grade": "10",
-            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_ec2ae98b",
-            "items": [
-                {
-                    "content": "Hai chromatid chị em của mỗi NST kép bắt đầu tách rời nhau thành hai NST đơn và di chuyển trên thoi phân bào về hai cực đối diện của tế bào.",
-                    "funFact": "",
-                    "id": "pt_ec2ae98b_nst",
-                    "link": "",
-                    "name": "NST"
-                }
-            ],
-            "modelUid": "ec2ae98bcacd42508150183b1ade604a",
-            "name": "Nguyên phân"
-        },
-        {
-            "chapter": "Chuyển hóa năng lượng trong tế bào",
-            "feature": "Là adenosine triphosphate (viết tắt là ATP) có chức năng dự trữ năng lượng ngắn hạn để cung cấp cho các hoạt động sống của tế bào ngay khi cần.",
-            "funFact": "Protein sữa sau khi được đóng gói trong túi vận chuyển và xuất ra khỏi tế bào tuyến sữa.",
-            "grade": "10",
-            "id": "10_chuy_n_h_a_n_ng_l_ng_trong_t_b_o_atp_fc449696",
-            "items": [
-                {
-                    "content": "Là nucleotide loại adenin tham gia cấu tạp nên hợp chất giàu năng lượng như ATP.",
-                    "funFact": "",
-                    "id": "pt_fc449696_adenine",
-                    "link": "",
-                    "name": "Adenine"
-                },
-                {
-                    "content": "Là loại đường đơn có công thức hóa học là C5H10O5.",
-                    "funFact": "",
-                    "id": "pt_fc449696_ng_ribose",
-                    "link": "",
-                    "name": "Đường ribose"
-                },
-                {
-                    "content": "Các gốc phosphate với hai liên kết giàu năng lượng.",
-                    "funFact": "",
-                    "id": "pt_fc449696_3_nh_m_phosphate",
-                    "link": "",
-                    "name": "3 Nhóm phosphate"
-                },
-                {
-                    "content": "Liên kết này thường dễ bị phá vỡ, khi bị phá vỡ sẽ giải phóng năng lượng.",
-                    "funFact": "",
-                    "id": "pt_fc449696_li_n_k_t_gi_a_2_nh_m_p",
-                    "link": "",
-                    "name": "Liên kết giữa 2 nhóm P"
-                }
-            ],
-            "modelUid": "fc4496961b3947499ec3dc0d878d5b05",
-            "name": "ATP"
-        },
-        {
-            "chapter": "Chuyển hóa năng lượng trong tế bào",
-            "feature": "Là chất xúc tác sinh học được tổng hợp trong tế bào sống, có tác dụng làm tăng tốc độ phản ứng trong điều kiện sinh lí bình thường của cơ thể nhưng không bị biến đổi sau phản ứng.",
-            "funFact": "Giúp giải thích cho việc một số người mắc hội chứng bất dung nạp lactose không thể tiêu hóa được sữa. Đom đóm phát sáng trong bóng tối là nhờ phản ứng do enzyme luciferase xúc tác cho phản ứng giữa luciferin với O2 và ATP tạo ra sản phẩm trong đó có ánh sáng.",
-            "grade": "10",
-            "id": "10_chuy_n_h_a_n_ng_l_ng_trong_t_b_o_enzyme_11901934",
-            "items": [
-                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -1.1904896189092176,
+                            -0.2168442289993664,
+                            0.10231674263002732
+                        ],
+                        "target": [
+                            0.2441752682580501,
+                            1.124673319062467,
+                            -0.9855075772874753
+                        ]
+                    },
                     "content": "",
-                    "funFact": "",
-                    "id": "pt_11901934_c_ch_t",
+                    "funFact": "Riêng tế bào động vật có trung thể và lysosome.",
+                    "id": "org_22f30c49bf6b48_1770701102962",
                     "link": "",
-                    "name": "Cơ chất"
-                },
-                {
-                    "content": "Là vùng cấu trúc không gian đặc biệt có khả năng liên kết đặc hiệu với cơ chất để xúc tác cho phản ứng diễn ra.",
-                    "funFact": "",
-                    "id": "pt_11901934_trung_t_m_ho_t_ng",
-                    "link": "",
-                    "name": "Trung tâm hoạt động"
-                },
-                {
-                    "content": "Được cấu tạo từ protein, một số khác còn có thêm cofactor là ion kim loại hoặc các phân tử hữu cơ.",
-                    "funFact": "",
-                    "id": "pt_11901934_enzyme",
-                    "link": "",
-                    "name": "Enzyme"
+                    "name": "Tế bào động vật",
+                    "world": [
+                        0.2650215888629666,
+                        0.3274085075020028,
+                        -0.5409429152879728
+                    ]
                 }
             ],
-            "modelUid": "1190193493d24b138521bfb718c5fac7",
-            "name": "Enzyme"
+            "modelUid": "cbdf7e677572492dacbb5834081592e7",
+            "name": "Tế bào nhân thực"
+        },
+        {
+            "chapter": "Cấu trúc tế bào",
+            "feature": "Là bào quan được bao bọc bởi màng kép, phần lớn có dạng hình cầu, có vai trò điều khiển mọi hoạt động sống của tế bào.",
+            "funFact": "Mõi tế bào nhân thực thường chỉ có một nhân, tuy nhiên ở một số tế bào nấm và sinh vật khác, mỗi tế bào có thể có một vài nhân. Như tế bào hồng cầu của người không có nhân.",
+            "grade": "10",
+            "id": "10_c_u_tr_c_t_b_o_nh_n_t_b_o_7e01bff4",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -57.043177794335854,
+                            -83.15432594468943,
+                            114.13796663368609
+                        ],
+                        "target": [
+                            15.754325621932914,
+                            -43.41055508012505,
+                            -50.60505723658141
+                        ]
+                    },
+                    "content": "Có cấu tạo bởi lớp kép phospholipid và protein, có vai trì bảo vệ nhân và giúp ngăn cách với tế bào chất bên ngoài.",
+                    "funFact": "",
+                    "id": "pt_7e01bff4_m_ng_nh_n",
+                    "link": "",
+                    "name": "Màng nhân",
+                    "world": [
+                        -11.427088203081919,
+                        -46.29530816219331,
+                        1.30468332282818
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -228.5514014480479,
+                            68.83002870704533,
+                            136.62967465636237
+                        ],
+                        "target": [
+                            29.61842614618287,
+                            2.7331817747888913,
+                            -13.859909477761898
+                        ]
+                    },
+                    "content": "Nằm trên màng nhân và là nơi cho các chất có thể ra vào nhân.",
+                    "funFact": "",
+                    "id": "pt_7e01bff4_l_nh_n",
+                    "link": "",
+                    "name": "Lỗ nhân",
+                    "world": [
+                        -58.08982330154285,
+                        35.87006880799922,
+                        40.049514680733104
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            23.280051838435813,
+                            -180.63022664392136,
+                            106.52933005221628
+                        ],
+                        "target": [
+                            19.9393649572,
+                            0.1512192462,
+                            -29.3306278653
+                        ]
+                    },
+                    "content": "Chứa DNA mang thông tin di truyền.",
+                    "funFact": "",
+                    "id": "pt_7e01bff4_ch_t_nhi_m_s_c",
+                    "link": "",
+                    "name": "Chất nhiễm sắc",
+                    "world": [
+                        1.670447895750204,
+                        -6.622388019115728,
+                        0.7702598187812733
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -22.13302612546562,
+                            -74.9327424031609,
+                            158.48481365025793
+                        ],
+                        "target": [
+                            34.5939745286187,
+                            2.872419716957153,
+                            -23.602408849077545
+                        ]
+                    },
+                    "content": "Trong nhân có một hoặc một vài hạch nhân, là nơi diễn ra quá trình tổng hợp các phân tử rRNA.",
+                    "funFact": "",
+                    "id": "pt_7e01bff4_h_ch_nh_n",
+                    "link": "",
+                    "name": "Hạch nhân",
+                    "world": [
+                        -0.1555214797383445,
+                        6.68769771048321,
+                        15.57897647150641
+                    ]
+                }
+            ],
+            "modelUid": "7e01bff42b2d47fab640503bcef071e6",
+            "name": "Nhân tế bào"
+        },
+        {
+            "chapter": "Cấu trúc tế bào",
+            "feature": "Là bào quan không có màng bao bọc, có dạng hình cầu, được cấu tạo từ một số loại rRNA và protein và là nơi tổng hợp protein cho tế bào.",
+            "funFact": "Ribosome có thể đính trên màng nhân, lưới nội chất hạt, trong ti thể và lục lạp. Ở các tế bào có tốc độ tổng hợp protein cao, số lượng ribosome trong một tế bào khá lớn, có thể lên tới vài triệu như tế bào tuyến tụy ở người.",
+            "grade": "10",
+            "id": "10_c_u_tr_c_t_b_o_ribosome_18677ad9",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.04884444593724291,
+                            -0.8115316333551711,
+                            -0.077707741023612
+                        ],
+                        "target": [
+                            0.07185528891651101,
+                            -0.011998937918092036,
+                            0.022609505416008344
+                        ]
+                    },
+                    "content": "Gắn với tiểu đơn vị nhỏ để tạo thành ribosome hoàn chỉnh. Khi không hoạt động, hai tiểu phần tách rời nhau.",
+                    "funFact": "",
+                    "id": "pt_18677ad9_ti_u_n_v_l_n",
+                    "link": "",
+                    "name": "Tiểu đơn vị lớn",
+                    "world": [
+                        0.12326656229328123,
+                        -0.1411586100060101,
+                        0.01989854786586842
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.003331581299638342,
+                            -0.8438336064281005,
+                            -0.49283038596348305
+                        ],
+                        "target": [
+                            0.04785946623059398,
+                            -0.006970184427486603,
+                            -0.15499973929601396
+                        ]
+                    },
+                    "content": "Gắn với tiểu đơn vị lớn để tạo thành ribosome hoàn chỉnh. Khi không hoạt động, hai tiểu phần tách rời nhau.",
+                    "funFact": "",
+                    "id": "pt_18677ad9_ti_u_n_v_nh",
+                    "link": "",
+                    "name": "Tiểu đơn vị nhỏ",
+                    "world": [
+                        0.11789423772837428,
+                        -0.08045084852115128,
+                        -0.38924031508310686
+                    ]
+                }
+            ],
+            "modelUid": "18677ad9afa74e52962b18a72d389779",
+            "name": "Ribosome"
+        },
+        {
+            "chapter": "Cấu trúc tế bào",
+            "feature": "Là bào quan có màng đơn, gồm các ống và các túi dẹt chứa dịch nối thông với nhau thành một mạng lưới. Hệ thống luới nội chất sản xuất ra các sản phẩm cần thiết cho hoạt động của tế bào.",
+            "funFact": "",
+            "grade": "10",
+            "id": "10_c_u_tr_c_t_b_o_l_i_n_i_ch_t_15ea78c8",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -3.7603272205780325,
+                            -9.026804755392739,
+                            7.652630530971018
+                        ],
+                        "target": [
+                            -6.389761383937962,
+                            -0.874203157075834,
+                            -0.929010678011612
+                        ]
+                    },
+                    "content": "Gồm hệ thống các đường ống tạo bởi lớp kép phospholipid, một đầu liên kết với màng nhân, đầu kia liên kết với lưới nội chất trơn. Trên màng có các hạt ribosome để tổng hợp protein đưa vào lưới nội chất.",
+                    "funFact": "",
+                    "id": "pt_15ea78c8_l_i_n_i_ch_t_h_t",
+                    "link": "",
+                    "name": "Lưới nội chất hạt",
+                    "world": [
+                        -3.563104297075899,
+                        -3.2418682295912795,
+                        0.6701713464259756
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            8.25767192341949,
+                            7.164240086585416,
+                            5.586535521429637
+                        ],
+                        "target": [
+                            -4.247288928671479,
+                            -0.6966103161396178,
+                            -1.4811741007367278
+                        ]
+                    },
+                    "content": "Là hệ thống màng dạng ống dẹp thông với lưới nội chất hạt, có ít hoặc không có ribosome. Tại đây có chứa các enzyme tham gia tổng hợp nhiều loại lipid, chuyển hóa đường, khử độc và là kho dự trữ Ca2+. Ngoài ra, đây còn là nơi tổng hợp nên sterol, phospholipid, hormone sinh dục, triglyceride, glycogen...",
+                    "funFact": "Các tế bào gan có lưới nội chất phát triển mạnh chứa các enzyme tham gia vào quá trình khử độc các chất như rượu và nhiều loại hóa chất độc hại. Người uống nhiều rượu, bia trong tế bào gan của họ có lưới nội chất trơn phát triển hơn so với người không uống rượu và nguy cơ tổn thương gan dãn đến ung thư gan cũng tăng cao.",
+                    "id": "pt_15ea78c8_l_i_n_i_ch_t_tr_n",
+                    "link": "",
+                    "name": "Lưới nội chất trơn",
+                    "world": [
+                        1.500849414528391,
+                        3.0256355836778437,
+                        -0.18535405325316334
+                    ]
+                }
+            ],
+            "modelUid": "15ea78c8537b476e8a4660859b7f5ebf",
+            "name": "Lưới nội chất"
         },
         {
             "chapter": "Cấu trúc tế bào",
             "feature": "Là bào quan có màng đơn, gồm các túi dẹp nằm song song với nhau nhưng tách rời nhau và là nơi tập trung chế biến, lắp ráp, đóng gói các sản phẩm rồi phân phối chúng đến các nơi cần thiết.",
-            "funFact": "Ribosome có thể đính trên màng nhân, lưới nội chất hạt, trong ti thể và lục lạp. Ở các tế bào có tốc độ tổng hợp protein cao, số lượng ribosome trong một tế bào khá lớn, có thể lên tới vài triệu như tế bào tuyến tụy ở người.",
+            "funFact": "",
             "grade": "10",
             "id": "10_c_u_tr_c_t_b_o_b_m_y_golgi_caa5b5ab",
             "items": [
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.30977769749101636,
+                            0.06580234230766573,
+                            0.11568986934276099
+                        ],
+                        "target": [
+                            -0.06823110475341179,
+                            0.004092819026516595,
+                            0.03460400903845391
+                        ]
+                    },
                     "content": "Chứa các chất được tổng hợp tại lưới nội chất như protein, lipid, đường,....",
                     "funFact": "",
                     "id": "pt_caa5b5ab_t_i_v_n_chuy_n",
                     "link": "",
-                    "name": "Túi vận chuyển"
+                    "name": "Túi vận chuyển",
+                    "world": [
+                        -0.1345414262952762,
+                        0.02266751431003887,
+                        0.029654267885273724
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.031054652391212415,
+                            -0.012989933774882821,
+                            0.3681745830753246
+                        ],
+                        "target": [
+                            -0.025594896543825064,
+                            -0.013732858961332256,
+                            0.017421481327184324
+                        ]
+                    },
                     "content": "Các túi dẹp nằm song song với nhau nhưng tách rời nhau. Túi vận chuyển khi đi qua các túi dẹp này sẽ được chế biến, lắp ráp, đóng gói rồi phân phối đến những nơi cần thiết.",
                     "funFact": "",
                     "id": "pt_caa5b5ab_t_i_d_p",
                     "link": "",
-                    "name": "Túi dẹp"
+                    "name": "Túi dẹp",
+                    "world": [
+                        -0.016631185492953678,
+                        -0.11785924714252827,
+                        0.07327157262018522
+                    ]
                 }
             ],
             "modelUid": "caa5b5abadbf495a928f30ddf94022b7",
@@ -269,13 +921,200 @@
         },
         {
             "chapter": "Cấu trúc tế bào",
-            "feature": "Được cấu tạo từ vi ống, vi sợi, sợi trung gian và có chức năng làm giá đỡ cơ học, duy trì hình dạng tế bào và là nơi neo đậu của nhiều bào quan và enzyme trong tế bào.",
-            "funFact": "Nếu tế bào xương, cơ tim thiếu một loại protein của bộ khung xương tế bào, chúng sẽ bị thoái hóa và có thể gây bệnh hiểm nghèo. Các tế bào hồng cầu nếu bị tổn thương khung xương tế bào thì không còn giữ được hình dạng tối ưu, dẫn đến giảm khả năng vận chuyển oxygen.",
+            "feature": "Là bào quan có màng đơn, dạng túi, có nhiệm vụ tái chế cũng như hỗ trợ tế bào tiêu hóa thức ăn theo con đường thực bào.",
+            "funFact": "Ngoài ra, lysosome còn có vai trò bảo vệ tế bào bằng cách chống lại các tác nhân gây hại như vi khuẩn, virus, các chất độc hại.",
             "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_khung_x_ng_t_b_o_6a26d72b",
-            "items": [],
-            "modelUid": "6a26d72b474c48f691de78b4ace9e463",
-            "name": "Khung xương tế bào"
+            "id": "10_c_u_tr_c_t_b_o_lysosome_6fc2fdc1",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.36732925284978224,
+                            0.17374732322135666,
+                            0.023530046971635528
+                        ],
+                        "target": [
+                            0.040264190231640754,
+                            0.03723367859602619,
+                            0.028900605496429074
+                        ]
+                    },
+                    "content": "Màng lipoprotein, có nguồn gốc từ bộ máy Golgi.",
+                    "funFact": "",
+                    "id": "pt_6fc2fdc1_m_ng",
+                    "link": "",
+                    "name": "Màng",
+                    "world": [
+                        0.11108692883270921,
+                        0.029832439876888345,
+                        0.014954630437680408
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.11747372603583069,
+                            0.29056925310986115,
+                            0.07045482024869575
+                        ],
+                        "target": [
+                            -0.003575953009573605,
+                            0.06585533236482644,
+                            0.01674295488171305
+                        ]
+                    },
+                    "content": "Enzyme thủy phân protein, nucleic acid, carbohydrate, lipid, các bào quan, các tế bào cần thay thế.",
+                    "funFact": "",
+                    "id": "pt_6fc2fdc1_enzyme_th_y_ph_n",
+                    "link": "",
+                    "name": "Enzyme thủy phân",
+                    "world": [
+                        0.009870774476106915,
+                        0.10572859049068747,
+                        0.04667594391430578
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.22024254366324794,
+                            0.26624648438073645,
+                            0.0708113199949769
+                        ],
+                        "target": [
+                            -0.022378723201833987,
+                            0.012633982414278306,
+                            0.0010056112248749958
+                        ]
+                    },
+                    "content": "Chứa các chất có thể tái sử dụng hoặc các chất thải để xuất ra ngoài tế bào",
+                    "funFact": "",
+                    "id": "pt_6fc2fdc1_protein_v_n_chuy_n",
+                    "link": "",
+                    "name": "Protein vận chuyển",
+                    "world": [
+                        0.01834472448623983,
+                        0.10969494545814955,
+                        -0.044936232903478895
+                    ]
+                }
+            ],
+            "modelUid": "6fc2fdc16a6b4463b581880c965d536d",
+            "name": "Lysosome"
+        },
+        {
+            "chapter": "Cấu trúc tế bào",
+            "feature": "Là bào quan có màng đơn, dạng hình cầu, có nhiệm vụ chuyển hóa lipid, khử độc cho tế bào.",
+            "funFact": "Các tế bào gan, thận của người có peroxysome chứa các enzyme khử các chất độc từ máu đưa tới. Ở người, khi một số enzyme phân giải chất béo trong peroxysome ở tế bào não bị mất chức năng, lipid bị tích tụ trong não làm tổn thương não và có thể dẫn đến tử vong.",
+            "grade": "10",
+            "id": "10_c_u_tr_c_t_b_o_peroxisome_9b9e9973",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -1.9539731717645603,
+                            -2.641256389404207,
+                            0.19838778714099886
+                        ],
+                        "target": [
+                            -0.003509070794996849,
+                            -0.02929459514387367,
+                            -0.3832474016728012
+                        ]
+                    },
+                    "content": "Là màng lipoprotein có nguồn gốc từ bộ máy Golgi.",
+                    "funFact": "",
+                    "id": "pt_9b9e9973_m_ng",
+                    "link": "",
+                    "name": "Màng",
+                    "world": [
+                        -0.1066713470766409,
+                        -0.9701115292874981,
+                        -0.5303271538747834
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.11373116173359149,
+                            -1.6016854683462265,
+                            1.621436429880434
+                        ],
+                        "target": [
+                            -0.003509070794996849,
+                            -0.02929459514387367,
+                            -0.3832474016728012
+                        ]
+                    },
+                    "content": "Chứa enzyme phân giải H2O2 - là một loại chất dễ phân giải thành gốc oxy tự do làm tổn thương tế bào được sản sinh một số phản ứng hóa học trong tế bào.",
+                    "funFact": "",
+                    "id": "pt_9b9e9973_c_c_enzyme",
+                    "link": "",
+                    "name": "Các enzyme",
+                    "world": [
+                        0.48608519486888635,
+                        0.2332370657158118,
+                        -0.025430372831089218
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.20160371285399453,
+                            -1.0595225795285266,
+                            2.4487176664760386
+                        ],
+                        "target": [
+                            -0.003509070794996849,
+                            -0.02929459514387367,
+                            -0.3832474016728012
+                        ]
+                    },
+                    "content": "",
+                    "funFact": "",
+                    "id": "pt_9b9e9973_v_ng_l_i",
+                    "link": "",
+                    "name": "Vùng lõi",
+                    "world": [
+                        -0.013974416460745731,
+                        -0.08960808923361752,
+                        0.08754163469819878
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.1219275548106672,
+                            -2.078988074870576,
+                            0.8534082542626205
+                        ],
+                        "target": [
+                            0.6473230153750061,
+                            -0.43878772381661124,
+                            -0.486728266435154
+                        ]
+                    },
+                    "content": "",
+                    "funFact": "",
+                    "id": "pt_9b9e9973_protein_v_n_chuy_n",
+                    "link": "",
+                    "name": "Protein vận chuyển",
+                    "world": [
+                        0.20650472812399295,
+                        -1.0620228675714236,
+                        0.0049519796011108785
+                    ]
+                }
+            ],
+            "modelUid": "9b9e99738c444798a30f91d924445339",
+            "name": "Peroxisome"
         },
         {
             "chapter": "Cấu trúc tế bào",
@@ -289,70 +1128,214 @@
         },
         {
             "chapter": "Cấu trúc tế bào",
-            "feature": "Là bào quan có màng đơn, dạng túi, có nhiệm vụ tái chế cũng như hỗ trợ tế bào tiêu hóa thức ăn theo con đường thực bào.",
-            "funFact": "Ngoài ra, lysosome còn có vai trò bảo vệ tế bào bằng cách chống lại các tác nhân gây hại như vi khuẩn, virus, các chất độc hại.",
+            "feature": "Là bào quan có màng kép, có nhiều hình dạng khác nhau và là nơi diễn ra quá trình phân giải carbohydrate giải phóng năng lượng cung cấp cho mọi hoạt động sống, đồng thời tạo ra nhiều sản phẩm trung gian cho quá trình chuyển hóa vật chất của tế bào.",
+            "funFact": "Số lượng ti thể trong tế bào có thể từ hàng trăm đến hàng nghìn tùy từng loại tế bào. Một số loại tế bào không có ti thể như tế bào hồng cầu người, tế bào mạch gỗ và mạch rây ở thực vật. Ở tế bào cơ, tế bào gan có số lượng ti thể (hàng nghìn) cao hơn rất nhiều so với các tế bào khác như tế bào biểu mô ở da, tế bào xương (hàng trăm). DNA ti thể được sử dụng trong định danh, phân tích tiến hóa phân tử và phát sinh loài.",
             "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_lysosome_6fc2fdc1",
+            "id": "10_c_u_tr_c_t_b_o_ti_th_e6f450c7",
             "items": [
                 {
-                    "content": "Màng lipoprotein, có nguồn gốc từ bộ máy Golgi.",
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            4.431620419627246,
+                            -6.366406715793232,
+                            3.5916272249336147
+                        ],
+                        "target": [
+                            0.19161967142078046,
+                            0.24819449474338875,
+                            -0.04705995584367632
+                        ]
+                    },
+                    "content": "Màng ngoài trơn, nhẵn.",
                     "funFact": "",
-                    "id": "pt_6fc2fdc1_m_ng",
+                    "id": "pt_e6f450c7_m_ng_ngo_i",
                     "link": "",
-                    "name": "Màng"
+                    "name": "Màng ngoài",
+                    "world": [
+                        1.0165250337343053,
+                        -2.979462758274342,
+                        1.2083850010326325
+                    ]
                 },
                 {
-                    "content": "Enzyme thủy phân protein, nucleic acid, carbohydrate, lipid, các bào quan, các tế bào cần thay thế.",
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            7.470095393865045,
+                            -4.357818412472108,
+                            7.738523544995301
+                        ],
+                        "target": [
+                            0.19161967142078046,
+                            0.24819449474338875,
+                            -0.04705995584367632
+                        ]
+                    },
+                    "content": "Màng trong gấp nếp hình răng lược tạo nhiều mào ngăn ti thể thành hai khoang. Màng trong chứa các phức hệ enzyme tham gia tổng hợp ATP.",
                     "funFact": "",
-                    "id": "pt_6fc2fdc1_enzyme_th_y_ph_n",
+                    "id": "pt_e6f450c7_m_ng_trong",
                     "link": "",
-                    "name": "Enzyme thủy phân"
+                    "name": "Màng trong",
+                    "world": [
+                        1.7554108737830831,
+                        -1.6786084220361874,
+                        0.8729878840838607
+                    ]
                 },
                 {
-                    "content": "Chứa các chất có thể tái sử dụng hoặc các chất thải để xuất ra ngoài tế bào",
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -1.232114419040819,
+                            -2.5509035930041555,
+                            10.097180854508906
+                        ],
+                        "target": [
+                            -2.2547888966963945,
+                            0.1679386906562522,
+                            -0.20171237086909913
+                        ]
+                    },
+                    "content": "Là phần gấp nếp của màng trong.",
                     "funFact": "",
-                    "id": "pt_6fc2fdc1_protein_v_n_chuy_n",
+                    "id": "pt_e6f450c7_m_o",
                     "link": "",
-                    "name": "Protein vận chuyển"
+                    "name": "Mào",
+                    "world": [
+                        -2.4138456193349733,
+                        0.48776563425937014,
+                        1.3817210458066567
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            11.663657806293912,
+                            -5.162006923434163,
+                            3.8918972915889958
+                        ],
+                        "target": [
+                            1.9225273826138987,
+                            2.254817697378535,
+                            -0.4977200557055605
+                        ]
+                    },
+                    "content": "Chứa niều loại enzyme tham gia vào quá trình hô hấp tế bào.",
+                    "funFact": "",
+                    "id": "pt_e6f450c7_ch_t_n_n",
+                    "link": "",
+                    "name": "Chất nền",
+                    "world": [
+                        4.41194941449452,
+                        -1.0934901309440304,
+                        1.106179554226102
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            6.607207697212238,
+                            -1.517861931583329,
+                            1.6359964748056077
+                        ],
+                        "target": [
+                            2.1314835293722547,
+                            2.2644520712371956,
+                            -0.9451423391927526
+                        ]
+                    },
+                    "content": "Ribosome là nơi tổng hợp protein riêng cho ti thể.",
+                    "funFact": "",
+                    "id": "pt_e6f450c7_ribosome",
+                    "link": "",
+                    "name": "Ribosome",
+                    "world": [
+                        5.833068666255969,
+                        -0.431373682401026,
+                        1.1565192231685575
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            1.7340449124209287,
+                            -1.4169017902681957,
+                            6.073089824091541
+                        ],
+                        "target": [
+                            -1.1908418339768294,
+                            0.30406183578503915,
+                            1.3891535241814017
+                        ]
+                    },
+                    "content": "Dự trữ ion calci nhằm điều hòa lượng calci trong tế bào.",
+                    "funFact": "",
+                    "id": "pt_e6f450c7_h_t_d_tr",
+                    "link": "",
+                    "name": "Hạt dự trữ",
+                    "world": [
+                        -1.958765987014563,
+                        0.001223675481601588,
+                        1.3573037151325495
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            6.33308729604339,
+                            -3.8635672910984864,
+                            4.748056449146803
+                        ],
+                        "target": [
+                            1.7837610046095498,
+                            0.21533442321432875,
+                            -1.2485273697980488
+                        ]
+                    },
+                    "content": "DNA nhỏ, dạng vòng quy định một số tính trạng.",
+                    "funFact": "",
+                    "id": "pt_e6f450c7_dna",
+                    "link": "",
+                    "name": "DNA",
+                    "world": [
+                        3.538483666672379,
+                        -1.2891500197725458,
+                        1.1421445946744146
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            5.479361677977813,
+                            -1.840649495345227,
+                            11.719355012147906
+                        ],
+                        "target": [
+                            4.104300302639875,
+                            -0.10270184886196318,
+                            -2.3524749770869495
+                        ]
+                    },
+                    "content": "Khoảng trống giữa màng ngoài và màng trong chứa ion H+ tham gia tổng hợp ATP.",
+                    "funFact": "",
+                    "id": "pt_e6f450c7_kh_ng_gian_gi_a_2_m_ng",
+                    "link": "",
+                    "name": "Không gian giữa 2 màng",
+                    "world": [
+                        6.824750139475194,
+                        0.652433238687127,
+                        0.7657764156892226
+                    ]
                 }
             ],
-            "modelUid": "6fc2fdc16a6b4463b581880c965d536d",
-            "name": "Lysosome"
-        },
-        {
-            "chapter": "Cấu trúc tế bào",
-            "feature": "Là những cấu trúc dạng sợi nhô ra khỏi màng tế bào, được cấu tạo từ các vi ống và có chức năng vận động. Thường có nhiều.",
-            "funFact": "Các tế bào niêm mạc khí quản, niêm mạc mũi đẩy được dịch nhầy ra khỏi đường hô hấp là nhờ hoạt động của lông rung. Ở người, nếu lông trong tai bị tổn thương thì thính giác sẽ bị suy giảm, thậm chí bị điếc vì âm thanh làm lông rung động chuyển tín hiệu tới não bộ giúp chúng ta nghe được âm thanh.",
-            "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_l_ng_78528451",
-            "items": [],
-            "modelUid": "78528451cf7b47a5ac5b70e62f3a4435",
-            "name": "Lông"
-        },
-        {
-            "chapter": "Cấu trúc tế bào",
-            "feature": "Là bào quan có màng đơn, gồm các ống và các túi dẹt chứa dịch nối thông với nhau thành một mạng lưới. Hệ thống luới nội chất sản xuất ra các sản phẩm cần thiết cho hoạt động của tế bào.",
-            "funFact": "Ribosome có thể đính trên màng nhân, lưới nội chất hạt, trong ti thể và lục lạp. Ở các tế bào có tốc độ tổng hợp protein cao, số lượng ribosome trong một tế bào khá lớn, có thể lên tới vài triệu như tế bào tuyến tụy ở người.",
-            "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_l_i_n_i_ch_t_15ea78c8",
-            "items": [
-                {
-                    "content": "Gồm hệ thống các đường ống tạo bởi lớp kép phospholipid, một đầu liên kết với màng nhân, đầu kia liên kết với lưới nội chất trơn. Trên màng có các hạt ribosome để tổng hợp protein đưa vào lưới nội chất.",
-                    "funFact": "",
-                    "id": "pt_15ea78c8_l_i_n_i_ch_t_h_t",
-                    "link": "",
-                    "name": "Lưới nội chất hạt"
-                },
-                {
-                    "content": "Là hệ thống màng dạng ống dẹp thông với lưới nội chất hạt, có ít hoặc không có ribosome. Tại đây có chứa các enzyme tham gia tổng hợp nhiều loại lipid, chuyển hóa đường, khử độc và là kho dự trữ Ca2+. Ngoài ra, đây còn là nơi tổng hợp nên sterol, phospholipid, hormone sinh dục, triglyceride, glycogen...",
-                    "funFact": "Các tế bào gan có lưới nội chất phát triển mạnh chứa các enzyme tham gia vào quá trình khử độc các chất như rượu và nhiều loại hóa chất độc hại. Người uống nhiều rượu, bia trong tế bào gan của họ có lưới nội chất trơn phát triển hơn so với người không uống rượu và nguy cơ tổn thương gan dãn đến ung thư gan cũng tăng cao.",
-                    "id": "pt_15ea78c8_l_i_n_i_ch_t_tr_n",
-                    "link": "",
-                    "name": "Lưới nội chất trơn"
-                }
-            ],
-            "modelUid": "15ea78c8537b476e8a4660859b7f5ebf",
-            "name": "Lưới nội chất"
+            "modelUid": "e6f450c77fd74c468568c6528ab08ae4",
+            "name": "Ti thể"
         },
         {
             "chapter": "Cấu trúc tế bào",
@@ -362,46 +1345,179 @@
             "id": "10_c_u_tr_c_t_b_o_l_c_l_p_7f88895e",
             "items": [
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.07327996861213691,
+                            -0.17199074141810422,
+                            0.07318213581564695
+                        ],
+                        "target": [
+                            -0.01110207097736603,
+                            0.029807427232059192,
+                            -0.022982526585913755
+                        ]
+                    },
                     "content": "Màng ngoài tạo khoảng không hẹp với màng trong.",
                     "funFact": "",
                     "id": "pt_7f88895e_m_ng_ngo_i",
                     "link": "",
-                    "name": "Màng ngoài"
+                    "name": "Màng ngoài",
+                    "world": [
+                        0.06229379835157848,
+                        -0.016963270025938032,
+                        0.002405420885520801
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.17677377934872407,
+                            -0.173313448000321,
+                            0.15948133572142703
+                        ],
+                        "target": [
+                            0.041823556839333594,
+                            0.033280219600898615,
+                            -0.030495038947036493
+                        ]
+                    },
                     "content": "Màng trong không gấp khúc.",
                     "funFact": "",
                     "id": "pt_7f88895e_m_ng_trong",
                     "link": "",
-                    "name": "Màng trong"
+                    "name": "Màng trong",
+                    "world": [
+                        0.011134776741268062,
+                        -0.004817711186454954,
+                        0.030689474166346452
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.06874385922977762,
+                            -0.028918233451039745,
+                            0.016774097802171203
+                        ],
+                        "target": [
+                            0.008776990788432875,
+                            0.006442898545011763,
+                            -0.01780445679707018
+                        ]
+                    },
                     "content": "Là thành phần giúp các túi thylakoid nối thông với nhau.",
                     "funFact": "",
                     "id": "pt_7f88895e_phi_n_m_ng",
                     "link": "",
-                    "name": "Phiến màng"
+                    "name": "Phiến màng",
+                    "world": [
+                        -0.007760261297225951,
+                        0.004533366629357077,
+                        -0.00817592407047849
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.06928058895196178,
+                            0.050939564972407175,
+                            0.11959018683656708
+                        ],
+                        "target": [
+                            0.005332275619709043,
+                            -0.01766909735892386,
+                            -0.049027847925998645
+                        ]
+                    },
                     "content": "Chứa hệ enzyme tham gia vào quá trình cố định CO2 trong quan hợp. Ngoài ra còn chứa nhiều DNA dạng vòng và ribosome.",
                     "funFact": "",
                     "id": "pt_7f88895e_ch_t_n_n",
                     "link": "",
-                    "name": "Chất nền"
+                    "name": "Chất nền",
+                    "world": [
+                        -0.030169747180178078,
+                        -0.016671943027725053,
+                        -0.018706392420990568
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.1443929422257768,
+                            0.08444442774085574,
+                            0.09865294255324618
+                        ],
+                        "target": [
+                            0.034092963667537016,
+                            -0.021362526164095494,
+                            -0.022063933192771445
+                        ]
+                    },
                     "content": "Là cấu trúc bao gồm các túi thylakoid xếp chồng và nối thông với nhau bằng các phiến màng.",
                     "funFact": "",
                     "id": "pt_7f88895e_granum",
                     "link": "",
-                    "name": "Granum"
+                    "name": "Granum",
+                    "world": [
+                        0.029587890481020104,
+                        -0.015195192097405231,
+                        -0.0128187321289374
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.06927423762273388,
+                            -0.064179301446392,
+                            0.021210778925696325
+                        ],
+                        "target": [
+                            0.026215671631788832,
+                            0.04399812084077628,
+                            -0.04040410466491345
+                        ]
+                    },
                     "content": "Là các túi dẹp chứa diệp lục, enzyme và protein tham gia vào quang hợp.",
                     "funFact": "",
                     "id": "pt_7f88895e_thylakoid",
                     "link": "",
-                    "name": "Thylakoid"
+                    "name": "Thylakoid",
+                    "world": [
+                        -0.007011458401490811,
+                        0.011131872051884562,
+                        -0.0028832779683115374
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.07046222285276964,
+                            -0.06489696182783958,
+                            0.03353092052129704
+                        ],
+                        "target": [
+                            -0.022450166925993807,
+                            0.05051117295488363,
+                            -0.05607335416262811
+                        ]
+                    },
+                    "content": "DNA nhỏ, dạng vòng và quy định một số tính trạng.",
+                    "funFact": "",
+                    "id": "org_7320736379452_1770954242311",
+                    "link": "",
+                    "name": "DNA",
+                    "world": [
+                        -0.054056622375635695,
+                        0.0019695182281075233,
+                        -0.002819626393037626
+                    ]
                 }
             ],
             "modelUid": "7f88895ea21641f9a14598a565f06ed2",
@@ -415,74 +1531,254 @@
             "id": "10_c_u_tr_c_t_b_o_m_ng_t_b_o_fe119da9",
             "items": [
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            9.020085115306568,
+                            -3.7549023861413007,
+                            2.1034137635981547
+                        ],
+                        "target": [
+                            2.894482555213196,
+                            4.138733590072794,
+                            -0.393585261704552
+                        ]
+                    },
                     "content": "Được giữ với nhau tạo nên lớp màng nhờ các tương tác kị nước giữa các phân tử. Vì vậy phân tử phospholipid trong cùng lớp không cố định tại một vị trí mà luôn di chuyển.",
                     "funFact": "",
                     "id": "pt_fe119da9_l_p_k_p_phospholipid",
                     "link": "",
-                    "name": "Lớp kép phospholipid"
+                    "name": "Lớp kép phospholipid",
+                    "world": [
+                        5.195197161661343,
+                        3.011852796527962,
+                        0.17962337232962078
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -4.420856211452116,
+                            -2.5921423466688864,
+                            5.899811752370144
+                        ],
+                        "target": [
+                            0.9724070207950763,
+                            3.1052245767681184,
+                            0.28633806671549916
+                        ]
+                    },
                     "content": "Các protein màng liên kết với các phân tử đường ngắn.",
                     "funFact": "",
                     "id": "pt_fe119da9_glycoprotein",
                     "link": "",
-                    "name": "Glycoprotein"
+                    "name": "Glycoprotein",
+                    "world": [
+                        -1.6201882774001362,
+                        2.819524383848023,
+                        3.3288612650774176
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            3.286784005388196,
+                            -3.4670627964481264,
+                            3.9670180873310237
+                        ],
+                        "target": [
+                            3.03833913050925,
+                            4.427698686987494,
+                            2.092775076373579
+                        ]
+                    },
                     "content": "Các protein màng liên kết với các phân tử lipid.",
                     "funFact": "",
                     "id": "pt_fe119da9_glycolipid",
                     "link": "",
-                    "name": "Glycolipid"
+                    "name": "Glycolipid",
+                    "world": [
+                        2.9181459499345817,
+                        2.1482859047655642,
+                        2.842442213722497
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            7.639169594944606,
+                            -0.5268849043818893,
+                            5.630179400908043
+                        ],
+                        "target": [
+                            2.8100820787975223,
+                            3.644408082608707,
+                            1.6538793546995572
+                        ]
+                    },
                     "content": "",
                     "funFact": "",
                     "id": "pt_fe119da9_carbohydrate",
                     "link": "",
-                    "name": "Carbohydrate"
+                    "name": "Carbohydrate",
+                    "world": [
+                        4.016617169204624,
+                        3.941574221325732,
+                        3.8564050957042513
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            8.303127800999118,
+                            -2.0946057182096887,
+                            0.6664538681520684
+                        ],
+                        "target": [
+                            1.8784279161421997,
+                            3.193785860981283,
+                            0.9800209233627878
+                        ]
+                    },
                     "content": "Giúp điều chỉnh độ linh hoạt của màng sinh chất.",
                     "funFact": "",
                     "id": "pt_fe119da9_cholesterol",
                     "link": "",
-                    "name": "Cholesterol"
+                    "name": "Cholesterol",
+                    "world": [
+                        5.632132732043058,
+                        0.09230201613217792,
+                        0.8905409354654027
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.742130732800238,
+                            11.759345441518729,
+                            3.253087467713639
+                        ],
+                        "target": [
+                            1.4725934204781643,
+                            3.0327062899053745,
+                            0.904572816718854
+                        ]
+                    },
                     "content": "",
                     "funFact": "",
                     "id": "pt_fe119da9_protein_h_nh_c_u",
                     "link": "",
-                    "name": "Protein hình cầu"
+                    "name": "Protein hình cầu",
+                    "world": [
+                        1.0717496477596904,
+                        4.67066043743231,
+                        2.1460850791413675
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            10.467151054783304,
+                            10.009037224668035,
+                            1.3003590467091464
+                        ],
+                        "target": [
+                            1.4725934204781643,
+                            3.0327062899053745,
+                            0.904572816718854
+                        ]
+                    },
                     "content": "",
                     "funFact": "",
                     "id": "pt_fe119da9_protein_xo_n",
                     "link": "",
-                    "name": "Protein xoắn"
+                    "name": "Protein xoắn",
+                    "world": [
+                        5.319844717842688,
+                        6.229622445752455,
+                        -0.76642386062349
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -3.4786392573449922,
+                            -5.832303448109281,
+                            1.4004257072193436
+                        ],
+                        "target": [
+                            0.6994461892712871,
+                            3.560452341411557,
+                            0.7350236615632164
+                        ]
+                    },
                     "content": "",
                     "funFact": "",
                     "id": "pt_fe119da9_k_nh_protein",
                     "link": "",
-                    "name": "Kênh protein"
+                    "name": "Kênh protein",
+                    "world": [
+                        -2.3200125395030575,
+                        0.08396182684753663,
+                        1.1340504585493556
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            4.850279702364182,
+                            -4.713162041583656,
+                            1.7456721855816046
+                        ],
+                        "target": [
+                            0.4079816431342011,
+                            2.3796366035179766,
+                            1.0429328636503028
+                        ]
+                    },
                     "content": "Là protein liên kết với phía ngoài của một lớp phospholipid.",
                     "funFact": "",
                     "id": "pt_fe119da9_protein_b_m_m_ng",
                     "link": "",
-                    "name": "Protein bám màng"
+                    "name": "Protein bám màng",
+                    "world": [
+                        0.7913475692095544,
+                        -0.2753508348325384,
+                        0.17523782749270936
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            5.806134195585912,
+                            -3.116580510713799,
+                            1.596879487783926
+                        ],
+                        "target": [
+                            1.877553362725802,
+                            3.1364085177780607,
+                            0.22005107941201932
+                        ]
+                    },
                     "content": "Là protein xuyên qua lớp kép phospholipid.",
                     "funFact": "",
                     "id": "pt_fe119da9_protein_xuy_n_m_ng",
                     "link": "",
-                    "name": "Protein xuyên màng"
+                    "name": "Protein xuyên màng",
+                    "world": [
+                        3.9027981006697647,
+                        -0.27438816322098253,
+                        0.9862672905072942
+                    ]
                 }
             ],
             "modelUid": "fe119da9037b4a24b3f9f60a25e82ee6",
@@ -490,106 +1786,39 @@
         },
         {
             "chapter": "Cấu trúc tế bào",
-            "feature": "Là bào quan được bao bọc bởi màng kép, phần lớn có dạng hình cầu, có vai trò điều khiển mọi hoạt động sống của tế bào.",
-            "funFact": "Mõi tế bào nhân thực thường chỉ có một nhân, tuy nhiên ở một số tế bào nấm và sinh vật khác, mỗi tế bào có thể có một vài nhân. Như tế bào hồng cầu của người không có nhân.",
+            "feature": "Là những cấu trúc dạng sợi nhô ra khỏi màng tế bào, được cấu tạo từ các vi ống và có chức năng vận động. Thường có nhiều.",
+            "funFact": "Các tế bào niêm mạc khí quản, niêm mạc mũi đẩy được dịch nhầy ra khỏi đường hô hấp là nhờ hoạt động của lông rung. Ở người, nếu lông trong tai bị tổn thương thì thính giác sẽ bị suy giảm, thậm chí bị điếc vì âm thanh làm lông rung động chuyển tín hiệu tới não bộ giúp chúng ta nghe được âm thanh.",
             "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_nh_n_t_b_o_7e01bff4",
+            "id": "10_c_u_tr_c_t_b_o_l_ng_78528451",
             "items": [
                 {
-                    "content": "Có cấu tạo bởi lớp kép phospholipid và protein, có vai trì bảo vệ nhân và giúp ngăn cách với tế bào chất bên ngoài.",
-                    "funFact": "",
-                    "id": "pt_7e01bff4_m_ng_nh_n",
-                    "link": "",
-                    "name": "Màng nhân"
-                },
-                {
-                    "content": "Nằm trên màng nhân và là nơi cho các chất có thể ra vào nhân.",
-                    "funFact": "",
-                    "id": "pt_7e01bff4_l_nh_n",
-                    "link": "",
-                    "name": "Lỗ nhân"
-                },
-                {
-                    "content": "Chứa DNA mang thông tin di truyền.",
-                    "funFact": "",
-                    "id": "pt_7e01bff4_ch_t_nhi_m_s_c",
-                    "link": "",
-                    "name": "Chất nhiễm sắc"
-                },
-                {
-                    "content": "Trong nhân có một hoặc một vài hạch nhân, là nơi diễn ra quá trình tổng hợp các phân tử rRNA.",
-                    "funFact": "",
-                    "id": "pt_7e01bff4_h_ch_nh_n",
-                    "link": "",
-                    "name": "Hạch nhân"
-                }
-            ],
-            "modelUid": "7e01bff42b2d47fab640503bcef071e6",
-            "name": "Nhân tế bào"
-        },
-        {
-            "chapter": "Cấu trúc tế bào",
-            "feature": "Là bào quan có màng đơn, dạng hình cầu, có nhiệm vụ chuyển hóa lipid, khử độc cho tế bào.",
-            "funFact": "Các tế bào gan, thận của người có peroxysome chứa các enzyme khử các chất độc từ máu đưa tới. Ở người, khi một số enzyme phân giải chất béo trong peroxysome ở tế bào não bị mất chức năng, lipid bị tích tụ trong não làm tổn thương não và có thể dẫn đến tử vong.",
-            "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_peroxisome_9b9e9973",
-            "items": [
-                {
-                    "content": "Là màng lipoprotein có nguồn gốc từ bộ máy Golgi.",
-                    "funFact": "",
-                    "id": "pt_9b9e9973_m_ng",
-                    "link": "",
-                    "name": "Màng"
-                },
-                {
-                    "content": "Chứa enzyme phân giải H2O2 - là một loại chất dễ phân giải thành gốc oxy tự do làm tổn thương tế bào được sản sinh một số phản ứng hóa học trong tế bào.",
-                    "funFact": "",
-                    "id": "pt_9b9e9973_c_c_enzyme",
-                    "link": "",
-                    "name": "Các enzyme"
-                },
-                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            14.67471380648062,
+                            -289.53520068119866,
+                            125.97299775647258
+                        ],
+                        "target": [
+                            14.674713806481996,
+                            12.05247971280194,
+                            27.98122025526733
+                        ]
+                    },
                     "content": "",
                     "funFact": "",
-                    "id": "pt_9b9e9973_v_ng_l_i",
+                    "id": "org_364228573846a_1770565895832",
                     "link": "",
-                    "name": "Vùng lõi"
-                },
-                {
-                    "content": "",
-                    "funFact": "",
-                    "id": "pt_9b9e9973_protein_v_n_chuy_n",
-                    "link": "",
-                    "name": "Protein vận chuyển"
+                    "name": "Lông",
+                    "world": [
+                        114.30374625659492,
+                        26.253812487226725,
+                        22.83555567742415
+                    ]
                 }
             ],
-            "modelUid": "9b9e99738c444798a30f91d924445339",
-            "name": "Peroxisome"
-        },
-        {
-            "chapter": "Cấu trúc tế bào",
-            "feature": "Là bào quan không có màng bao bọc, có dạng hình cầu, được cấu tạo từ một số loại rRNA và protein và là nơi tổng hợp protein cho tế bào.",
-            "funFact": "Ribosome có thể đính trên màng nhân, lưới nội chất hạt, trong ti thể và lục lạp. Ở các tế bào có tốc độ tổng hợp protein cao, số lượng ribosome trong một tế bào khá lớn, có thể lên tới vài triệu như tế bào tuyến tụy ở người.",
-            "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_ribosome_18677ad9",
-            "items": [
-                {
-                    "content": "Gắn với tiểu đơn vị nhỏ để tạo thành ribosome hoàn chỉnh. Khi không hoạt động, hai tiểu phần tách rời nhau.",
-                    "funFact": "",
-                    "id": "pt_18677ad9_ti_u_n_v_l_n",
-                    "link": "",
-                    "name": "Tiểu đơn vị lớn"
-                },
-                {
-                    "content": "Gắn với tiểu đơn vị lớn để tạo thành ribosome hoàn chỉnh. Khi không hoạt động, hai tiểu phần tách rời nhau.",
-                    "funFact": "",
-                    "id": "pt_18677ad9_ti_u_n_v_nh",
-                    "link": "",
-                    "name": "Tiểu đơn vị nhỏ"
-                }
-            ],
-            "modelUid": "18677ad9afa74e52962b18a72d389779",
-            "name": "Ribosome"
+            "modelUid": "78528451cf7b47a5ac5b70e62f3a4435",
+            "name": "Lông"
         },
         {
             "chapter": "Cấu trúc tế bào",
@@ -597,86 +1826,81 @@
             "funFact": "Tinh trùng ở động vật và người có roi để bơi đến thụ tinh cho trứng. Các tế bào phôi của động vật và người trong quá trình phát triển thường phải di chuyển từ vị trí này sang vị trí khác mới có thể biệt hóa thành các tế bào chuyên hóa, nếu không di chuyển được sẽ gây ra những dị dạng và bệnh tật.",
             "grade": "10",
             "id": "10_c_u_tr_c_t_b_o_roi_6a26d72b",
-            "items": [],
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            1.2600056075821506,
+                            1.30969280951971,
+                            1.8182899309386427
+                        ],
+                        "target": [
+                            0.27570425882711275,
+                            0.25031601806961123,
+                            -0.07818297753535126
+                        ]
+                    },
+                    "content": "",
+                    "funFact": "",
+                    "id": "org_381262fa34ad18_1770565999304",
+                    "link": "",
+                    "name": "Roi",
+                    "world": [
+                        0.5121619007116192,
+                        0.2470873921841954,
+                        0.14267041115517926
+                    ]
+                }
+            ],
             "modelUid": "6a26d72b474c48f691de78b4ace9e463",
             "name": "Roi"
         },
         {
             "chapter": "Cấu trúc tế bào",
-            "feature": "Được cấu tạo từ các phân tử cellulose tạo nên các sợi vững chắc, được gia cố thêm bởi nhiều chất khác như lignin do tế bào tiết ra và có chức năng bảo vệ, định hình tế bào.",
-            "funFact": "Nếu tế bào xương, cơ tim thiếu một loại protein của bộ khung xương tế bào, chúng sẽ bị thoái hóa và có thể gây bệnh hiểm nghèo. Các tế bào hồng cầu nếu bị tổn thương khung xương tế bào thì không còn giữ được hình dạng tối ưu, dẫn đến giảm khả năng vận chuyển oxygen.",
+            "feature": "",
+            "funFact": "",
             "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_th_nh_t_b_o_6007f30d",
+            "id": "model_5f1402b29ad8f25c",
             "items": [],
-            "modelUid": "6007f30d70f944c0bddd80a4626daaaa",
-            "name": "Thành tế bào"
+            "modelUid": "",
+            "name": "Khung xương tế bào"
         },
         {
             "chapter": "Cấu trúc tế bào",
-            "feature": "Là bào quan có màng kép, có nhiều hình dạng khác nhau và là nơi diễn ra quá trình phân giải carbohydrate giải phóng năng lượng cung cấp cho mọi hoạt động sống, đồng thời tạo ra nhiều sản phẩm trung gian cho quá trình chuyển hóa vật chất của tế bào.",
-            "funFact": "Số lượng ti thể trong tế bào có thể từ hàng trăm đến hàng nghìn tùy từng loại tế bào. Một số loại tế bào không có ti thể như tế bào hồng cầu người, tế bào mạch gỗ và mạch rây ở thực vật. Ở tế bào cơ, tế bào gan có số lượng ti thể (hàng nghìn) cao hơn rất nhiều so với các tế bào khác như tế bào biểu mô ở da, tế bào xương (hàng trăm). DNA ti thể được sử dụng trong định danh, phân tích tiến hóa phân tử và phát sinh loài.",
+            "feature": "Được cấu tạo từ các phân tử cellulose tạo nên các sợi vững chắc, được gia cố thêm bởi nhiều chất khác như lignin do tế bào tiết ra và có chức năng bảo vệ, định hình tế bào.",
+            "funFact": "",
             "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_ti_th_e6f450c7",
+            "id": "10_c_u_tr_c_t_b_o_th_nh_t_b_o_6007f30d",
             "items": [
                 {
-                    "content": "Màng ngoài trơn, nhẵn.",
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.07239760491600696,
+                            -0.15879086273680493,
+                            0.272182353182674
+                        ],
+                        "target": [
+                            0.04144712008380688,
+                            -0.0034224438551731747,
+                            0.05202225611647778
+                        ]
+                    },
+                    "content": "",
                     "funFact": "",
-                    "id": "pt_e6f450c7_m_ng_ngo_i",
+                    "id": "org_6dd09246cc22d8_1770566142608",
                     "link": "",
-                    "name": "Màng ngoài"
-                },
-                {
-                    "content": "Màng trong gấp nếp hình răng lược tạo nhiều mào ngăn ti thể thành hai khoang. Màng trong chứa các phức hệ enzyme tham gia tổng hợp ATP.",
-                    "funFact": "",
-                    "id": "pt_e6f450c7_m_ng_trong",
-                    "link": "",
-                    "name": "Màng trong"
-                },
-                {
-                    "content": "Là phần gấp nếp của màng trong.",
-                    "funFact": "",
-                    "id": "pt_e6f450c7_m_o",
-                    "link": "",
-                    "name": "Mào"
-                },
-                {
-                    "content": "Chứa niều loại enzyme tham gia vào quá trình hô hấp tế bào.",
-                    "funFact": "",
-                    "id": "pt_e6f450c7_ch_t_n_n",
-                    "link": "",
-                    "name": "Chất nền"
-                },
-                {
-                    "content": "Ribosome là nơi tổng hợp protein riêng cho ti thể.",
-                    "funFact": "",
-                    "id": "pt_e6f450c7_ribosome",
-                    "link": "",
-                    "name": "Ribosome"
-                },
-                {
-                    "content": "Dự trữ ion calci nhằm điều hòa lượng calci trong tế bào.",
-                    "funFact": "",
-                    "id": "pt_e6f450c7_h_t_d_tr",
-                    "link": "",
-                    "name": "Hạt dự trữ"
-                },
-                {
-                    "content": "DNA nhỏ, dạng vòng quy định một số tính trạng.",
-                    "funFact": "",
-                    "id": "pt_e6f450c7_dna",
-                    "link": "",
-                    "name": "DNA"
-                },
-                {
-                    "content": "Khoảng trống giữa màng ngoài và màng trong chứa ion H+ tham gia tổng hợp ATP.",
-                    "funFact": "",
-                    "id": "pt_e6f450c7_kh_ng_gian_gi_a_2_m_ng",
-                    "link": "",
-                    "name": "Không gian giữa 2 màng"
+                    "name": "Thành tế bào",
+                    "world": [
+                        0.0900812773482246,
+                        -0.005275490782648973,
+                        0.10082229126906843
+                    ]
                 }
             ],
-            "modelUid": "e6f450c77fd74c468568c6528ab08ae4",
-            "name": "Ti thể"
+            "modelUid": "6007f30d70f944c0bddd80a4626daaaa",
+            "name": "Thành tế bào"
         },
         {
             "chapter": "Cấu trúc tế bào",
@@ -686,177 +1910,53 @@
             "id": "10_c_u_tr_c_t_b_o_trung_th_b4f99e05",
             "items": [
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.009050190753612165,
+                            -0.13963419335184543,
+                            0.07860915851514824
+                        ],
+                        "target": [
+                            -0.03661165652690164,
+                            -0.006107379630636883,
+                            0.04928099327127831
+                        ]
+                    },
                     "content": "",
                     "funFact": "",
                     "id": "pt_b4f99e05_vi_ng",
                     "link": "",
-                    "name": "Vi ống"
+                    "name": "Vi ống",
+                    "world": [
+                        -0.029916892316816796,
+                        -0.06599999964237213,
+                        0.06706651186717365
+                    ]
                 }
             ],
             "modelUid": "b4f99e0501cf45c68da38ab0c9e4d975",
             "name": "Trung thể"
         },
         {
-            "chapter": "Cấu trúc tế bào",
-            "feature": "Tế bào nhân sơ có kích thước nhỏ, chưa có nhân hoàn chỉnh, có rất ít bào quan; trao đổi chất, sinh trưởng và sinh sản rất nhanh.",
-            "funFact": "Ban đầu được phát hiện chủ yếu trong nhân tế bào, nhưng thực tế còn có trong tế bào chất tại bào quan ti thể và lục lạp hoặc là các plasmid. Trong hệ gene người có các trình tự nucleotide ngắn, được lặp lại nhiều lần và đặc trưng cho từng cá thể nên được dọi là dấu vân tay DNA giúp nhận dạng cá thể, điều tra tội phạm, xác định nhân thân và quan hệ họ hàng.",
+            "chapter": "Trao đổi chất qua màng và truyền tin tế bào",
+            "feature": "",
+            "funFact": "",
             "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_t_b_o_nh_n_s_8488cbee",
-            "items": [
-                {
-                    "content": "Có cấu trúc dạng sơi, có bản chất là protein giúp tế bào vi khuẩn bám dính, tiếp hợp với nhau hoặc bám vào bề mặt tế bào của sinh vật khác.",
-                    "funFact": "Ví dụ vi khuẩn Helicobacter pylori dùng lông bám dính vào tế bào niêm mạc dạ dày người gây bệnh viêm loét dạ dày.",
-                    "id": "pt_8488cbee_l_ng",
-                    "link": "",
-                    "name": "Lông"
-                },
-                {
-                    "content": "Được cấu tạo từ bó sợi protein, là cơ quan vận động của tế bào. Các tế bào vi khuẩn có thể có một hoặc một vài roi.",
-                    "funFact": "",
-                    "id": "pt_8488cbee_roi",
-                    "link": "",
-                    "name": "Roi"
-                },
-                {
-                    "content": "Có cấu tạo từ lipopolysaccharide giúp bảo vệ vi khuẩn tránh sự tấn công của bạch cầu.",
-                    "funFact": "",
-                    "id": "pt_8488cbee_m_ng_ngo_i",
-                    "link": "",
-                    "name": "Màng ngoài"
-                },
-                {
-                    "content": "Có độ dày từ 10nm đến 20nm, được cấu tạo bởi peptidoglycan, có tác dụng giữ ổn định hình dạng và bảo vệ tế bào. Dựa vào cấu tạo thành tế bào, vi khuẩn được chia thành hai dạng là vi khuẩn Gram dương và vi khuẩn Gram âm.",
-                    "funFact": "Ứng dụng một số loại thuốc kháng sinh như penicillin diệt vi khuẩn bằng cách ngăn không có vi khuẩn tạo được thành tế bào, ức chế sự phân chia tế bào và tiêu diệt vi khuẩn.",
-                    "id": "pt_8488cbee_th_nh_t_b_o",
-                    "link": "",
-                    "name": "Thành tế bào"
-                },
-                {
-                    "content": "Được cấu tạo bởi lớp kép phospholipid và protein giúp tế bào vi khuẩn trao đổi chất có chọn lọc và còn là nơi diễn ra các quá trình chuyển hóa vật chất và năng lượng của tế bào.",
-                    "funFact": "",
-                    "id": "pt_8488cbee_m_ng_t_b_o",
-                    "link": "",
-                    "name": "Màng tế bào"
-                },
-                {
-                    "content": "Thành phần chính là bào tương (trong bào tương có các hạt dự trữ và nhiều ribosome) và là nơi diễn ra các phản ứng hóa sinh, đảm bảo duy trì các hoạt động sống của tế bào.",
-                    "funFact": "",
-                    "id": "pt_8488cbee_t_b_o_ch_t",
-                    "link": "",
-                    "name": "Tế bào chất"
-                },
-                {
-                    "content": "Không có màng bao bọc, chỉ chứa 1 phân tử DNA dạng vòng, mạch kép - mang thông tin di truyền điều khiển mọi hoạt động sống của tế bào vi khuẩn.",
-                    "funFact": "",
-                    "id": "pt_8488cbee_v_ng_nh_n_ch_a_dna",
-                    "link": "",
-                    "name": "Vùng nhân chứa DNA"
-                },
-                {
-                    "content": "Có số lượng khoảng 10000 đến 100000 và là nơi xảy ra quá trình tổng hợp protein của tế bào",
-                    "funFact": "",
-                    "id": "pt_8488cbee_ribosome",
-                    "link": "",
-                    "name": "Ribosome"
-                },
-                {
-                    "content": "Là các DNA nhỏ, dạng vòng, mạch kép. Trên các plamid thường chứa nhiều gene kháng thuốc kháng sinh.",
-                    "funFact": "Các plasmid mang gene kháng thuốc kháng sinh có thể được truyền từ tế bào vi khuẩn này sang tế bào vi khuẩn khác bằng con đường tiếp hợp.",
-                    "id": "pt_8488cbee_plasmid",
-                    "link": "",
-                    "name": "Plasmid"
-                }
-            ],
-            "modelUid": "8488cbee912f48d38d3da676af129884",
-            "name": "Tế bào nhân sơ"
-        },
-        {
-            "chapter": "Cấu trúc tế bào",
-            "feature": "Tế bào nhân thực có kích thước lớn và có cấu tạo phức tạp; đã có nhân chính thức với màng nhân ngăn cách chất nhân với tế bào chất, bộ khung xương tế bào cùng với hệ thống nội màng và hàng loạt các bào quan có màng bao bọc.",
-            "funFact": "Ban đầu được phát hiện chủ yếu trong nhân tế bào, nhưng thực tế còn có trong tế bào chất tại bào quan ti thể và lục lạp hoặc là các plasmid. Trong hệ gene người có các trình tự nucleotide ngắn, được lặp lại nhiều lần và đặc trưng cho từng cá thể nên được dọi là dấu vân tay DNA giúp nhận dạng cá thể, điều tra tội phạm, xác định nhân thân và quan hệ họ hàng.",
-            "grade": "10",
-            "id": "10_c_u_tr_c_t_b_o_t_b_o_nh_n_th_c_cbdf7e67",
+            "id": "model_ce41c6a1a4b1da16",
             "items": [],
-            "modelUid": "cbdf7e677572492dacbb5834081592e7",
-            "name": "Tế bào nhân thực"
+            "modelUid": "98bd961f497148148dc7d131ef9e6eed",
+            "name": "Vận chuyển thụ động"
         },
         {
-            "chapter": "Sinh học vi sinh vật",
-            "feature": "Là những sinh vật có kích thước nhỏ bé, thường chỉ quan sát được dưới kính hiển vi. Vi sinh vật không chỉ có số lượng lớn và đa dạng về hình thái mà còn có nhiều kiểu chuyển hóa vật chất và năng lượng hơn so với các nhóm sinh vật khác.",
-            "funFact": "VSV có ở khắp mọi nơi trên Trái Đất, kể cả ở điều kiện khắc nghiệt nhất như ở trong miệng núi lửa, ở Nam Cực hay trong điều kiện áp suất thẩm thấu lớn dưới đáy đại dương,..",
+            "chapter": "Trao đổi chất qua màng và truyền tin tế bào",
+            "feature": "",
+            "funFact": "",
             "grade": "10",
-            "id": "10_sinh_h_c_vi_sinh_v_t_vsv_4efcf2fb",
-            "items": [
-                {
-                    "content": "",
-                    "funFact": "",
-                    "id": "pt_4efcf2fb_c_u_khu_n",
-                    "link": "",
-                    "name": "Cầu khuẩn"
-                },
-                {
-                    "content": "",
-                    "funFact": "",
-                    "id": "pt_4efcf2fb_tr_c_khu_n",
-                    "link": "",
-                    "name": "Trực khuẩn"
-                },
-                {
-                    "content": "",
-                    "funFact": "",
-                    "id": "pt_4efcf2fb_ph_y_khu_n",
-                    "link": "",
-                    "name": "Phẩy khuẩn"
-                }
-            ],
-            "modelUid": "4efcf2fb00e14f1a9e6fa2bb457066d4",
-            "name": "VSV"
-        },
-        {
-            "chapter": "Thành phần hóa học của tế bào",
-            "feature": "Là một phân tử có cấu trúc xoắn kép gồm 2 mạch polynucleotide xoắn song song và ngược chiều nhau, có chức năng lưu trữ, bảo quản và truyền đạt thông tin di truyền.",
-            "funFact": "Ban đầu được phát hiện chủ yếu trong nhân tế bào, nhưng thực tế còn có trong tế bào chất tại bào quan ti thể và lục lạp hoặc là các plasmid. Trong hệ gene người có các trình tự nucleotide ngắn, được lặp lại nhiều lần và đặc trưng cho từng cá thể nên được dọi là dấu vân tay DNA giúp nhận dạng cá thể, điều tra tội phạm, xác định nhân thân và quan hệ họ hàng.",
-            "grade": "10",
-            "id": "10_th_nh_ph_n_h_a_h_c_c_a_t_b_o_dna_27714f2b",
-            "items": [
-                {
-                    "content": "Là liên kết giữa nhóm phosphate ở carbon 5' của một nucleotide và nhóm hydroxyl ở carbon 3' của nucleotide kế tiếp giúp tạo thành chuỗi polynucleotide dài, ổn định và mang tính di truyền.",
-                    "funFact": "",
-                    "id": "pt_27714f2b_li_n_k_t_phosphodiester",
-                    "link": "",
-                    "name": "Liên kết phosphodiester"
-                },
-                {
-                    "content": "Có bốn loại là Adenine (A), Guanine (G), Cytosine (C), và Thymine (T), thuộc hai nhóm: Purine (A, G - có cấu trúc vòng kép) và Pyrimidine (C, T - có cấu trúc vòng đơn) và gắn ở carbon 1' của một nucleotide.",
-                    "funFact": "",
-                    "id": "pt_27714f2b_nitrogenous_base",
-                    "link": "",
-                    "name": "Nitrogenous base"
-                },
-                {
-                    "content": "Là deoxyribose - một loại đường đơn có công thức hóa học là C5H10O4.",
-                    "funFact": "",
-                    "id": "pt_27714f2b_ng_5_carbon",
-                    "link": "",
-                    "name": "Đường 5-carbon"
-                },
-                {
-                    "content": "Là nhóm (PO4)3- gắn ở carbon 5' của một nucleotide",
-                    "funFact": "",
-                    "id": "pt_27714f2b_nh_m_phosphate",
-                    "link": "",
-                    "name": "Nhóm phosphate"
-                },
-                {
-                    "content": "Là liên kết hình thành giữa các cặp nitrogenous base (A-T và G-C) trên hai mạch polynucleotide giúp DNA giữ cấu trúc xoắn kép ổn định, trong đó A liên kết với T bằng 2 liên kết hydrogen, G liên kết với C bằng 3 liên kết hydrogen.",
-                    "funFact": "",
-                    "id": "pt_27714f2b_li_n_k_t_hydrogen",
-                    "link": "",
-                    "name": "Liên kết hydrogen"
-                }
-            ],
-            "modelUid": "27714f2b8e2a42f0aedb30f92bdd9c73",
-            "name": "DNA"
+            "id": "model_1e1b36e1b172a444",
+            "items": [],
+            "modelUid": "6dcbe6511a634b468a143818957baf82",
+            "name": "Vận chuyển chủ động"
         },
         {
             "chapter": "Trao đổi chất qua màng và truyền tin tế bào",
@@ -864,29 +1964,7 @@
             "funFact": "Cholesterol được vận chuyển trong máu dưới dạng lipoprotein, các lipoprotein này liên kết đặc hiệu với các thụ thể trên màng làm màng biến dạng, lõm vào phía trong tạo thành túi vận chuyển tách khỏi màng đi vào trong tế bào chất.",
             "grade": "10",
             "id": "10_trao_i_ch_t_qua_m_ng_v_truy_n_tin_t_b_o_nh_p_b_o_1ebec2d6",
-            "items": [
-                {
-                    "content": "Chứa các đại phân tử như protein, đường đa, DNA có kích thước quá lớn.",
-                    "funFact": "",
-                    "id": "pt_1ebec2d6_t_i_v_n_chuy_n",
-                    "link": "",
-                    "name": "Túi vận chuyển"
-                },
-                {
-                    "content": "Là lớp màng bao quanh tế bào, có thể biến dạng để tạo thành các túi (bóng).",
-                    "funFact": "",
-                    "id": "pt_1ebec2d6_m_ng_sinh_ch_t",
-                    "link": "",
-                    "name": "Màng sinh chất"
-                },
-                {
-                    "content": "Là môi trường bên trong tế bào.",
-                    "funFact": "",
-                    "id": "pt_1ebec2d6_t_b_o_ch_t",
-                    "link": "",
-                    "name": "Tế bào chất"
-                }
-            ],
+            "items": [],
             "modelUid": "1ebec2d6c0d6427b98d2b31ceab82318",
             "name": "Nhập bào"
         },
@@ -896,535 +1974,987 @@
             "funFact": "Protein sữa sau khi được đóng gói trong túi vận chuyển và xuất ra khỏi tế bào tuyến sữa.",
             "grade": "10",
             "id": "10_trao_i_ch_t_qua_m_ng_v_truy_n_tin_t_b_o_xu_t_b_o_e15a3e3c",
-            "items": [
-                {
-                    "content": "Chứa các chất có kích thước quá lớn.",
-                    "funFact": "",
-                    "id": "pt_e15a3e3c_t_i_ti_t",
-                    "link": "",
-                    "name": "Túi tiết"
-                },
-                {
-                    "content": "Là lớp màng bao quanh tế bào, có thể biến dạng để tạo thành các túi (bóng).",
-                    "funFact": "",
-                    "id": "pt_e15a3e3c_m_ng_sinh_ch_t",
-                    "link": "",
-                    "name": "Màng sinh chất"
-                },
-                {
-                    "content": "Là môi trường bên trong tế bào.",
-                    "funFact": "",
-                    "id": "pt_e15a3e3c_t_b_o_ch_t",
-                    "link": "",
-                    "name": "Tế bào chất"
-                }
-            ],
+            "items": [],
             "modelUid": "e15a3e3c0509495bba4e5e706a6022f7",
             "name": "Xuất bào"
         },
         {
+            "chapter": "Trao đổi chất qua màng và truyền tin tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "11_cam_ung_o_sinh_vat_synapse",
+            "items": [],
+            "modelUid": "d3be9054e57b4104b3f029cb8c6f19a9",
+            "name": "Truyền tin giữa các tế bào"
+        },
+        {
+            "chapter": "Trao đổi chất qua màng và truyền tin tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_1092f5d0a44fe7fc",
+            "items": [],
+            "modelUid": "e5f3762676a94633b3862e42e9e4a7a9",
+            "name": "Truyền tin trong tế bào"
+        },
+        {
+            "chapter": "Chuyển hóa năng lượng trong tế bào",
+            "feature": "Là adenosine triphosphate (viết tắt là ATP) có chức năng dự trữ năng lượng ngắn hạn để cung cấp cho các hoạt động sống của tế bào ngay khi cần.",
+            "funFact": "Protein sữa sau khi được đóng gói trong túi vận chuyển và xuất ra khỏi tế bào tuyến sữa.",
+            "grade": "10",
+            "id": "10_chuy_n_h_a_n_ng_l_ng_trong_t_b_o_atp_fc449696",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            343.1990386058667,
+                            -550.5100173161745,
+                            385.0689540804224
+                        ],
+                        "target": [
+                            120.71774312378709,
+                            328.5009271548976,
+                            316.75294917257224
+                        ]
+                    },
+                    "content": "Là nucleotide loại adenin tham gia cấu tạp nên hợp chất giàu năng lượng như ATP.",
+                    "funFact": "",
+                    "id": "pt_fc449696_adenine",
+                    "link": "",
+                    "name": "Adenine",
+                    "world": [
+                        227.23239619653611,
+                        167.35836813161546,
+                        267.22923812260615
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            105.96020607380588,
+                            -709.7911892804769,
+                            266.86780305188967
+                        ],
+                        "target": [
+                            -15.438675662281952,
+                            243.59443536671563,
+                            56.6987147469263
+                        ]
+                    },
+                    "content": "Là loại đường đơn có công thức hóa học là C5H10O5.",
+                    "funFact": "",
+                    "id": "pt_fc449696_ng_ribose",
+                    "link": "",
+                    "name": "Đường ribose",
+                    "world": [
+                        5.558039572007609,
+                        -71.18533873416528,
+                        60.51198232784714
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -412.0834386159255,
+                            -785.8147137734195,
+                            303.0449834657217
+                        ],
+                        "target": [
+                            -268.4521839910865,
+                            308.38095579842087,
+                            274.42096358640987
+                        ]
+                    },
+                    "content": "Các gốc phosphate với hai liên kết giàu năng lượng.",
+                    "funFact": "",
+                    "id": "pt_fc449696_3_nh_m_phosphate",
+                    "link": "",
+                    "name": "3 Nhóm phosphate",
+                    "world": [
+                        -392.1291441697532,
+                        -156.76899719238278,
+                        286.66441239240635
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -853.6468941237326,
+                            -468.51077573353956,
+                            383.1658400537609
+                        ],
+                        "target": [
+                            -57.50404435592208,
+                            272.37295846986757,
+                            224.76960723716408
+                        ]
+                    },
+                    "content": "Liên kết này thường dễ bị phá vỡ, khi bị phá vỡ sẽ giải phóng năng lượng.",
+                    "funFact": "",
+                    "id": "pt_fc449696_li_n_k_t_gi_a_2_nh_m_p",
+                    "link": "",
+                    "name": "Liên kết giữa 2 nhóm P",
+                    "world": [
+                        -548.5119136221997,
+                        -22.878741425286112,
+                        339.6784141536617
+                    ]
+                }
+            ],
+            "modelUid": "fc4496961b3947499ec3dc0d878d5b05",
+            "name": "ATP"
+        },
+        {
+            "chapter": "Chuyển hóa năng lượng trong tế bào",
+            "feature": "Là chất xúc tác sinh học được tổng hợp trong tế bào sống, có tác dụng làm tăng tốc độ phản ứng trong điều kiện sinh lí bình thường của cơ thể nhưng không bị biến đổi sau phản ứng.",
+            "funFact": "Giúp giải thích cho việc một số người mắc hội chứng bất dung nạp lactose không thể tiêu hóa được sữa. Đom đóm phát sáng trong bóng tối là nhờ phản ứng do enzyme luciferase xúc tác cho phản ứng giữa luciferin với O2 và ATP tạo ra sản phẩm trong đó có ánh sáng.",
+            "grade": "10",
+            "id": "10_chuy_n_h_a_n_ng_l_ng_trong_t_b_o_enzyme_11901934",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.8313970221346338,
+                            -0.7804245815263983,
+                            0.4934708552544967
+                        ],
+                        "target": [
+                            -0.6881125232211509,
+                            0.011999079319164377,
+                            -0.06327154218804161
+                        ]
+                    },
+                    "content": "",
+                    "funFact": "",
+                    "id": "pt_11901934_c_ch_t",
+                    "link": "",
+                    "name": "Cơ chất",
+                    "world": [
+                        -0.6738742484193625,
+                        0.058091541274884195,
+                        0.10649788193720942
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -1.3051357339404686,
+                            0.28187169917121696,
+                            0.4430958515047457
+                        ],
+                        "target": [
+                            -0.14762761015433123,
+                            0.013122223557507855,
+                            -0.4010064775479088
+                        ]
+                    },
+                    "content": "Là vùng cấu trúc không gian đặc biệt có khả năng liên kết đặc hiệu với cơ chất để xúc tác cho phản ứng diễn ra.",
+                    "funFact": "",
+                    "id": "pt_11901934_trung_t_m_ho_t_ng",
+                    "link": "",
+                    "name": "Trung tâm hoạt động",
+                    "world": [
+                        -0.7373234117730505,
+                        0.2052340621826512,
+                        0.011396697339373308
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.5669465794413375,
+                            -0.8901382029212573,
+                            0.11326506140257758
+                        ],
+                        "target": [
+                            -0.5669465794413374,
+                            -0.048753908632730276,
+                            -0.16011726791278885
+                        ]
+                    },
+                    "content": "Được cấu tạo từ protein, một số khác còn có thêm cofactor là ion kim loại hoặc các phân tử hữu cơ.",
+                    "funFact": "",
+                    "id": "pt_11901934_enzyme",
+                    "link": "",
+                    "name": "Enzyme",
+                    "world": [
+                        -0.5801042087513941,
+                        -0.18632382467466788,
+                        -0.20070319812199094
+                    ]
+                }
+            ],
+            "modelUid": "1190193493d24b138521bfb718c5fac7",
+            "name": "Enzyme"
+        },
+        {
+            "chapter": "Chuyển hóa năng lượng trong tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_6a631a8dbad84034",
+            "items": [],
+            "modelUid": "98ff0339242c4f6eb6fdc88cd4fa471e",
+            "name": "Đường phân"
+        },
+        {
+            "chapter": "Chuyển hóa năng lượng trong tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_4a4f16795ea3c00b",
+            "items": [],
+            "modelUid": "05d09fd0ddc14418884b5f1032fdf490",
+            "name": "Chu trình Krebs"
+        },
+        {
+            "chapter": "Chuyển hóa năng lượng trong tế bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_173a99aff1683f63",
+            "items": [],
+            "modelUid": "7ef7026c2b7e4960ba4f508cbdad7829",
+            "name": "Lên men"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "Là khoảng thời gian từ khi tế bào được sinh ra, lớn lên và phân chia thành hai tế bào con. Gồm kì trung gian và quá trình phân bào.",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_1770697944508",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.06687109317362987,
+                            -0.005732369202547494,
+                            0.21441182582812823
+                        ],
+                        "target": [
+                            0.07061442117711052,
+                            -0.004556931918208879,
+                            -0.03534787316488583
+                        ]
+                    },
+                    "content": "Là pha tăng kích thước tế bào, tổng hợp các bào quan và tổng hợp, tích lũy các chất.",
+                    "funFact": "Trong pha G1 có điểm kiểm soát G1/S, nếu nhận diện điểm sai hỏng, điểm kiểm soát sẽ sử dụng cơ chế tín hiệu để ngừng chu kì tế bào cho đến khi các sai hỏng được khắc phục. Tại đây tế bào sẽ tiến vào trạng thái \"nghỉ\" ở pha G0.",
+                    "id": "org_7b630ef8df4058_1770927322339",
+                    "link": "",
+                    "name": "Pha G1",
+                    "world": [
+                        0.06459062745857426,
+                        -0.0029192055370348214,
+                        -0.006977916258958074
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.006590023938481423,
+                            -0.14479729359919774,
+                            0.1428230373708959
+                        ],
+                        "target": [
+                            0.015453938662319753,
+                            -0.060036931406220594,
+                            -0.06535819338921615
+                        ]
+                    },
+                    "content": "Là pha nhân đôi DNA dẫn đến nhân đôi NST tạo thành NST kép.",
+                    "funFact": "",
+                    "id": "org_72819a632ded4_1770930441634",
+                    "link": "",
+                    "name": "Pha S",
+                    "world": [
+                        -0.01187133006137914,
+                        -0.06065490615385301,
+                        0.0016732454961364805
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.008620892637593053,
+                            0.0025855467540889356,
+                            0.14844345684200025
+                        ],
+                        "target": [
+                            -0.05811354430469398,
+                            0.003383645419926395,
+                            -0.01273709987488726
+                        ]
+                    },
+                    "content": "Là pha gia tăng kích thước, chuẩn bị phân chia.",
+                    "funFact": "Trong pha G2 có điểm kiểm soát G2/M, tại đây kiểm soát quá trình nhân đôi DNA đã hoàn tất và mọi sai sót đã được sữa chữa hay chưa.",
+                    "id": "org_3d06828859ee18_1770930529202",
+                    "link": "",
+                    "name": "Pha G2",
+                    "world": [
+                        -0.073218432294324,
+                        0.0021141307951731644,
+                        0.009962517518121805
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.018450863662860462,
+                            0.055188798446492805,
+                            0.16873400573642186
+                        ],
+                        "target": [
+                            0.01860022527994921,
+                            0.05838767543305242,
+                            -0.03511792806515545
+                        ]
+                    },
+                    "content": "Là một trong các kiểu phân chia của tế bào nhân thực, xảy ra ở tế bào sinh dưỡng và các tế bào sinh dục sơ khai.",
+                    "funFact": "Tại đây có điểm kiểm soát thoi phân bào nhằm kiểm tra tất cả các NST đã gắn với thoi phân bào hay chưa. Nếu chưa hoạt tất, chu kì tế bào cũng sẽ dừng lại.",
+                    "id": "org_ec595cbbbb0618_1770930586002",
+                    "link": "",
+                    "name": "Nguyên phân",
+                    "world": [
+                        0.0006815841258909751,
+                        0.06632051941552039,
+                        -0.006994797884712442
+                    ]
+                }
+            ],
+            "modelUid": "35f5205532044fc880d88defee2bbc68",
+            "name": "Chu kì tế bào"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_b1d3be17b1d772d8",
+            "items": [],
+            "modelUid": "154bb2009e8e45bb9eac2ddbf011d883",
+            "name": "NST"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_5893c912",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            13.42780556712575,
+                            -58.10839118294045,
+                            -20.473298290550627
+                        ],
+                        "target": [
+                            17.05096879576603,
+                            -0.06572385785093668,
+                            -2.0033026675687777
+                        ]
+                    },
+                    "content": "Bắt đầu hình thành",
+                    "funFact": "",
+                    "id": "pt_5893c912_thoi_ph_n_b_o",
+                    "link": "",
+                    "name": "Thoi phân bào",
+                    "world": [
+                        23.21442581477129,
+                        -17.896892862298373,
+                        -1.9502883932665773
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            3.4478383825312378,
+                            -36.96291730235853,
+                            4.296938810570041
+                        ],
+                        "target": [
+                            4.240509258952446,
+                            2.1182214514008137,
+                            -6.197772203342589
+                        ]
+                    },
+                    "content": "Bắt đầu co xoắn",
+                    "funFact": "",
+                    "id": "pt_5893c912_nst",
+                    "link": "",
+                    "name": "NST",
+                    "world": [
+                        3.6872334359521792,
+                        -26.69266688709658,
+                        3.163971593432489
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -18.39224056288926,
+                            -32.32220264062102,
+                            -27.5663582909607
+                        ],
+                        "target": [
+                            1.9616148807253104,
+                            6.587770534021113,
+                            -6.524803524268479
+                        ]
+                    },
+                    "content": "Tiêu biến",
+                    "funFact": "",
+                    "id": "pt_5893c912_m_ng_nh_n_v_h_ch_nh_n",
+                    "link": "",
+                    "name": "Màng nhân và hạch nhân",
+                    "world": [
+                        -12.58372291278813,
+                        -14.793987360709796,
+                        -19.90918249449735
+                    ]
+                }
+            ],
+            "modelUid": "5893c91271574463a9020d0deeaf95f0",
+            "name": "Nguyên phân - kì đầu"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_68662e88",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            2.206335222578183,
+                            -60.99069440011678,
+                            0.09476316517210748
+                        ],
+                        "target": [
+                            0.37458598182468716,
+                            6.484401736403371,
+                            -2.144564722386629
+                        ]
+                    },
+                    "content": "Co xoắn tối đa và nằm ở mặt phẳng xích đạo của thoi phân bào.",
+                    "funFact": "",
+                    "id": "pt_68662e88_nst",
+                    "link": "",
+                    "name": "NST",
+                    "world": [
+                        0.8865343274560631,
+                        -26.821014051271252,
+                        -1.2055541075854574
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            37.949656049640005,
+                            -60.240561576469375,
+                            25.73496659366138
+                        ],
+                        "target": [
+                            2.9257772408767058,
+                            9.258773896189693,
+                            -5.711394368154765
+                        ]
+                    },
+                    "content": "Các vi ống của thoi phân bào đính vào 2 phía tâm động của NST.",
+                    "funFact": "",
+                    "id": "pt_68662e88_vi_ng",
+                    "link": "",
+                    "name": "Vi ống",
+                    "world": [
+                        15.97176729106488,
+                        -22.022904484208432,
+                        7.803502362363326
+                    ]
+                }
+            ],
+            "modelUid": "68662e881ab54dc09e5736984c1aa9b3",
+            "name": "Nguyên phân - kì giữa"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "Kì sau là kì có thời gian ngắn nhất.",
+            "grade": "10",
+            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_ec2ae98b",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            10.517392073470226,
+                            -80.29332673875993,
+                            20.800813416763603
+                        ],
+                        "target": [
+                            2.1591809697923816,
+                            2.970114616492739,
+                            5.998380893479335
+                        ]
+                    },
+                    "content": "Hai chromatid chị em của mỗi NST kép bắt đầu tách rời nhau thành hai NST đơn và di chuyển trên thoi phân bào về hai cực đối diện của tế bào.",
+                    "funFact": "",
+                    "id": "pt_ec2ae98b_nst",
+                    "link": "",
+                    "name": "NST",
+                    "world": [
+                        8.373820883651312,
+                        -16.873154450626693,
+                        21.852390786214624
+                    ]
+                }
+            ],
+            "modelUid": "ec2ae98bcacd42508150183b1ade604a",
+            "name": "Nguyên phân - kì sau"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "10_chu_k_t_b_o_v_ph_n_b_o_nguy_n_ph_n_ebb24bc7",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.1054673227409948,
+                            -90.01543497262797,
+                            12.33708598583037
+                        ],
+                        "target": [
+                            7.7324938236526055,
+                            -2.250015341017228,
+                            -3.1779790101157723
+                        ]
+                    },
+                    "content": "Dãn xoắn",
+                    "funFact": "",
+                    "id": "pt_ebb24bc7_nst",
+                    "link": "",
+                    "name": "NST",
+                    "world": [
+                        -5.906699941025422,
+                        -21.995866227515435,
+                        1.3404712151604086
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            68.92800710549896,
+                            -84.53923591099172,
+                            23.10384080776604
+                        ],
+                        "target": [
+                            9.431306285477739,
+                            4.426703940274842,
+                            -8.94310661471272
+                        ]
+                    },
+                    "content": "Tái xuất hiện hình thành hai nhân mới",
+                    "funFact": "",
+                    "id": "pt_ebb24bc7_m_ng_nh_n_v_h_ch_nh_n",
+                    "link": "",
+                    "name": "Màng nhân và hạch nhân",
+                    "world": [
+                        37.31958794340747,
+                        -20.92941956026553,
+                        -4.735615306111642
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            9.911754528266844,
+                            -87.7127409512145,
+                            49.051923996855166
+                        ],
+                        "target": [
+                            5.880543557869937,
+                            7.266624522083293,
+                            -9.637701777955336
+                        ]
+                    },
+                    "content": "Tiêu biến",
+                    "funFact": "",
+                    "id": "pt_ebb24bc7_thoi_ph_n_b_o",
+                    "link": "",
+                    "name": "Thoi phân bào",
+                    "world": [
+                        -18.901719486495278,
+                        -16.749960442906563,
+                        22.048222793392174
+                    ]
+                },
+                {
+                    "content": "Tế bào chất phân chia dần và tách tế bào mẹ thành hai tế bào con.",
+                    "funFact": "",
+                    "id": "pt_ebb24bc7_t_b_o_ch_t",
+                    "link": "",
+                    "name": "Tế bào chất"
+                }
+            ],
+            "modelUid": "ebb24bc7cf8c44c480d3f462a96b9b99",
+            "name": "Nguyên phân - kì cuối"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_aecce2aa83db8332",
+            "items": [],
+            "modelUid": "1a4847af311a41a4832356b3bf6b7bf6",
+            "name": "Kì đầu - GP I"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_0e3df601d67285e8",
+            "items": [],
+            "modelUid": "45935a1ffca444f2ac4d2bfb65ad2d4b",
+            "name": "Kì giữa - GP I"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_3cb848ddb220f9fb",
+            "items": [],
+            "modelUid": "dbb61c9222b547b7b819a5e077721464",
+            "name": "Kì sau - GP I"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_67bfa1c27739a5d6",
+            "items": [],
+            "modelUid": "5cde0967328241a9b50e3f7394d7bb30",
+            "name": "Kì cuối - GP I"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_700ca7d0ec8a9978",
+            "items": [],
+            "modelUid": "7141c0214c2e4134b8822ae3e5f69849",
+            "name": "Kì đầu - GP II"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_87e84be742314795",
+            "items": [],
+            "modelUid": "d9800d686e6a400cbab9f27c5a42f1b2",
+            "name": "Kì giữa - GP II"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_b1d71ab2161a9632",
+            "items": [],
+            "modelUid": "0258e6d872854dec9a572aebacce37a5",
+            "name": "Kì sau - GP II"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_7e426ab5428e7e0c",
+            "items": [],
+            "modelUid": "cb8d7f8054d0441b94e2f483d3278f30",
+            "name": "Kì cuối - GP II"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_8e019cf5c82c81d0",
+            "items": [],
+            "modelUid": "1772cb63102b4f1c9ff5e607643cde83",
+            "name": "Hình thành giao tử"
+        },
+        {
+            "chapter": "Chu kì tế bào và phân bào",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_94010ac04946b8c7",
+            "items": [],
+            "modelUid": "c7c9071f599d4c7d8e4af1e47f57fa5f",
+            "name": "Nuôi cấy mô"
+        },
+        {
+            "chapter": "Vi sinh vật",
+            "feature": "Là những sinh vật có kích thước nhỏ bé, thường chỉ quan sát được dưới kính hiển vi. Vi sinh vật không chỉ có số lượng lớn và đa dạng về hình thái mà còn có nhiều kiểu chuyển hóa vật chất và năng lượng hơn so với các nhóm sinh vật khác.",
+            "funFact": "VSV có ở khắp mọi nơi trên Trái Đất, kể cả ở điều kiện khắc nghiệt nhất như ở trong miệng núi lửa, ở Nam Cực hay trong điều kiện áp suất thẩm thấu lớn dưới đáy đại dương,..",
+            "grade": "10",
+            "id": "10_sinh_h_c_vi_sinh_v_t_vsv_4efcf2fb",
+            "items": [
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            3.1358966954801,
+                            -2.2611199440364547,
+                            1.00010003417773
+                        ],
+                        "target": [
+                            0.6827828008420862,
+                            -0.9477401370064618,
+                            -0.5015524568946479
+                        ]
+                    },
+                    "content": "",
+                    "funFact": "",
+                    "id": "pt_4efcf2fb_c_u_khu_n",
+                    "link": "",
+                    "name": "Cầu khuẩn",
+                    "world": [
+                        1.2500910022540284,
+                        -0.8596712767196438,
+                        -0.09138236227376252
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            2.9105913289769365,
+                            2.079364164790373,
+                            1.1269504619485864
+                        ],
+                        "target": [
+                            1.5293652711523564,
+                            2.2818724928936,
+                            1.1535727459753915
+                        ]
+                    },
+                    "content": "",
+                    "funFact": "",
+                    "id": "pt_4efcf2fb_tr_c_khu_n",
+                    "link": "",
+                    "name": "Trực khuẩn",
+                    "world": [
+                        1.535969809907967,
+                        2.2269193151249924,
+                        1.1043745556366775
+                    ]
+                },
+                {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            1.8127121680207003,
+                            0.17381122706167357,
+                            1.5965802652545973
+                        ],
+                        "target": [
+                            0.6243464703169441,
+                            0.4154041801162917,
+                            0.5646496669967236
+                        ]
+                    },
+                    "content": "",
+                    "funFact": "",
+                    "id": "pt_4efcf2fb_ph_y_khu_n",
+                    "link": "",
+                    "name": "Phẩy khuẩn",
+                    "world": [
+                        1.1762410071829492,
+                        0.3995704273987586,
+                        0.5895879909294611
+                    ]
+                }
+            ],
+            "modelUid": "4efcf2fb00e14f1a9e6fa2bb457066d4",
+            "name": "Vi sinh vật"
+        },
+        {
+            "chapter": "Vi sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_ed60dba99eb8a104",
+            "items": [],
+            "modelUid": "e0685100eb9545578c82776f85da373e",
+            "name": "Nhuộm gram"
+        },
+        {
+            "chapter": "Vi sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_e6798c562e80a180",
+            "items": [],
+            "modelUid": "ccd7b553d04f4484b74f6c27e10352b6",
+            "name": "Phân đôi"
+        },
+        {
+            "chapter": "Vi sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_e77b27dd29abdbff",
+            "items": [],
+            "modelUid": "faa5ff1d90914f5989373df754e0e607",
+            "name": "Bào tử"
+        },
+        {
+            "chapter": "Vi sinh vật",
+            "feature": "",
+            "funFact": "",
+            "grade": "10",
+            "id": "model_7d540296d24e4367",
+            "items": [],
+            "modelUid": "594ec5c63535441f870962017c1e48bd",
+            "name": "Nảy chồi"
+        },
+        {
             "chapter": "Virus",
             "feature": "Là thực thể chưa có cấu tạo tế bào, có kích thước vô cùng bé, chỉ được nhân lên trong tế bào của sinh vật sống. Virus có hình dạng và cấu trúc rất đa dạng (hình xoắn, hình đa diện, hình cầu, dạng phức tạp,...).",
-            "funFact": "VSV có ở khắp mọi nơi trên Trái Đất, kể cả ở điều kiện khắc nghiệt nhất như ở trong miệng núi lửa, ở Nam Cực hay trong điều kiện áp suất thẩm thấu lớn dưới đáy đại dương,..",
+            "funFact": "",
             "grade": "10",
             "id": "10_virus_virus_8da91821",
             "items": [
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            -0.31075391754309123,
+                            -2.2656049013794295,
+                            -0.21540927773608276
+                        ],
+                        "target": [
+                            -0.0126018294,
+                            -1.0468578932,
+                            -0.119895132
+                        ]
+                    },
                     "content": "Là nucleic acid, có thể là DNA hoặc RNA, có cấu trúc mạch kép hay mạch đơn và gồm một hoặc một vài đoạn phân tử tương đối ngắn.",
                     "funFact": "",
                     "id": "pt_8da91821_l_i",
                     "link": "",
-                    "name": "Lõi"
+                    "name": "Lõi",
+                    "world": [
+                        -0.1526936576404104,
+                        -1.1100153530636592,
+                        -0.28991427019963045
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            0.6956347557252553,
+                            -3.6329534240932957,
+                            -0.21456621888184563
+                        ],
+                        "target": [
+                            -0.0126018294,
+                            -1.0468578932,
+                            -0.119895132
+                        ]
+                    },
                     "content": "Là vỏ protein, giúp bảo vệ lõi nucleic acid bên trong.",
                     "funFact": "",
                     "id": "pt_8da91821_capsid",
                     "link": "",
-                    "name": "Capsid"
+                    "name": "Capsid",
+                    "world": [
+                        -0.4779846558312547,
+                        -1.668677203047032,
+                        -0.14008778209698755
+                    ]
                 },
                 {
+                    "cam": {
+                        "duration": 1.2,
+                        "position": [
+                            1.8107515314384353,
+                            -4.34524843476099,
+                            -0.34315758052170575
+                        ],
+                        "target": [
+                            0.35601504676766466,
+                            -0.7900146684390058,
+                            -0.18679389703892685
+                        ]
+                    },
                     "content": "Là lớp màng kép phospholipid với các gai glycoprotein giúp virus tiệm cận tế bào chủ.",
                     "funFact": "",
                     "id": "pt_8da91821_v_ngo_i",
                     "link": "",
-                    "name": "Vỏ ngoài"
+                    "name": "Vỏ ngoài",
+                    "world": [
+                        1.2567886107162387,
+                        -1.5155646058269756,
+                        -0.29066880144705803
+                    ]
                 }
             ],
             "modelUid": "8da918211f4f4194a53c25573dbd20bf",
             "name": "Virus"
         },
         {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "chapter": "Virus",
             "feature": "",
             "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_nguyen_to_da_luong",
+            "grade": "10",
+            "id": "model_bf36659758f8bc01",
             "items": [],
-            "modelUid": "6e05dda8d97746c086d5b4dc8ada22f1",
-            "name": "Nguyên tố đa lượng"
+            "modelUid": "ffa362dcb530443f813ff2e5d45fd74a",
+            "name": "Virus HIV"
         },
         {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
+            "chapter": "Virus",
             "feature": "",
             "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_than",
+            "grade": "10",
+            "id": "model_eff852a44eda076d",
             "items": [],
-            "modelUid": "74554b702184450fbfdf3c5ace31468b",
-            "name": "Thân"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tieu_hoa_chua_co_co_quan_tieu_hoa",
-            "items": [],
-            "modelUid": "f9a5e0b423e345cb90416ef1be1109ed",
-            "name": "Tiêu hóa chưa có cơ quan tiêu hóa"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tieu_hoa_trong_ong_tieu_hoa",
-            "items": [],
-            "modelUid": "b5b571c21077429d804354dd3f3cc308",
-            "name": "Tiêu hóa trong ống tiêu hóa"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_gan",
-            "items": [],
-            "modelUid": "bf6273bdf0664f8b809a27fcac8693cb",
-            "name": "Gan"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tuyen_tuy_tui_mat",
-            "items": [],
-            "modelUid": "8acf64dc315b49308b4fcbd47e48b92b",
-            "name": "Tuyến tụy, túi mật"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_be_mat_co_the",
-            "items": [],
-            "modelUid": "693db7a8e44e4b90a1afef81204459ce",
-            "name": "Trao đổi khí qua bề mặt cơ thể"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_he_thong_ong_khi",
-            "items": [],
-            "modelUid": "e951a812971049bfbbdc3c3685a30b3f",
-            "name": "Trao đổi khí qua hệ thống ống khí"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_mang",
-            "items": [],
-            "modelUid": "7bf7115377f14f138d0b99dc689c1ace",
-            "name": "Trao đổi khí qua mang"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_trao_doi_khi_qua_phoi",
-            "items": [],
-            "modelUid": "c0ca6af6c6a1449084341a96eea515ea",
-            "name": "Trao đổi khí qua phổi"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_tim",
-            "items": [],
-            "modelUid": "7241b29839804855a6d2cc101d73db55",
-            "name": "Tim"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_he_mach",
-            "items": [],
-            "modelUid": "50d55a6208604c1ca04d917aa4f17e3b",
-            "name": "Hệ mạch"
-        },
-        {
-            "chapter": "Trao đổi chất và chuyển hóa năng lượng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_trao_doi_chat_va_chuyen_hoa_nang_luong_o_sinh_vat_than_1",
-            "items": [],
-            "modelUid": "d3dc9bcc490c42f7a3bd9176de169e00",
-            "name": "Thận"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_huong_dong",
-            "items": [],
-            "modelUid": "8984903df2fb49cf99082ba9c7743136",
-            "name": "Hướng động"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_he_than_kinh_dang_luoi",
-            "items": [],
-            "modelUid": "46d8b5fb50654425b661d6c6f347edbc",
-            "name": "Hệ thần kinh dạng lưới"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_he_than_kinh_dang_chuoi_hach",
-            "items": [],
-            "modelUid": "db0b1b8d18f940c4b9528f0e50001b31",
-            "name": "Hệ thần kinh dạng chuỗi hạch"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_he_than_kinh_dang_ong",
-            "items": [],
-            "modelUid": "c1ba7fe29e7f44b28186e56a07502463",
-            "name": "Hệ thần kinh dạng ống"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_synapse",
-            "items": [],
-            "modelUid": "d3be9054e57b4104b3f029cb8c6f19a9",
-            "name": "Synapse"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_neuron",
-            "items": [],
-            "modelUid": "f33ea01f8e674578b55ac51d110b1721",
-            "name": "Neuron"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_mat",
-            "items": [],
-            "modelUid": "9fc8c2d381b34220a330c68876840783",
-            "name": "Mắt"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_nao",
-            "items": [],
-            "modelUid": "01b31600fc1140bc96394cb5ec6d6825",
-            "name": "Não"
-        },
-        {
-            "chapter": "Cảm ứng ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_cam_ung_o_sinh_vat_tai",
-            "items": [],
-            "modelUid": "e14ca6ebb8de411695ce04eb5089266c",
-            "name": "Tai"
-        },
-        {
-            "chapter": "Sinh trưởng và phát triển ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_sinh_truong_va_phat_trien_o_sinh_vat_phoi",
-            "items": [],
-            "modelUid": "9fb225b983c14b20b67b639e17126f5b",
-            "name": "Phôi"
-        },
-        {
-            "chapter": "Sinh trưởng và phát triển ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_sinh_truong_va_phat_trien_o_sinh_vat_phat_trien_qua_bien_thai",
-            "items": [],
-            "modelUid": "97a185a69e25467e8931da7639c64f2e",
-            "name": "Phát triển qua biến thái"
-        },
-        {
-            "chapter": "Sinh trưởng và phát triển ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_sinh_truong_va_phat_trien_o_sinh_vat_phat_trien_khong_qua_bien_thai",
-            "items": [],
-            "modelUid": "5ade58cf25a34a928d0c88dddba83c35",
-            "name": "Phát triển không qua biến thái"
-        },
-        {
-            "chapter": "Sinh sản ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_sinh_san_o_sinh_vat_hoa",
-            "items": [],
-            "modelUid": "5aff81d16da5429bb66e14b0b8167780",
-            "name": "Hoa"
-        },
-        {
-            "chapter": "Sinh sản ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_sinh_san_o_sinh_vat_trung",
-            "items": [],
-            "modelUid": "d6b46f8a975848249edbbfb33d4882dd",
-            "name": "Trứng"
-        },
-        {
-            "chapter": "Sinh sản ở sinh vật",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_sinh_san_o_sinh_vat_tu_cung",
-            "items": [],
-            "modelUid": "08d5cdbca98d452eb7660334a7ad2780",
-            "name": "Tử cung"
-        },
-        {
-            "chapter": "Mối quan hệ giữa các quá trình sinh lí trong cơ thể sinh vật với một số ngành nghề liên quan đến sinh học cơ thể",
-            "feature": "",
-            "funFact": "",
-            "grade": "11",
-            "id": "11_moi_quan_he_giua_cac_qua_trinh_sinh_li_trong_co_the_sinh_vat_voi_mot_so_nganh_nghe_lien_quan_den_sinh_hoc_co_the_cay",
-            "items": [],
-            "modelUid": "047bd0fe057547e993c56a7ebc147731",
-            "name": "Cây"
-        },
-        {
-            "chapter": "Di truyền phân tử",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_phan_tu_dna",
-            "items": [],
-            "modelUid": "4ff9b29e7952443ca050e15dff05256a",
-            "name": "DNA"
-        },
-        {
-            "chapter": "Di truyền phân tử",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_phan_tu_mrna",
-            "items": [],
-            "modelUid": "86d3572002254365bc52c0c034445718",
-            "name": "mRNA"
-        },
-        {
-            "chapter": "Di truyền phân tử",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_phan_tu_trna",
-            "items": [],
-            "modelUid": "8ab8a1d412404d73ba66ee82bdd22f4f",
-            "name": "tRNA"
-        },
-        {
-            "chapter": "Di truyền phân tử",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_phan_tu_phien_ma_dich_ma",
-            "items": [],
-            "modelUid": "8d7833756c3d402f8572db722c735e3f",
-            "name": "Phiên mã, dịch mã"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_cau_truc_sieu_hien_vi",
-            "items": [],
-            "modelUid": "16f57ae67f3a4fbdb2f4b22d80c2d10d",
-            "name": "Cấu trúc siêu hiển vi"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_cau_tao_nst",
-            "items": [],
-            "modelUid": "2cb7bdde1f274b089eef2ca48e9c68f0",
-            "name": "Cấu tạo NST"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_allele_locus",
-            "items": [],
-            "modelUid": "68881ccde9954fdeaadd74b64ea89495",
-            "name": "Allele, locus"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_nst_don_kep",
-            "items": [],
-            "modelUid": "8fbd0eba37b64e68993311faffb5e57b",
-            "name": "NST đơn, kép"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_tuong_tac_gene_at_che",
-            "items": [],
-            "modelUid": "f8edc1a410384141bbbc3980e5d91e9c",
-            "name": "Tương tác gene át chế"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_nst_x",
-            "items": [],
-            "modelUid": "4ab2fe1dfcba469097e2d0fe4a0f942b",
-            "name": "NST X"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_nst_y",
-            "items": [],
-            "modelUid": "388d29fb827845bfbec65dd0614c4fb7",
-            "name": "NST Y"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_ruoi_giam",
-            "items": [],
-            "modelUid": "6a4470f884554864827d848718b2b6bc",
-            "name": "Ruồi giấm"
-        },
-        {
-            "chapter": "Di truyền NST",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_di_truyen_nst_bo_nst_do_cua_nguoi_binh_thuong",
-            "items": [],
-            "modelUid": "caec92fcc43d4098888c981975558667",
-            "name": "Bộ NST đồ của người bình thường"
-        },
-        {
-            "chapter": "Bằng chứng và các học thuyết tiến hóa",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_bang_chung_va_cac_hoc_thuyet_tien_hoa_hoa_thach",
-            "items": [],
-            "modelUid": "75e59d79f2a042f1aad2b6cded8b65bf",
-            "name": "Hóa thạch"
-        },
-        {
-            "chapter": "Bằng chứng và các học thuyết tiến hóa",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_bang_chung_va_cac_hoc_thuyet_tien_hoa_ho_phach",
-            "items": [],
-            "modelUid": "53a61d58c09b4d2ab30e269aa3e22078",
-            "name": "Hổ phách"
-        },
-        {
-            "chapter": "Bằng chứng và các học thuyết tiến hóa",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_bang_chung_va_cac_hoc_thuyet_tien_hoa_phat_sinh_loai_nguoi",
-            "items": [],
-            "modelUid": "95eae619af884dafb7191945adf95b9c",
-            "name": "Phát sinh loài người"
-        },
-        {
-            "chapter": "Sinh thái học quần xã",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_sinh_thai_hoc_quan_xa_he_sinh_thai",
-            "items": [],
-            "modelUid": "e6ae5b861c914f0bafb8a2766d899bb8",
-            "name": "Hệ sinh thái"
-        },
-        {
-            "chapter": "Sinh thái học quần xã",
-            "feature": "",
-            "funFact": "",
-            "grade": "12",
-            "id": "12_sinh_thai_hoc_quan_xa_chu_trinh_nuoc",
-            "items": [],
-            "modelUid": "033545715b344616bf08431a290d69c2",
-            "name": "Chu trình nước"
+            "modelUid": "a2f47fc9074c44d691e0c46d814cc5a2",
+            "name": "Virus cúm A"
         }
     ],
-    "version": 2,
-    "updatedAt": "2026-02-16T02:39:32.172402+00:00"
+    "updatedAt": "2026-04-05T10:15:40.600838+00:00",
+    "version": 329
 }
