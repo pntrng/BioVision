@@ -1,0 +1,1999 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BioVision 3D – Học tập tương tác</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Permissions Policy để fix lỗi accelerometer -->
+  <meta http-equiv="Permissions-Policy" content="accelerometer=*, gyroscope=*, magnetometer=*">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
+  
+  <style>
+    /* Đảm bảo container viewer có position relative */
+    #right {
+      position: relative !important;
+      background: url("/static/img/biovision-hero.png") center/cover no-repeat;
+    }
+    
+    /* Iframe nằm dưới overlay */
+    #api-frame {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Overlay container - QUAN TRỌNG: z-index cao và overflow visible */
+    #overlay { 
+      position: absolute; 
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none; 
+      overflow: visible;
+      z-index: 1000;
+    }
+    
+    /* Hotspot - điểm đánh dấu trên mô hình */
+    .hotspot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      background: color-mix(in srgb, var(--color-primary) 80%, transparent);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      z-index: 1001;
+    }
+    
+    .hotspot.active {
+      background: color-mix(in srgb, var(--color-success) 75%, transparent);
+      border-color: #fff;
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.5);
+      transform: translate(-50%, -50%) scale(1.4);
+    }
+    
+    .hotspot:hover {
+      transform: translate(-50%, -50%) scale(1.25);
+    }
+    
+    /* Floating label - thông tin hiển thị */
+    .floating-label {
+      position: absolute;
+      background: var(--color-primary);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid color-mix(in srgb, var(--color-primary) 70%, #000 30%);
+      border-radius: 999px;
+      padding: 4px 10px;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+      pointer-events: auto;
+      cursor: pointer;
+      max-width: 200px;
+      z-index: 1002;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      overflow: visible;
+    }
+
+    /* detail is shown in fixed box, not inside floating labels */
+    .floating-label.detail { max-width: 240px; }
+    
+    .floating-label.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .floating-label.active {
+      background: var(--color-success);
+      border-color: color-mix(in srgb, var(--color-success) 70%, #000 30%);
+      box-shadow: 0 10px 26px rgba(34, 197, 94, 0.25);
+    }
+    
+    .label-title {
+      font-weight: 700;
+      font-size: 12px;
+      color: #fff;
+      margin-bottom: 0;
+      line-height: 1.3;
+    }
+    
+    .floating-label.active .label-title {
+      color: #fff;
+    }
+    
+    .label-content {
+      font-size: 11px;
+      color: #4b5563;
+      line-height: 1.4;
+      white-space: normal;
+    }
+
+    /* Fixed detail box (top-right) */
+    #detailBox {
+      position: absolute;
+      top: 80px;
+      right: 16px;
+      width: 360px;
+      max-width: calc(100% - 32px);
+      max-height: calc(100% - 32px);
+      overflow: auto;
+      z-index: 1003;
+      pointer-events: auto;
+    }
+
+    /* Fun fact box (bottom-right) */
+    #funFactBox {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      width: 360px;
+      max-width: calc(100% - 32px);
+      max-height: 40vh;
+      overflow: auto;
+      z-index: 1003;
+      pointer-events: auto;
+    }
+
+    #viewerLoading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.6);
+      color: #f8fafc;
+      z-index: 1005;
+      backdrop-filter: blur(3px);
+    }
+
+    #viewerLoading.hidden {
+      display: none;
+    }
+
+    .loading-card {
+      width: min(420px, 90%);
+      padding: 24px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 12px;
+      border-radius: 999px;
+      border: 3px solid rgba(248, 250, 252, 0.3);
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.35);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      backdrop-filter: blur(6px);
+    }
+
+    .float-in {
+      animation: floatIn 220ms ease-out;
+    }
+
+    @keyframes floatIn {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    /* SVG overlay cho leader lines */
+    #svg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+    
+    .leader-line {
+      stroke: rgba(59, 130, 246, 0.6);
+      stroke-width: 2;
+      fill: none;
+      stroke-dasharray: none;
+      transition: stroke 0.3s ease;
+    }
+    
+    .leader-line.active {
+      stroke: rgba(34, 197, 94, 0.8);
+      stroke-width: 2.5;
+    }
+
+    :root {
+      --topbar-height: 56px;
+      --control-size: 44px;
+    }
+
+    body {
+      height: 100vh;
+      padding-top: var(--topbar-height);
+      box-sizing: border-box;
+    }
+
+    #right {
+      height: calc(100vh - var(--topbar-height));
+    }
+
+    #topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--topbar-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 1100;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease;
+    }
+
+    #topbar .topbar-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--color-text);
+      letter-spacing: 0.02em;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mobile-only {
+      display: none;
+    }
+
+    #left {
+      position: absolute;
+      top: calc(var(--topbar-height) + 16px);
+      left: -360px;
+      height: calc(100vh - var(--topbar-height) - 32px);
+      width: 320px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      backdrop-filter: blur(8px);
+      z-index: 1002;
+      transition: left 0.25s ease;
+    }
+
+    #left.open {
+      left: 16px;
+    }
+
+    #left .section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--color-muted);
+    }
+
+    #q {
+      border: 1px solid var(--color-border);
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 10px 12px 10px 36px;
+      font-size: 0.95rem;
+      color: var(--color-text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #q:focus {
+      border-color: color-mix(in srgb, var(--color-primary) 60%, var(--color-border));
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      outline: none;
+      background: #fff;
+    }
+
+    .tree-item {
+      padding: 8px 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-text);
+      transition: background 0.18s ease, color 0.18s ease;
+      cursor: pointer;
+    }
+
+    .tree-item:hover {
+      background: #f1f5f9;
+    }
+
+    .tree-item.active {
+      background: #e0f2fe;
+      border-left: 3px solid var(--color-primary);
+      padding-left: 10px;
+      font-weight: 600;
+    }
+
+    .tree-item small {
+      color: var(--color-muted);
+    }
+
+    #panel {
+      background: var(--color-surface);
+    }
+
+    #pFunFact {
+      background: #fef9c3;
+      border-color: #fde68a;
+    }
+
+    .card.show {
+      animation: cardIn 220ms ease-out;
+    }
+
+    @keyframes cardIn {
+      from { transform: translateY(8px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .topbar-btn,
+    .viewer-btn {
+      height: var(--control-size);
+      min-width: var(--control-size);
+      padding: 0 12px;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .topbar-btn:hover,
+    .viewer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+    }
+
+    .viewer-controls {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1004;
+    }
+
+    .viewer-btn.primary {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    body.topbar-hidden #topbar {
+      transform: translateY(-110%);
+    }
+
+    body.presenter #left {
+      display: none;
+    }
+
+    body.presenter #right {
+      width: 100%;
+    }
+
+    body.presenter #topbar {
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    body.presenter #topbar .topbar-title {
+      color: #f8fafc;
+    }
+
+    body.presenter #detailBox,
+    body.presenter #funFactBox {
+      transform: scale(1.02);
+    }
+
+    body.presenter .viewer-btn,
+    body.presenter .topbar-btn {
+      height: 52px;
+      font-size: 14px;
+    }
+
+    #drawerOverlay {
+      position: fixed;
+      top: var(--topbar-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.4);
+      z-index: 900;
+      display: none;
+    }
+
+    #drawerOverlay.active {
+      display: block;
+    }
+
+    #presenterToolbar {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      display: none;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      z-index: 1004;
+    }
+
+    body.presenter #presenterToolbar {
+      display: flex;
+    }
+
+    #presenterToolbar .btn {
+      background: rgba(248, 250, 252, 0.9);
+      border-color: rgba(148, 163, 184, 0.6);
+      color: #0f172a;
+    }
+
+    @media (max-width: 1024px) {
+      #left {
+        width: 280px;
+        left: -320px;
+        top: calc(var(--topbar-height) + 12px);
+        height: calc(100vh - var(--topbar-height) - 24px);
+      }
+
+      #left.open {
+        left: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --topbar-height: 48px;
+        --control-size: 40px;
+      }
+
+      .mobile-only {
+        display: inline-flex;
+      }
+
+      body {
+        padding-top: var(--topbar-height);
+      }
+
+      #left {
+        position: fixed;
+        top: var(--topbar-height);
+        left: -100%;
+        height: calc(100vh - var(--topbar-height));
+        width: 80%;
+        max-width: 360px;
+        transition: left 0.25s ease;
+        z-index: 1000;
+        border-radius: 0;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+      }
+
+      #left.open {
+        left: 0;
+      }
+
+      #right {
+        width: 100%;
+        height: calc(100vh - var(--topbar-height));
+      }
+
+      #detailBox,
+      #funFactBox {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        top: auto;
+        width: auto;
+        max-height: 45vh;
+        border-radius: 16px 16px 8px 8px;
+      }
+
+      #funFactBox {
+        display: none !important;
+      }
+
+      .viewer-controls {
+        right: 12px;
+        bottom: 12px;
+        top: auto;
+      }
+
+      #presenterToolbar {
+        bottom: 12px;
+      }
+
+      .hotspot {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    /* Welcome screen */
+    #welcomeScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1004;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(248, 250, 252, 0.98) 0%, rgba(236, 242, 255, 0.98) 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 24px;
+    }
+
+    .welcome-card {
+      max-width: 720px;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px;
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+      padding: 28px;
+    }
+
+    .welcome-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .welcome-step .num {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+  </style>
+
+  <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+</head>
+<body class="m-0 h-screen flex font-sans">
+  <div id="topbar">
+    <div class="flex items-center gap-3">
+      <button id="btnSidebar" class="topbar-btn" title="Mở cây kiến thức">☰</button>
+      <div class="topbar-title">BioVision 3D</div>
+      <div class="hero-tagline hidden md:block">Nền tảng học tập tương tác giúp bạn khám phá các mô hình Sinh học 3D trực quan.</div>
+    </div>
+    <div class="topbar-actions">
+      <button id="btnToggleLabelsMobile" class="topbar-btn mobile-only" title="Ẩn/hiện nhãn">🏷️</button>
+      <button id="btnViewMode" class="topbar-btn" title="Chuyển chế độ xem/chi tiết">👁️ Chế độ: Chi tiết</button>
+      <button id="btnPresenter" class="topbar-btn" title="Bật/Tắt trình chiếu">🖥️ Trình chiếu</button>
+    </div>
+  </div>
+  <div id="drawerOverlay"></div>
+  <!-- Sidebar -->
+  <div id="left" class="bg-white/90 shadow-xl overflow-y-auto">
+    <div class="p-8 space-y-6">
+      <!-- Search -->
+      <div>
+        <input 
+          id="q" 
+          type="text" 
+          placeholder="🔍 Tìm kiếm trên toàn thư viện..." 
+          class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-200 focus:border-blue-400 transition-all shadow-sm"
+        />
+      </div>
+
+      <!-- Model Tree -->
+      <div>
+        <h3 class="section-title mb-4 uppercase tracking-wider">🌳 Cây kiến thức</h3>
+        <div id="modelTree" class="space-y-1">
+          <!-- Tree view will be inserted here -->
+        </div>
+      </div>
+
+      <!-- Detail Panel -->
+      <div id="panel" class="hidden panel p-6 mt-6">
+        <h3 id="pTitle" class="text-2xl font-bold text-purple-800 mb-3 border-b-2 border-pink-200 pb-2"></h3>
+        <div id="pContent" class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap mb-3"></div>
+        <div id="pFunFact" class="hidden mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
+          <div class="text-xs font-semibold text-yellow-800 mb-1">✨ Góc thú vị:</div>
+          <div id="pFunFactContent" class="text-sm text-yellow-900"></div>
+        </div>
+        <div id="pLink" class="hidden mt-4">
+          <a id="pLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 text-white rounded-lg text-sm font-medium transition-all shadow-md">
+            🔗 Xem chi tiết
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D Viewer -->
+  <div id="right" class="flex-1 relative bg-black">
+    <iframe id="api-frame" class="w-full h-full border-0" allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"></iframe>
+    <svg id="svg-overlay"></svg>
+    <div id="overlay"></div>
+    <div id="viewerLoading" class="hidden">
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <div id="loadingTitle" class="text-base font-semibold">Đang tải mô hình…</div>
+        <div id="loadingMessage" class="text-sm text-slate-200 mt-2">Khởi tạo viewer, vui lòng chờ.</div>
+        <button id="loadingRetry" class="btn btn-primary mt-4 hidden">Tải lại</button>
+      </div>
+    </div>
+    <div id="detailBox" class="hidden card">
+      <div class="p-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-xs font-semibold text-slate-600">🧩 Chi tiết điểm</div>
+            <div id="detailTitle" class="mt-1 text-lg font-bold text-slate-900"></div>
+          </div>
+          <button id="detailClose" class="topbar-btn" title="Đóng">✕</button>
+        </div>
+        <div id="detailContent" class="mt-3 text-sm text-slate-700 whitespace-pre-wrap leading-relaxed"></div>
+        <div id="detailFunFactWrap" class="hidden mt-3 p-3 rounded-lg border border-amber-200 bg-amber-50">
+          <div class="text-xs font-semibold text-amber-700">✨ Góc thú vị</div>
+          <div id="detailFunFactContent" class="mt-1 text-sm text-slate-700 whitespace-pre-wrap"></div>
+        </div>
+        <div id="detailLinkWrap" class="hidden mt-4">
+          <a id="detailLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Mở liên kết
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="funFactBox" class="hidden card">
+      <div class="p-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-xs font-semibold text-amber-700">✨ Góc thú vị</div>
+            <div id="funFactTitle" class="mt-1 text-base font-bold text-slate-900"></div>
+          </div>
+          <button id="funFactClose" class="topbar-btn" title="Đóng">✕</button>
+        </div>
+        <div id="funFactContent" class="mt-3 text-sm text-slate-800 whitespace-pre-wrap leading-relaxed"></div>
+      </div>
+    </div>
+    <div class="viewer-controls">
+      <button id="btnResetCamera" class="viewer-btn primary" title="Reset góc nhìn (R)">↺ Reset góc nhìn</button>
+    </div>
+    <div id="presenterToolbar">
+      <button id="btnPrevItem" class="btn btn-primary">← Prev</button>
+      <button id="btnNextItem" class="btn btn-primary">Next →</button>
+      <button id="btnPresenterReset" class="btn">Reset view</button>
+    </div>
+  </div>
+
+<script>
+  let ALL_DATA = { models: [] };
+  let CURRENT_MODEL = null;
+  let DATA = { modelUid: "", items: [] };
+  let api = null;
+  let selectedId = null;
+  let animationFrameId = null;
+  let lastCameraHash = "";
+  let labelElements = new Map(); // itemId -> { element, screenX, screenY }
+  let hotspotElements = new Map(); // itemId -> element
+  let mindmapOrder = null;
+  let expandedGrades = new Set();
+  let expandedChapters = new Set();
+  let expandedModels = new Set();
+  let serverVersion = null;
+  let serverUpdatedAt = null;
+  const POLL_INTERVAL_MS = 15000; // 15s check for fresh data
+  let pollHandle = null;
+  let presenterMode = false;
+  let viewMode = 'detail'; // 'detail' | 'view'
+  let sidebarOpen = false;
+  let labelsEnabled = true;
+  let mobileHideTimer = null;
+  const defaultCameras = new Map(); // modelUid -> { position, target }
+  let annotationList = [];
+  let viewerLoadTimeout = null;
+
+  const el = (id) => document.getElementById(id);
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+  const typingTimers = new Map();
+  // Matching quiz config giữ lại cho tương lai (tạm thời không dùng).
+  const QUIZ_CONFIG = {
+    dna: {
+      modelNameIncludes: ["DNA"],
+      items: [
+        { id: "pt_27714f2b_li_n_k_t_phosphodieste", label: "Liên kết phosphodieste" },
+        { id: "pt_27714f2b_nitrogenous_base", label: "Nitrogenous base" },
+        { id: "pt_27714f2b_5_carbon", label: "Đường 5-carbon" },
+        { id: "pt_27714f2b_nh_m_phosphate", label: "Nhóm phosphate" },
+        { id: "pt_27714f2b_li_n_k_t_hydrogen", label: "Liên kết hydrogen" }
+      ]
+    }
+  };
+
+  function normalizeGrade(grade) {
+    const text = (grade || "").toString().trim();
+    return text ? text : "Khác";
+  }
+
+  function normalizeChapter(chapter) {
+    const text = (chapter || "").toString().trim();
+    return text ? text : "Khác";
+  }
+
+  function expandToModel(model) {
+    if (!model) return;
+    const grade = normalizeGrade(model.grade);
+    const chapter = normalizeChapter(model.chapter);
+    expandedGrades.add(grade);
+    expandedChapters.add(`${grade}::${chapter}`);
+    if (model.id) expandedModels.add(model.id);
+  }
+
+  function clearInfoPanels() {
+    setPanel(null);
+    showDetailBox(null);
+    showFunFactBox(null);
+    selectedId = null;
+  }
+
+  function setPresenterMode(enabled) {
+    presenterMode = enabled;
+    document.body.classList.toggle("presenter", presenterMode);
+    const presenterBtn = el("btnPresenter");
+    if (presenterBtn) {
+      presenterBtn.textContent = presenterMode ? "⬅️ Thoát trình chiếu" : "🖥️ Trình chiếu";
+    }
+    try {
+      localStorage.setItem("biovision_presenter_mode", presenterMode ? "1" : "0");
+    } catch (e) {
+      // ignore storage errors
+    }
+  }
+
+  function toggleSidebar(force) {
+    const left = el("left");
+    const overlay = el("drawerOverlay");
+    if (!left || !overlay) return;
+    sidebarOpen = typeof force === "boolean" ? force : !sidebarOpen;
+    left.classList.toggle("open", sidebarOpen);
+    overlay.classList.toggle("active", sidebarOpen);
+  }
+
+  function getDefaultCamera(model) {
+    if (!model) return null;
+    if (defaultCameras.has(model.modelUid)) {
+      return defaultCameras.get(model.modelUid);
+    }
+    return null;
+  }
+
+  function resetCamera() {
+    if (!api || !CURRENT_MODEL) return;
+    const cam = getDefaultCamera(CURRENT_MODEL);
+    if (!cam) return;
+    api.setCameraLookAt(cam.position, cam.target, 1.0, function(){});
+  }
+
+
+  function showLoading(title, message, showRetry = false) {
+    const overlay = el("viewerLoading");
+    if (!overlay) return;
+    overlay.classList.remove("hidden");
+    el("loadingTitle").textContent = title || "Đang tải mô hình…";
+    el("loadingMessage").textContent = message || "Khởi tạo viewer, vui lòng chờ.";
+    const retryBtn = el("loadingRetry");
+    if (retryBtn) retryBtn.classList.toggle("hidden", !showRetry);
+  }
+
+  function hideLoading() {
+    const overlay = el("viewerLoading");
+    if (overlay) overlay.classList.add("hidden");
+  }
+
+  function scheduleViewerTimeout() {
+    if (viewerLoadTimeout) clearTimeout(viewerLoadTimeout);
+    viewerLoadTimeout = setTimeout(() => {
+      showLoading("Không tải được mô hình", "Vui lòng kiểm tra mạng hoặc thử lại.", true);
+    }, 25000);
+  }
+
+  function focusOnItem(item, duration = 1.2) {
+    if (!api || !item) return;
+    const name = (item.name || "").toLowerCase();
+    const annotationIndex = annotationList.findIndex(ann => {
+      const annName = (ann.name || "").toLowerCase();
+      return annName === name || annName.includes(name) || name.includes(annName);
+    });
+    if (annotationIndex >= 0 && typeof api.gotoAnnotation === "function") {
+      api.gotoAnnotation(annotationIndex, { duration });
+      return;
+    }
+    if (item.cam && item.cam.position && item.cam.target) {
+      api.setCameraLookAt(item.cam.position, item.cam.target, duration, function(){});
+    }
+  }
+
+  function getOrderedItems(model) {
+    if (!model || !Array.isArray(model.items)) return [];
+    let items = model.items.slice();
+    if (mindmapOrder && mindmapOrder.components_by_model) {
+      const key = `${normalizeGrade(model.grade)}::${normalizeChapter(model.chapter)}::${model.name || ""}`;
+      if (mindmapOrder.components_by_model[key]) {
+        items = items.sort((a, b) => {
+          const idxA = mindmapOrder.components_by_model[key].indexOf(a.name || "");
+          const idxB = mindmapOrder.components_by_model[key].indexOf(b.name || "");
+          if (idxA === -1 && idxB === -1) return (a.name || "").localeCompare(b.name || "");
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
+      }
+    }
+    return items;
+  }
+
+  function selectPrevNext(direction) {
+    if (!CURRENT_MODEL) return;
+    const items = getOrderedItems(CURRENT_MODEL);
+    if (!items.length) return;
+    const currentIndex = items.findIndex(it => it.id === selectedId);
+    let nextIndex = currentIndex;
+    if (direction === "next") {
+      nextIndex = currentIndex >= 0 ? (currentIndex + 1) % items.length : 0;
+    } else {
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+    }
+    selectItem(items[nextIndex]);
+  }
+
+  // Load mindmap order
+  async function loadMindmapOrder() {
+    try {
+      const response = await fetch('mindmap_order.json');
+      if (response.ok) {
+        mindmapOrder = await response.json();
+      }
+    } catch (e) {
+      console.warn('Could not load mindmap_order.json:', e);
+    }
+  }
+
+  // Sanitize HTML to prevent XSS
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function setLabelsEnabled(enabled) {
+    labelsEnabled = enabled;
+    updateLabels();
+    const btn = el("btnToggleLabelsMobile");
+    if (btn) {
+      btn.textContent = labelsEnabled ? "🏷️" : "🏷️ Off";
+    }
+  }
+
+  function typeText(elm, text, speed = 14) {
+    if (!elm) return;
+    const content = text || "";
+    if (typingTimers.has(elm)) {
+      clearInterval(typingTimers.get(elm));
+      typingTimers.delete(elm);
+    }
+    if (prefersReducedMotion() || content.length === 0) {
+      elm.textContent = content;
+      return;
+    }
+    elm.textContent = "";
+    let idx = 0;
+    const timer = setInterval(() => {
+      elm.textContent = content.slice(0, idx + 1);
+      idx += 1;
+      if (idx >= content.length) {
+        clearInterval(timer);
+        typingTimers.delete(elm);
+      }
+    }, speed);
+    typingTimers.set(elm, timer);
+  }
+
+  // Fetch all data from server
+  async function loadAllData() {
+    try {
+      const response = await fetch(`/api/data?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      const incoming = await response.json();
+      ALL_DATA = incoming;
+      
+      // Hỗ trợ cả format cũ và mới
+      if (ALL_DATA.modelUid && !ALL_DATA.models) {
+        ALL_DATA = {
+          models: [{
+            id: "default",
+            grade: "",
+            chapter: "",
+            modelUid: ALL_DATA.modelUid,
+            items: ALL_DATA.items || []
+          }]
+        };
+      }
+      
+      if (!ALL_DATA.models) ALL_DATA.models = [];
+      serverVersion = typeof incoming.version === "number" ? incoming.version : serverVersion || 1;
+      serverUpdatedAt = incoming.updatedAt || serverUpdatedAt || "";
+      return true;
+    } catch (e) {
+      console.error('Error loading data:', e);
+      const tree = el("modelTree");
+      if (tree) {
+        tree.innerHTML = `<div class='px-4 py-6 text-center text-sm text-red-500 bg-red-50 border-2 border-red-200 rounded-xl'>Lỗi khi tải dữ liệu: ${escapeHtml(e.message)}</div>`;
+      }
+      return false;
+    }
+  }
+
+  function applyLatestData(incoming) {
+    if (incoming && incoming.modelUid && !incoming.models) {
+      incoming = {
+        models: [{
+          id: "default",
+          grade: "",
+          chapter: "",
+          modelUid: incoming.modelUid,
+          items: incoming.items || []
+        }],
+        version: incoming.version,
+        updatedAt: incoming.updatedAt
+      };
+    }
+
+    ALL_DATA = incoming && incoming.models ? incoming : { models: [] };
+    serverVersion = typeof incoming.version === "number" ? incoming.version : serverVersion;
+    serverUpdatedAt = incoming.updatedAt || serverUpdatedAt;
+
+    const prevModelId = CURRENT_MODEL ? CURRENT_MODEL.id : null;
+    renderModelTree();
+
+    if (prevModelId) {
+      const found = (ALL_DATA.models || []).find(m => m.id === prevModelId);
+      if (found) {
+        selectModel(found);
+      } else {
+        CURRENT_MODEL = null;
+        selectedId = null;
+      }
+    }
+  }
+
+  async function pollServerData() {
+    try {
+      const response = await fetch(`/api/data?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+      if (!response.ok) return;
+      const incoming = await response.json();
+      const incomingVersion = typeof incoming.version === "number" ? incoming.version : null;
+      if (incomingVersion === null) return;
+      if (serverVersion === null || incomingVersion > serverVersion) {
+        applyLatestData(incoming);
+        if (CURRENT_MODEL) {
+          renderList();
+        }
+      }
+    } catch (e) {
+      console.warn('pollServerData error:', e);
+    }
+  }
+
+  // Render danh sách/overlay (tối thiểu) để tránh lỗi và kích hoạt overlay
+  function renderList() {
+    if (selectedId && !(DATA.items || []).some(it => it.id === selectedId)) {
+      selectedId = null;
+    }
+    // Cập nhật overlay/leader lines
+    updateLabels();
+  }
+
+
+  // Render model tree với cấu trúc Khối lớp → Chương → Mô hình → Thành phần
+  function renderModelTree() {
+    const q = (el("q").value || "").toLowerCase().trim();
+    
+    const tree = el("modelTree");
+    tree.innerHTML = "";
+    
+    // Tổ chức dữ liệu theo cấu trúc tree
+    const treeData = {};
+    ALL_DATA.models.forEach(m => {
+      const grade = m.grade || "Khác";
+      const chapter = m.chapter || "Khác";
+      
+      // Filter by search
+      const matchSearch = !q || 
+        (m.grade && m.grade.toString().includes(q)) ||
+        (m.chapter && m.chapter.toLowerCase().includes(q)) ||
+        (m.name && m.name.toLowerCase().includes(q)) ||
+        ((m.items || []).some(item => 
+          (item.name && item.name.toLowerCase().includes(q)) ||
+          (item.content && item.content.toLowerCase().includes(q))
+        ));
+      
+      if (!matchSearch) return;
+      
+      if (!treeData[grade]) treeData[grade] = {};
+      if (!treeData[grade][chapter]) treeData[grade][chapter] = [];
+      treeData[grade][chapter].push(m);
+    });
+    
+    if (Object.keys(treeData).length === 0) {
+      tree.innerHTML = '<div class="px-4 py-6 text-center text-sm text-gray-500 bg-pink-50 border-2 border-pink-200 rounded-xl">Không tìm thấy dữ liệu nào</div>';
+      return;
+    }
+    
+    // Sắp xếp grades theo mindmap order
+    let grades = Object.keys(treeData);
+    if (mindmapOrder && mindmapOrder.grades) {
+      grades = grades.sort((a, b) => {
+        const idxA = mindmapOrder.grades.indexOf(a);
+        const idxB = mindmapOrder.grades.indexOf(b);
+        if (idxA === -1 && idxB === -1) return a.localeCompare(b);
+        if (idxA === -1) return 1;
+        if (idxB === -1) return -1;
+        return idxA - idxB;
+      });
+    } else {
+      grades.sort();
+    }
+    
+    grades.forEach(grade => {
+      const gradeDiv = createGradeNode(grade, treeData[grade], q);
+      tree.appendChild(gradeDiv);
+    });
+  }
+  
+  function createGradeNode(grade, chapters, searchQuery) {
+    const isExpanded = expandedGrades.has(grade);
+    const gradeDiv = document.createElement("div");
+    gradeDiv.className = "mb-1";
+    
+    const gradeHeader = document.createElement("div");
+    gradeHeader.className = `tree-item ${isExpanded ? "active" : ""}`;
+    
+    const icon = document.createElement("span");
+    icon.className = "text-lg mr-2 transition-transform";
+    icon.textContent = isExpanded ? "📚" : "📖";
+    icon.style.transform = isExpanded ? "rotate(0deg)" : "rotate(-90deg)";
+    
+    const gradeText = document.createElement("span");
+    gradeText.className = "font-semibold text-sm";
+    gradeText.textContent = `Khối ${grade}`;
+    
+    gradeHeader.appendChild(icon);
+    gradeHeader.appendChild(gradeText);
+    
+    const chaptersContainer = document.createElement("div");
+    chaptersContainer.className = "ml-3 mt-1 space-y-1";
+    chaptersContainer.style.display = isExpanded ? "block" : "none";
+    
+    // Sắp xếp chapters theo mindmap order
+    let chapterNames = Object.keys(chapters);
+    if (mindmapOrder && mindmapOrder.chapters_by_grade && mindmapOrder.chapters_by_grade[grade]) {
+      chapterNames = chapterNames.sort((a, b) => {
+        const idxA = mindmapOrder.chapters_by_grade[grade].indexOf(a);
+        const idxB = mindmapOrder.chapters_by_grade[grade].indexOf(b);
+        if (idxA === -1 && idxB === -1) return a.localeCompare(b);
+        if (idxA === -1) return 1;
+        if (idxB === -1) return -1;
+        return idxA - idxB;
+      });
+    } else {
+      chapterNames.sort();
+    }
+    
+    chapterNames.forEach(chapter => {
+      const chapterNode = createChapterNode(grade, chapter, chapters[chapter], searchQuery);
+      chaptersContainer.appendChild(chapterNode);
+    });
+    
+    gradeHeader.onclick = (e) => {
+      e.stopPropagation();
+      if (isExpanded) {
+        expandedGrades.delete(grade);
+      } else {
+        expandedGrades.add(grade);
+      }
+      renderModelTree();
+    };
+    
+    gradeDiv.appendChild(gradeHeader);
+    gradeDiv.appendChild(chaptersContainer);
+    
+    return gradeDiv;
+  }
+  
+  function createChapterNode(grade, chapter, models, searchQuery) {
+    const isExpanded = expandedChapters.has(`${grade}::${chapter}`);
+    const chapterDiv = document.createElement("div");
+    chapterDiv.className = "mb-1";
+    
+    const chapterHeader = document.createElement("div");
+    chapterHeader.className = `tree-item ${isExpanded ? "active" : ""}`;
+    
+    const icon = document.createElement("span");
+    icon.className = "text-sm mr-2";
+    icon.textContent = isExpanded ? "📁" : "📂";
+    
+    const chapterText = document.createElement("span");
+    chapterText.className = "font-semibold text-xs";
+    chapterText.textContent = escapeHtml(chapter);
+    
+    chapterHeader.appendChild(icon);
+    chapterHeader.appendChild(chapterText);
+    
+    const modelsContainer = document.createElement("div");
+    modelsContainer.className = "ml-3 mt-1 space-y-1";
+    modelsContainer.style.display = isExpanded ? "block" : "none";
+    
+    // Sắp xếp models theo mindmap order
+    let sortedModels = [...models];
+    if (mindmapOrder && mindmapOrder.models_by_chapter) {
+      const key = `${grade}::${chapter}`;
+      if (mindmapOrder.models_by_chapter[key]) {
+        sortedModels = sortedModels.sort((a, b) => {
+          const nameA = a.name || "";
+          const nameB = b.name || "";
+          const idxA = mindmapOrder.models_by_chapter[key].indexOf(nameA);
+          const idxB = mindmapOrder.models_by_chapter[key].indexOf(nameB);
+          if (idxA === -1 && idxB === -1) return nameA.localeCompare(nameB);
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
+      }
+    }
+    
+    sortedModels.forEach(model => {
+      const modelNode = createModelNode(grade, chapter, model, searchQuery);
+      modelsContainer.appendChild(modelNode);
+    });
+    
+    chapterHeader.onclick = (e) => {
+      e.stopPropagation();
+      const key = `${grade}::${chapter}`;
+      if (isExpanded) {
+        expandedChapters.delete(key);
+      } else {
+        expandedChapters.add(key);
+      }
+      renderModelTree();
+    };
+    
+    chapterDiv.appendChild(chapterHeader);
+    chapterDiv.appendChild(modelsContainer);
+    
+    return chapterDiv;
+  }
+  
+  function createModelNode(grade, chapter, model, searchQuery) {
+    const isExpanded = expandedModels.has(model.id);
+    const isSelected = CURRENT_MODEL && CURRENT_MODEL.id === model.id;
+    const modelDiv = document.createElement("div");
+    modelDiv.className = "mb-1";
+    
+    const modelHeader = document.createElement("div");
+    modelHeader.className = `tree-item ${isSelected ? "active" : ""}`;
+    
+    const icon = document.createElement("span");
+    icon.className = "text-xs mr-2";
+    icon.textContent = isExpanded ? "🎯" : "🎨";
+    
+    const modelText = document.createElement("span");
+    modelText.className = "font-medium text-xs";
+    modelText.textContent = escapeHtml(model.name || "Mô hình");
+    
+    const itemsCount = document.createElement("span");
+    itemsCount.className = "ml-auto text-xs";
+    itemsCount.textContent = `(${(model.items || []).length})`;
+    
+    modelHeader.appendChild(icon);
+    modelHeader.appendChild(modelText);
+    modelHeader.appendChild(itemsCount);
+    
+    const componentsContainer = document.createElement("div");
+    componentsContainer.className = "ml-3 mt-1 space-y-0.5";
+    componentsContainer.style.display = isExpanded ? "block" : "none";
+    
+    // Sắp xếp components theo mindmap order
+    let items = model.items || [];
+    if (mindmapOrder && mindmapOrder.components_by_model) {
+      const key = `${grade}::${chapter}::${model.name}`;
+      if (mindmapOrder.components_by_model[key]) {
+        items = items.sort((a, b) => {
+          const nameA = a.name || "";
+          const nameB = b.name || "";
+          const idxA = mindmapOrder.components_by_model[key].indexOf(nameA);
+          const idxB = mindmapOrder.components_by_model[key].indexOf(nameB);
+          if (idxA === -1 && idxB === -1) return nameA.localeCompare(nameB);
+          if (idxA === -1) return 1;
+          if (idxB === -1) return -1;
+          return idxA - idxB;
+        });
+      }
+    }
+    
+    items.forEach(item => {
+      const itemNode = createComponentNode(model, item);
+      componentsContainer.appendChild(itemNode);
+    });
+    
+    modelHeader.onclick = (e) => {
+      e.stopPropagation();
+      if (isExpanded) {
+        expandedModels.delete(model.id);
+        renderModelTree();
+      } else {
+        expandedModels.add(model.id);
+        selectModel(model);
+        renderModelTree();
+      }
+    };
+    
+    modelDiv.appendChild(modelHeader);
+    modelDiv.appendChild(componentsContainer);
+    
+    return modelDiv;
+  }
+  
+  function createComponentNode(model, item) {
+    const isSelected = selectedId === item.id;
+    const itemDiv = document.createElement("div");
+    itemDiv.className = `tree-item text-xs ${isSelected ? "active" : ""}`;
+    
+    const itemText = document.createElement("span");
+    itemText.className = isSelected ? "font-semibold" : "";
+    itemText.textContent = "• " + escapeHtml(item.name || "Thành phần");
+    
+    itemDiv.appendChild(itemText);
+    
+    itemDiv.onclick = (e) => {
+      e.stopPropagation();
+      selectItem(item);
+      // Expand model nếu chưa expand
+      if (!expandedModels.has(model.id)) {
+        expandedModels.add(model.id);
+        renderModelTree();
+      }
+    };
+    
+    return itemDiv;
+  }
+
+  // Select a model
+  function selectModel(model) {
+    CURRENT_MODEL = model;
+    DATA = {
+      modelUid: model.modelUid || "",
+      items: model.items || []
+    };
+    expandToModel(model);
+    clearInfoPanels();
+    annotationList = [];
+    showDetailBox({
+      name: model.name || "Mô hình",
+      content: model.feature || "",
+      funFact: model.funFact || "",
+      link: ""
+    });
+    showFunFactBox({
+      name: model.name || "Mô hình",
+      funFact: model.funFact || ""
+    });
+    if (window.innerWidth <= 768) {
+      toggleSidebar(false);
+    }
+    
+    // Clear old overlays when switching models
+    clearOverlays();
+    
+    if (DATA.modelUid) {
+      initViewer();
+    }
+    
+    // Expand model trong tree
+    if (!expandedModels.has(model.id)) {
+      expandedModels.add(model.id);
+    }
+  }
+
+  function clearOverlays() {
+    const overlay = el("overlay");
+    if (overlay) {
+      overlay.innerHTML = "";
+    }
+    const svg = el("svg-overlay");
+    if (svg) {
+      svg.innerHTML = "";
+    }
+    labelElements.clear();
+    hotspotElements.clear();
+  }
+
+  function setPanel(it, isModel = false) {
+    const panel = el("panel");
+    if (!it) { 
+      panel.classList.add("hidden");
+      return; 
+    }
+    panel.classList.remove("hidden");
+    
+    if (isModel) {
+      // Hiển thị thông tin mô hình
+      el("pTitle").textContent = it.name || "Mô hình";
+      el("pContent").textContent = it.feature || "Chưa có mô tả đặc điểm.";
+      
+      const funFactDiv = el("pFunFact");
+      const funFactContent = el("pFunFactContent");
+      if (it.funFact) {
+        funFactDiv.classList.remove("hidden");
+        funFactContent.textContent = it.funFact;
+      } else {
+        funFactDiv.classList.add("hidden");
+      }
+      
+      el("pLink").classList.add("hidden");
+    } else {
+      // Hiển thị thông tin thành phần
+      el("pTitle").textContent = it.name || "Thành phần";
+      el("pContent").textContent = it.content || "Chưa có mô tả.";
+      
+      const funFactDiv = el("pFunFact");
+      const funFactContent = el("pFunFactContent");
+      if (it.funFact) {
+        funFactDiv.classList.remove("hidden");
+        funFactContent.textContent = it.funFact;
+      } else {
+        funFactDiv.classList.add("hidden");
+      }
+      
+      const linkDiv = el("pLink");
+      const linkBtn = el("pLinkBtn");
+      if (it.link) {
+        linkDiv.classList.remove("hidden");
+        linkBtn.href = it.link;
+      } else {
+        linkDiv.classList.add("hidden");
+      }
+    }
+  }
+
+  function selectItem(it) {
+    selectedId = it.id;
+    focusOnItem(it);
+    if (viewMode === 'detail') {
+      setPanel(it, false);
+      showDetailBox(it);
+      showFunFactBox(it);
+    } else {
+      // Chế độ Xem: không hiển thị nội dung/đáp án
+      showDetailBox(null);
+      showFunFactBox(null);
+    }
+    updateLabels();
+    if (window.innerWidth <= 768 && viewMode === 'detail') {
+      toggleSidebar(false);
+    }
+  }
+
+  function showDetailBox(it) {
+    const box = el("detailBox");
+    if (!box) return;
+    if (!it || viewMode === 'view') {
+      box.classList.add("hidden");
+      return;
+    }
+    box.classList.remove("hidden");
+    box.classList.remove("show");
+    requestAnimationFrame(() => box.classList.add("show"));
+
+    typeText(el("detailTitle"), it.name || "Điểm", 12);
+    typeText(el("detailContent"), it.content || "", 10);
+
+    const linkWrap = el("detailLinkWrap");
+    const linkEl = el("detailLink");
+    if (it.link) {
+      linkWrap.classList.remove("hidden");
+      const linkValue = (it.link || "").trim();
+      if (/^https?:\/\//i.test(linkValue)) {
+        linkEl.href = linkValue;
+        linkEl.onclick = null;
+        linkEl.textContent = "Mở liên kết";
+      } else {
+        linkEl.href = "#";
+        linkEl.textContent = "Xem mô hình";
+        linkEl.onclick = (e) => {
+          e.preventDefault();
+          navigateToModel(linkValue);
+        };
+      }
+    } else {
+      linkWrap.classList.add("hidden");
+      linkEl.href = "#";
+    }
+
+    // Only show box if there is detail content/funfact/link
+    const hasAny = (it.content && it.content.trim()) || (it.link && it.link.trim());
+    if (!hasAny) {
+      box.classList.add("hidden");
+    }
+  }
+
+  function navigateToModel(linkValue) {
+    if (!linkValue) return;
+    const key = linkValue.trim();
+    const models = ALL_DATA.models || [];
+    let target = null;
+
+    if (key.startsWith("model:")) {
+      const modelId = key.replace("model:", "").trim();
+      target = models.find(m => m.id === modelId);
+    }
+
+    if (!target) {
+      target = models.find(m => m.id === key);
+    }
+    if (!target) {
+      target = models.find(m => m.modelUid === key);
+    }
+    if (!target) {
+      target = models.find(m => (m.name || "").toLowerCase() === key.toLowerCase());
+    }
+
+    if (!target) {
+      alert("Không tìm thấy mô hình để chuyển. Kiểm tra lại link.");
+      return;
+    }
+
+    selectModel(target);
+    renderModelTree();
+    setStatus(`Đã chuyển sang mô hình: ${target.name || target.modelUid}`);
+  }
+
+  function showFunFactBox(it) {
+    const box = el("funFactBox");
+    if (!box) return;
+    const detailWrap = el("detailFunFactWrap");
+    const detailContent = el("detailFunFactContent");
+    if (!it || !it.funFact || !it.funFact.trim() || viewMode === 'view') {
+      box.classList.add("hidden");
+      if (detailWrap) detailWrap.classList.add("hidden");
+      return;
+    }
+    if (isMobile()) {
+      if (detailWrap && detailContent) {
+        detailWrap.classList.remove("hidden");
+        typeText(detailContent, it.funFact, 10);
+      }
+      box.classList.add("hidden");
+      return;
+    }
+    box.classList.remove("hidden");
+    box.classList.remove("show");
+    requestAnimationFrame(() => box.classList.add("show"));
+    typeText(el("funFactTitle"), it.name || "Điểm", 12);
+    typeText(el("funFactContent"), it.funFact, 10);
+  }
+
+
+  function createFloatingLabel(item, screenX, screenY, existingLabel = null) {
+    // Ở chế độ Xem: không tạo nhãn chứa tên/chi tiết điểm
+    if (viewMode === 'view') {
+      labelElements.delete(item.id);
+      return null;
+    }
+    const overlay = el("overlay");
+    if (!overlay) return;
+    
+    const labelId = `label-${item.id}`;
+    
+    const label = existingLabel || document.createElement("div");
+    label.id = labelId;
+    label.className = `floating-label ${item.id === selectedId ? 'active' : ''}`;
+    
+    const nameText = escapeHtml(item.name || "Bào quan");
+    
+    label.innerHTML = `
+      <div class="label-title">${nameText}</div>
+    `;
+    
+    // Append if new to measure real size
+    if (!existingLabel) {
+      overlay.appendChild(label);
+    }
+    
+    const rightContainer = el("right");
+    const containerWidth = rightContainer ? rightContainer.offsetWidth : window.innerWidth;
+    const containerHeight = rightContainer ? rightContainer.offsetHeight : window.innerHeight;
+    const padding = 12;
+
+    const labelWidth = label.offsetWidth || 140;
+    const labelHeight = label.offsetHeight || 28;
+
+    // Prefer positioning near point
+    let x = screenX + 12;
+    if (x + labelWidth + padding > containerWidth) x = screenX - labelWidth - 12;
+    let y = screenY - labelHeight - 8;
+    if (y < padding) y = screenY + 8;
+    if (y < padding) y = padding;
+    if (y + labelHeight > containerHeight - padding) {
+      y = containerHeight - labelHeight - padding;
+    }
+
+    label.style.left = `${x}px`;
+    label.style.top = `${y}px`;
+    
+    label.onclick = (ev) => {
+      ev.stopPropagation();
+      selectItem(item);
+    };
+    
+    // Update line anchor (center of label)
+    labelElements.set(item.id, { element: label, screenX, screenY, labelX: x + labelWidth/2, labelY: y + labelHeight/2 });
+    
+    label.classList.add("visible");
+    
+    return { x: x + labelWidth/2, y: y + labelHeight/2 };
+  }
+
+  function updateLeaderLines() {
+    const svg = el("svg-overlay");
+    const rightContainer = el("right");
+    if (!rightContainer || !svg) return;
+    
+    const rect = rightContainer.getBoundingClientRect();
+    svg.setAttribute("width", rect.width);
+    svg.setAttribute("height", rect.height);
+    
+    svg.innerHTML = "";
+    
+    labelElements.forEach((labelData, itemId) => {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      const isActive = itemId === selectedId;
+      line.className = `leader-line ${isActive ? 'active' : ''}`;
+      
+      const { screenX, screenY, labelX, labelY } = labelData;
+      const dx = labelX - screenX;
+      const dy = labelY - screenY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      
+      if (dist < 5) return;
+      
+      const midX = screenX + dx * 0.5;
+      const midY = screenY + dy * 0.5;
+      const controlX = midX + (dy / dist) * 20;
+      const controlY = midY - (dx / dist) * 20;
+      
+      const path = `M ${screenX} ${screenY} Q ${controlX} ${controlY} ${labelX} ${labelY}`;
+      line.setAttribute("d", path);
+      
+      svg.appendChild(line);
+    });
+  }
+
+  function updateLabels() {
+    if (!api) return;
+    if (!DATA.items || DATA.items.length === 0) return;
+    if (!labelsEnabled) {
+      labelElements.forEach((val) => {
+        if (val.element && val.element.parentNode) {
+          val.element.parentNode.removeChild(val.element);
+        }
+      });
+      labelElements.clear();
+      return;
+    }
+    
+    const overlay = el("overlay");
+    if (!overlay) return;
+    
+    const seen = new Set();
+    let processedCount = 0;
+    const totalItems = DATA.items.length;
+    
+    (DATA.items || []).forEach(it => {
+      if (!it.world) {
+        processedCount++;
+        return;
+      }
+      
+      api.getWorldToScreenCoordinates(it.world, function(err, screen) {
+        processedCount++;
+        
+        // Sketchfab đôi khi trả kết quả ở tham số "err" dưới dạng object
+        // dạng { glCoord: Float64Array(2), canvasCoord: Float64Array(2) }
+        // hoặc ở tham số "screen". Ta chuẩn hoá về {x, y} pixel trên canvas.
+        let coord = null;
+
+        // Trường hợp chuẩn: screen.x, screen.y là số
+        if (screen && typeof screen.x === "number" && typeof screen.y === "number") {
+          coord = { x: screen.x, y: screen.y };
+        }
+        // Trường hợp mới: screen.canvasCoord là mảng [x, y]
+        else if (screen && screen.canvasCoord && screen.canvasCoord.length >= 2) {
+          coord = { x: screen.canvasCoord[0], y: screen.canvasCoord[1] };
+        }
+        // Một số phiên bản API trả object vào "err"
+        else if (!screen && err && err.canvasCoord && err.canvasCoord.length >= 2) {
+          coord = { x: err.canvasCoord[0], y: err.canvasCoord[1] };
+        }
+
+        if (!coord) {
+          if (processedCount === totalItems) {
+            updateLeaderLines();
+          }
+          return;
+        }
+
+        // Bỏ qua các điểm nằm ngoài vùng hiển thị của viewer
+        const rightContainer = el("right");
+        const boundsWidth = rightContainer ? rightContainer.offsetWidth : window.innerWidth;
+        const boundsHeight = rightContainer ? rightContainer.offsetHeight : window.innerHeight;
+        if (
+          coord.x < 0 || coord.y < 0 ||
+          coord.x > boundsWidth || coord.y > boundsHeight
+        ) {
+          if (processedCount === totalItems) {
+            cleanupOverlay(seen);
+          }
+          return;
+        }
+
+        // Hotspot: reuse element instead of appending forever
+        let hs = hotspotElements.get(it.id);
+        if (!hs) {
+          hs = document.createElement("div");
+          hs.className = "hotspot";
+          hs.onclick = (ev) => {
+            ev.stopPropagation();
+            selectItem(it);
+          };
+          overlay.appendChild(hs);
+          hotspotElements.set(it.id, hs);
+        }
+        hs.className = `hotspot ${it.id === selectedId ? "active" : ""}`;
+        hs.style.left = coord.x + "px";
+        hs.style.top = coord.y + "px";
+        hs.title = it.name || "Điểm";
+
+        // Track seen hotspot
+        seen.add(it.id);
+
+        // Label (name only): reuse element (chỉ khi chế độ Chi tiết)
+        if (viewMode === 'detail') {
+          const existingLabelEntry = labelElements.get(it.id);
+          const existingLabel = existingLabelEntry ? existingLabelEntry.element : null;
+          createFloatingLabel(it, coord.x, coord.y, existingLabel);
+        } else {
+          // Ở chế độ Xem, nếu đang còn label cũ thì xoá đi
+          const existing = labelElements.get(it.id);
+          if (existing && existing.element && existing.element.parentNode) {
+            existing.element.parentNode.removeChild(existing.element);
+          }
+          labelElements.delete(it.id);
+        }
+
+        
+        if (processedCount === totalItems) {
+          cleanupOverlay(seen);
+        }
+      });
+    });
+  }
+
+  function cleanupOverlay(seen) {
+    // Remove labels not seen
+    const toDeleteLabels = [];
+    labelElements.forEach((val, key) => {
+      if (!seen.has(key)) {
+        if (val.element && val.element.parentNode) {
+          val.element.parentNode.removeChild(val.element);
+        }
+        toDeleteLabels.push(key);
+      }
+    });
+    toDeleteLabels.forEach(k => labelElements.delete(k));
+
+    // Remove hotspots not seen
+    const toDeleteHotspots = [];
+    hotspotElements.forEach((el, key) => {
+      if (!seen.has(key)) {
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+        toDeleteHotspots.push(key);
+      }
+    });
+    toDeleteHotspots.forEach(k => hotspotElements.delete(k));
+
+    // Disable leader lines for simplicity (less clutter)
+    const svg = el("svg-overlay");
+    if (svg) svg.innerHTML = "";
+  }
+
+  function optimizedRenderLoop() {
+    if (!api) {
+      animationFrameId = requestAnimationFrame(optimizedRenderLoop);
+      return;
+    }
+    
+    api.getCameraLookAt(function(err, cam) {
+      if (err) {
+        animationFrameId = requestAnimationFrame(optimizedRenderLoop);
+        return;
+      }
+      
+      if (cam) {
+        const camHash = JSON.stringify([cam.position, cam.target]);
+        if (camHash !== lastCameraHash) {
+          lastCameraHash = camHash;
+          updateLabels();
+        }
+      }
+      
+      animationFrameId = requestAnimationFrame(optimizedRenderLoop);
+    });
+  }
+
+  async function initViewer() {
+    if (!DATA.modelUid || DATA.modelUid.trim() === "") {
+      const listEl = el("list");
+      if (listEl) {
+        listEl.innerHTML = "<div class='px-5 py-8 text-center text-sm text-blue-600 bg-blue-50 border-2 border-blue-200 rounded-2xl'><p class='font-semibold mb-2'>Chưa có dữ liệu mô hình</p></div>";
+      }
+      return;
+    }
+
+    clearOverlays();
+    showLoading("Đang tải mô hình…", "Khởi tạo viewer, vui lòng chờ.");
+    scheduleViewerTimeout();
+
+    const iframe = el("api-frame");
+    const client = new Sketchfab(iframe);
+
+    client.init(DATA.modelUid, {
+      autostart: 1,
+      ui_infos: 0,
+      ui_controls: 1,
+      success: function(_api) {
+        api = _api;
+        showLoading("Đang tải mô hình…", "Đang tải dữ liệu 3D…");
+        api.start(function() {
+          api.addEventListener("viewerready", function() {
+            if (viewerLoadTimeout) {
+              clearTimeout(viewerLoadTimeout);
+              viewerLoadTimeout = null;
+            }
+            hideLoading();
+            renderList();
+            setTimeout(() => {
+              updateLabels();
+              optimizedRenderLoop();
+            }, 800);
+
+            api.getCameraLookAt(function(err, cam) {
+              if (!err && cam && DATA.modelUid) {
+                defaultCameras.set(DATA.modelUid, { position: cam.position, target: cam.target });
+              }
+            });
+
+            if (typeof api.getAnnotationList === "function") {
+              api.getAnnotationList(function(err, list) {
+                if (!err && Array.isArray(list)) {
+                  annotationList = list;
+                }
+              });
+            }
+          });
+        });
+      },
+      error: function(err) {
+        console.error("Error initializing viewer:", err);
+        if (viewerLoadTimeout) {
+          clearTimeout(viewerLoadTimeout);
+          viewerLoadTimeout = null;
+        }
+        showLoading("Không tải được mô hình", "Model có thể chặn embed/API hoặc mạng lỗi.", true);
+      }
+    });
+  }
+
+  // Event listeners
+  el("q").addEventListener("input", () => {
+    renderModelTree();
+    if (CURRENT_MODEL) renderList();
+  });
+
+  if (el("btnSidebar")) {
+    el("btnSidebar").addEventListener("click", () => toggleSidebar());
+  }
+  if (el("drawerOverlay")) {
+    el("drawerOverlay").addEventListener("click", () => toggleSidebar(false));
+  }
+  if (el("btnPresenter")) {
+    el("btnPresenter").addEventListener("click", () => setPresenterMode(!presenterMode));
+  }
+  if (el("btnToggleLabelsMobile")) {
+    el("btnToggleLabelsMobile").addEventListener("click", () => setLabelsEnabled(!labelsEnabled));
+  }
+  if (el("btnViewMode")) {
+    el("btnViewMode").addEventListener("click", () => {
+      viewMode = viewMode === 'detail' ? 'view' : 'detail';
+      const btn = el("btnViewMode");
+      if (viewMode === 'detail') {
+        btn.textContent = "👁️ Chế độ: Chi tiết";
+      } else {
+        btn.textContent = "👁️ Chế độ: Xem";
+      }
+      // Cập nhật lại overlay & hộp thông tin theo mode mới
+      clearInfoPanels();
+      updateLabels();
+    });
+  }
+  if (el("btnResetCamera")) {
+    el("btnResetCamera").addEventListener("click", resetCamera);
+  }
+  if (el("btnPresenterReset")) {
+    el("btnPresenterReset").addEventListener("click", resetCamera);
+  }
+  if (el("btnPrevItem")) {
+    el("btnPrevItem").addEventListener("click", () => selectPrevNext("prev"));
+  }
+  if (el("btnNextItem")) {
+    el("btnNextItem").addEventListener("click", () => selectPrevNext("next"));
+  }
+  if (el("loadingRetry")) {
+    el("loadingRetry").addEventListener("click", () => {
+      hideLoading();
+      initViewer();
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+    const typing = tag === "input" || tag === "textarea" || (e.target && e.target.isContentEditable);
+    if (!typing && e.key.toLowerCase() === "r") {
+      resetCamera();
+    }
+    if (!typing && e.key === "ArrowRight") {
+      selectPrevNext("next");
+    }
+    if (!typing && e.key === "ArrowLeft") {
+      selectPrevNext("prev");
+    }
+    if (e.key === "Escape" && sidebarOpen) {
+      toggleSidebar(false);
+    }
+  });
+
+  const rightEl = el("right");
+  if (rightEl) {
+    rightEl.addEventListener("pointerdown", () => {
+      if (!isMobile()) return;
+      document.body.classList.add("topbar-hidden");
+      if (mobileHideTimer) clearTimeout(mobileHideTimer);
+      mobileHideTimer = setTimeout(() => {
+        document.body.classList.remove("topbar-hidden");
+      }, 2200);
+    });
+  }
+  
+
+  window.addEventListener("resize", () => {
+    if (api) {
+      setTimeout(updateLabels, 100);
+    }
+    setLabelsEnabled(!isMobile());
+  });
+
+  // Initialize
+  loadMindmapOrder().then(() => {
+    return loadAllData();
+  }).then(() => {
+    renderModelTree();
+    if (!pollHandle) {
+      pollHandle = setInterval(pollServerData, POLL_INTERVAL_MS);
+    }
+    setLabelsEnabled(!isMobile());
+    try {
+      const savedMode = localStorage.getItem("biovision_presenter_mode");
+      if (savedMode === "1") {
+        setPresenterMode(true);
+      }
+    } catch (e) {
+      // ignore storage errors
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("mode") === "present") {
+      setPresenterMode(true);
+    }
+  });
+
+  // Detail box close button
+  if (el("detailClose")) {
+    el("detailClose").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const box = el("detailBox");
+      if (box) box.classList.add("hidden");
+    });
+  }
+
+  // Fun fact box close button
+  if (el("funFactClose")) {
+    el("funFactClose").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const box = el("funFactBox");
+      if (box) box.classList.add("hidden");
+    });
+  }
+  
+</script>
+</body>
+</html>
+

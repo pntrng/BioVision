@@ -1,0 +1,242 @@
+{
+  "grades": [
+    "10"
+  ],
+  "chapters_by_grade": {
+    "10": [
+      "Thành phần hóa học của tế bào",
+      "Cấu trúc tế bào",
+      "Trao đổi chất qua màng và truyền tin tế bào",
+      "Chuyển hóa năng lượng trong tế bào",
+      "Chu kì tế bào và phân bào",
+      "Vi sinh vật",
+      "Virus"
+    ]
+  },
+  "models_by_chapter": {
+    "10::Thành phần hóa học của tế bào": [
+      "Khung carbon",
+      "Nước",
+      "Đường đơn",
+      "Đường đôi",
+      "Đường đa",
+      "Lipid",
+      "Phospholipid",
+      "Steroid",
+      "Amino acid",
+      "Các bậc cấu trúc của protein",
+      "Liên kết trong protein",
+      "DNA",
+      "mRNA",
+      "tRNA"
+    ],
+    "10::Cấu trúc tế bào": [
+      "Tế bào nhân sơ",
+      "Vi khuẩn Gr- và Gr+",
+      "Tế bào nhân thực",
+      "Nhân tế bào",
+      "Ribosome",
+      "Lưới nội chất",
+      "Bộ máy Golgi",
+      "Lysosome",
+      "Peroxisome",
+      "Không bào",
+      "Ti thể",
+      "Lục lạp",
+      "Màng tế bào",
+      "Lông",
+      "Roi",
+      "Khung xương tế bào",
+      "Thành tế bào",
+      "Trung thể"
+    ],
+    "10::Trao đổi chất qua màng và truyền tin tế bào": [
+      "Vận chuyển thụ động",
+      "Vận chuyển chủ động",
+      "Nhập bào",
+      "Xuất bào",
+      "Truyền tin giữa các tế bào",
+      "Truyền tin trong tế bào"
+    ],
+    "10::Chuyển hóa năng lượng trong tế bào": [
+      "ATP",
+      "Enzyme",
+      "Đường phân",
+      "Chu trình Krebs",
+      "Lên men"
+    ],
+    "10::Chu kì tế bào và phân bào": [
+      "Chu kì tế bào",
+      "NST",
+      "Nguyên phân - kì đầu",
+      "Nguyên phân - kì giữa",
+      "Nguyên phân - kì sau",
+      "Nguyên phân - kì cuối",
+      "Kì đầu - GP I",
+      "Kì giữa - GP I",
+      "Kì sau - GP I",
+      "Kì cuối - GP I",
+      "Kì đầu - GP II",
+      "Kì giữa - GP II",
+      "Kì sau - GP II",
+      "Kì cuối - GP II",
+      "Hình thành giao tử",
+      "Nuôi cấy mô"
+    ],
+    "10::Vi sinh vật": [
+      "Vi sinh vật",
+      "Nhuộm gram",
+      "Phân đôi",
+      "Bào tử",
+      "Nảy chồi"
+    ],
+    "10::Virus": [
+      "Virus",
+      "Virus HIV",
+      "Virus cúm A"
+    ]
+  },
+  "components_by_model": {
+    "10::Thành phần hóa học của tế bào::DNA": [
+      "Liên kết phosphodiester",
+      "Nitrogenous base",
+      "Đường 5-carbon",
+      "Nhóm phosphate",
+      "Liên kết hydrogen"
+    ],
+    "10::Cấu trúc tế bào::Tế bào nhân sơ": [
+      "Lông",
+      "Roi",
+      "Màng ngoài",
+      "Thành tế bào",
+      "Màng tế bào",
+      "Tế bào chất",
+      "Vùng nhân chứa DNA",
+      "Ribosome",
+      "Plasmid"
+    ],
+    "10::Cấu trúc tế bào::Tế bào nhân thực": [],
+    "10::Cấu trúc tế bào::Nhân tế bào": [
+      "Màng nhân",
+      "Lỗ nhân",
+      "Chất nhiễm sắc",
+      "Hạch nhân"
+    ],
+    "10::Cấu trúc tế bào::Ribosome": [
+      "Tiểu đơn vị lớn",
+      "Tiểu đơn vị nhỏ"
+    ],
+    "10::Cấu trúc tế bào::Lưới nội chất": [
+      "Lưới nội chất hạt",
+      "Lưới nội chất trơn"
+    ],
+    "10::Cấu trúc tế bào::Bộ máy Golgi": [
+      "Túi vận chuyển",
+      "Túi dẹp"
+    ],
+    "10::Cấu trúc tế bào::Lysosome": [
+      "Màng",
+      "Enzyme thủy phân",
+      "Protein vận chuyển"
+    ],
+    "10::Cấu trúc tế bào::Peroxisome": [
+      "Màng",
+      "Các enzyme",
+      "Vùng lõi",
+      "Protein vận chuyển"
+    ],
+    "10::Cấu trúc tế bào::Không bào": [],
+    "10::Cấu trúc tế bào::Ti thể": [
+      "Màng ngoài",
+      "Màng trong",
+      "Mào",
+      "Chất nền",
+      "Ribosome",
+      "Hạt dự trữ",
+      "DNA",
+      "Không gian giữa 2 màng"
+    ],
+    "10::Cấu trúc tế bào::Lục lạp": [
+      "Màng ngoài",
+      "Màng trong",
+      "Phiến màng",
+      "Chất nền",
+      "Granum",
+      "Thylakoid"
+    ],
+    "10::Cấu trúc tế bào::Màng tế bào": [
+      "Lớp kép phospholipid",
+      "Glycoprotein",
+      "Glycolipid",
+      "Carbohydrate",
+      "Cholesterol",
+      "Protein hình cầu",
+      "Protein xoắn",
+      "Kênh protein",
+      "Protein bám màng",
+      "Protein xuyên màng"
+    ],
+    "10::Cấu trúc tế bào::Lông": [],
+    "10::Cấu trúc tế bào::Roi": [],
+    "10::Cấu trúc tế bào::Khung xương tế bào": [],
+    "10::Cấu trúc tế bào::Thành tế bào": [],
+    "10::Cấu trúc tế bào::Trung thể": [
+      "Vi ống"
+    ],
+    "10::Trao đổi chất qua màng và truyền tin tế bào::Nhập bào": [
+      "Túi vận chuyển",
+      "Màng sinh chất",
+      "Tế bào chất"
+    ],
+    "10::Trao đổi chất qua màng và truyền tin tế bào::Xuất bào": [
+      "Túi tiết",
+      "Màng sinh chất",
+      "Tế bào chất"
+    ],
+    "10::Chuyển hóa năng lượng trong tế bào::ATP": [
+      "Adenine",
+      "Đường ribose",
+      "3 Nhóm phosphate",
+      "Liên kết giữa 2 nhóm P"
+    ],
+    "10::Chuyển hóa năng lượng trong tế bào::Enzyme": [
+      "Cơ chất",
+      "Trung tâm hoạt động",
+      "Enzyme"
+    ],
+    "10::Chu kì tế bào và phân bào::Chu kì tế bào": [
+      "Pha G1",
+      "Pha S",
+      "Pha G2",
+      "Nguyên phân"
+    ],
+    "10::Chu kì tế bào và phân bào::Nguyên phân - kì đầu": [
+      "Thoi phân bào",
+      "NST",
+      "Màng nhân và hạch nhân"
+    ],
+    "10::Chu kì tế bào và phân bào::Nguyên phân - kì giữa": [
+      "NST",
+      "Vi ống"
+    ],
+    "10::Chu kì tế bào và phân bào::Nguyên phân - kì sau": [
+      "NST"
+    ],
+    "10::Chu kì tế bào và phân bào::Nguyên phân - kì cuối": [
+      "NST",
+      "Màng nhân và hạch nhân",
+      "Thoi phân bào",
+      "Tế bào chất"
+    ],
+    "10::Vi sinh vật::Vi sinh vật": [
+      "Cầu khuẩn",
+      "Trực khuẩn",
+      "Phẩy khuẩn"
+    ],
+    "10::Virus::Virus": [
+      "Lõi",
+      "Capsid",
+      "Vỏ ngoài"
+    ]
+  }
+}
